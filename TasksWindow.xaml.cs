@@ -10,11 +10,14 @@ namespace Space
     {
         private readonly UserInfo _user;
         private List<EmployeeItem> _all = new List<EmployeeItem>();
+        private int _editId = -1;
 
         public TasksWindow(UserInfo user)
         {
             InitializeComponent();
             _user = user;
+            SidebarRole.Text     = (_user.Role ?? "user").ToUpper();
+            SidebarUsername.Text = _user.Username;
             Loaded += async (s, e) => await Reload();
         }
 
@@ -41,23 +44,78 @@ namespace Space
             => Apply(SearchBox.Text.StartsWith("🔍") ? "" : SearchBox.Text);
 
         private void AddBtn_Click(object s, RoutedEventArgs e)
-            => AddPanel.Visibility = AddPanel.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+        {
+            _editId = -1;
+            FormTitle.Text  = "Новый работник";
+            SaveBtn.Content = "Сохранить";
+            AddFullName.Text = AddEmail.Text = AddPosition.Text = AddUsername.Text = AddPassword.Text = "";
+            AddRole.SelectedIndex = 0;
+            LoginRow.Visibility   = Visibility.Visible;
+            AddUsername.IsEnabled = AddPassword.IsEnabled = true;
+            AddError.Visibility   = Visibility.Collapsed;
+            AddPanel.Visibility   = AddPanel.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void Edit_Click(object s, RoutedEventArgs e)
+        {
+            var id   = (int)((System.Windows.Controls.Button)s).Tag;
+            var item = _all.FirstOrDefault(p => p.Id == id);
+            if (item == null) return;
+
+            _editId = id;
+            FormTitle.Text  = "Редактировать работника";
+            SaveBtn.Content = "Обновить";
+
+            AddFullName.Text = item.FullName;
+            AddEmail.Text    = item.Email    == "—" ? "" : item.Email;
+            AddPosition.Text = item.Position == "—" ? "" : item.Position;
+
+            foreach (System.Windows.Controls.ComboBoxItem ci in AddRole.Items)
+                if (ci.Content?.ToString() == item.Role) { AddRole.SelectedItem = ci; break; }
+
+            // hide login/password fields on edit — username changes aren't supported here
+            LoginRow.Visibility = Visibility.Collapsed;
+
+            AddError.Visibility = Visibility.Collapsed;
+            AddPanel.Visibility = Visibility.Visible;
+        }
 
         private async void SaveAdd_Click(object s, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(AddFullName.Text) || string.IsNullOrWhiteSpace(AddUsername.Text) || string.IsNullOrWhiteSpace(AddPassword.Text))
-            { AddError.Text = "Заполните Имя, Логин и Пароль"; AddError.Visibility = Visibility.Visible; return; }
-            try
+            if (_editId > 0)
             {
-                var role = (AddRole.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content?.ToString() ?? "developer";
-                await DatabaseService.AddEmployeeAsync(AddFullName.Text.Trim(), AddEmail.Text.Trim(),
-                    AddPosition.Text.Trim(), AddUsername.Text.Trim(), AddPassword.Text.Trim(), role);
-                AddFullName.Text = AddEmail.Text = AddPosition.Text = AddUsername.Text = AddPassword.Text = "";
-                AddError.Visibility = Visibility.Collapsed;
-                AddPanel.Visibility = Visibility.Collapsed;
-                await Reload();
+                // Edit mode: update name, email, position, role
+                if (string.IsNullOrWhiteSpace(AddFullName.Text))
+                { AddError.Text = "Введите имя"; AddError.Visibility = Visibility.Visible; return; }
+                try
+                {
+                    var role = (AddRole.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content?.ToString() ?? "developer";
+                    await DatabaseService.UpdateEmployeeAsync(_editId, AddFullName.Text.Trim(),
+                        AddEmail.Text.Trim(), AddPosition.Text.Trim(), role);
+                    _editId = -1;
+                    AddPanel.Visibility = Visibility.Collapsed;
+                    AddError.Visibility = Visibility.Collapsed;
+                    await Reload();
+                }
+                catch (Exception ex) { AddError.Text = ex.Message; AddError.Visibility = Visibility.Visible; }
             }
-            catch (Exception ex) { AddError.Text = ex.Message; AddError.Visibility = Visibility.Visible; }
+            else
+            {
+                // Add mode: require login and password
+                if (string.IsNullOrWhiteSpace(AddFullName.Text) || string.IsNullOrWhiteSpace(AddUsername.Text) || string.IsNullOrWhiteSpace(AddPassword.Text))
+                { AddError.Text = "Заполните Имя, Логин и Пароль"; AddError.Visibility = Visibility.Visible; return; }
+                try
+                {
+                    var role = (AddRole.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content?.ToString() ?? "developer";
+                    await DatabaseService.AddEmployeeAsync(AddFullName.Text.Trim(), AddEmail.Text.Trim(),
+                        AddPosition.Text.Trim(), AddUsername.Text.Trim(), AddPassword.Text.Trim(), role);
+                    AddFullName.Text = AddEmail.Text = AddPosition.Text = AddUsername.Text = AddPassword.Text = "";
+                    AddError.Visibility = Visibility.Collapsed;
+                    AddPanel.Visibility = Visibility.Collapsed;
+                    await Reload();
+                }
+                catch (Exception ex) { AddError.Text = ex.Message; AddError.Visibility = Visibility.Visible; }
+            }
         }
 
         private async void Delete_Click(object s, RoutedEventArgs e)
@@ -72,6 +130,7 @@ namespace Space
 
         private void NavProjects_Click(object s, RoutedEventArgs e)  { new MainProject(_user).Show(); Close(); }
         private void NavTeams_Click(object s, RoutedEventArgs e)     { new TeemProject(_user).Show(); Close(); }
+        private void NavTasks_Click(object s, RoutedEventArgs e)     { new TaskManageWindow(_user).Show(); Close(); }
         private void NavReports_Click(object s, RoutedEventArgs e)   { new ReportWindows(_user).Show(); Close(); }
         private void Exit_Click(object s, RoutedEventArgs e)         { new Autorisation().Show(); Close(); }
         private void TitleBar_MouseDown(object s, MouseButtonEventArgs e) { if (e.LeftButton == MouseButtonState.Pressed) DragMove(); }

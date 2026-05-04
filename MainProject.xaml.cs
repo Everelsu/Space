@@ -10,11 +10,14 @@ namespace Space
     {
         private readonly UserInfo _user;
         private List<ProjectItem> _all = new List<ProjectItem>();
+        private int _editId = -1;
 
         public MainProject(UserInfo user)
         {
             InitializeComponent();
             _user = user;
+            SidebarRole.Text     = (_user.Role ?? "user").ToUpper();
+            SidebarUsername.Text = _user.Username;
             Loaded += async (s, e) => await Reload();
         }
 
@@ -40,7 +43,31 @@ namespace Space
             => Apply(SearchBox.Text.StartsWith("🔍") ? "" : SearchBox.Text);
 
         private void AddBtn_Click(object s, RoutedEventArgs e)
-            => AddPanel.Visibility = AddPanel.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+        {
+            _editId = -1;
+            FormTitle.Text = "Новый проект";
+            SaveBtn.Content = "Сохранить";
+            AddName.Text = AddStart.Text = AddDeadline.Text = "";
+            AddError.Visibility = Visibility.Collapsed;
+            AddPanel.Visibility = AddPanel.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void Edit_Click(object s, RoutedEventArgs e)
+        {
+            var id   = (int)((System.Windows.Controls.Button)s).Tag;
+            var item = _all.FirstOrDefault(p => p.Id == id);
+            if (item == null) return;
+            _editId = id;
+            FormTitle.Text  = "Редактировать проект";
+            SaveBtn.Content = "Обновить";
+            AddName.Text     = item.Name;
+            AddStart.Text    = item.StartDate == "—" ? "" : item.StartDate;
+            AddDeadline.Text = item.Deadline  == "—" ? "" : item.Deadline;
+            foreach (System.Windows.Controls.ComboBoxItem ci in AddStatus.Items)
+                if (ci.Content?.ToString() == item.Status) { AddStatus.SelectedItem = ci; break; }
+            AddError.Visibility = Visibility.Collapsed;
+            AddPanel.Visibility = Visibility.Visible;
+        }
 
         private async void SaveAdd_Click(object s, RoutedEventArgs e)
         {
@@ -50,7 +77,11 @@ namespace Space
             try
             {
                 var status = (AddStatus.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content?.ToString() ?? "active";
-                await DatabaseService.AddProjectAsync(AddName.Text.Trim(), "", start, dl, status);
+                if (_editId > 0)
+                    await DatabaseService.UpdateProjectAsync(_editId, AddName.Text.Trim(), start, dl, status);
+                else
+                    await DatabaseService.AddProjectAsync(AddName.Text.Trim(), "", start, dl, status);
+                _editId = -1;
                 AddName.Text = AddStart.Text = AddDeadline.Text = "";
                 AddError.Visibility = Visibility.Collapsed;
                 AddPanel.Visibility = Visibility.Collapsed;
@@ -72,6 +103,7 @@ namespace Space
         // Navigation
         private void NavEmployees_Click(object s, RoutedEventArgs e) { new TasksWindow(_user).Show(); Close(); }
         private void NavTeams_Click(object s, RoutedEventArgs e)     { new TeemProject(_user).Show(); Close(); }
+        private void NavTasks_Click(object s, RoutedEventArgs e)     { new TaskManageWindow(_user).Show(); Close(); }
         private void NavReports_Click(object s, RoutedEventArgs e)   { new ReportWindows(_user).Show(); Close(); }
         private void Exit_Click(object s, RoutedEventArgs e)         { new Autorisation().Show(); Close(); }
         private void TitleBar_MouseDown(object s, MouseButtonEventArgs e) { if (e.LeftButton == MouseButtonState.Pressed) DragMove(); }

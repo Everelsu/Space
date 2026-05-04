@@ -10,11 +10,14 @@ namespace Space
     {
         private readonly UserInfo _user;
         private List<TeamItem> _all = new List<TeamItem>();
+        private int _editId = -1;
 
         public TeemProject(UserInfo user)
         {
             InitializeComponent();
             _user = user;
+            SidebarRole.Text     = (_user.Role ?? "user").ToUpper();
+            SidebarUsername.Text = _user.Username;
             Loaded += async (s, e) => await Reload();
         }
 
@@ -39,14 +42,41 @@ namespace Space
             => Apply(SearchBox.Text.StartsWith("🔍") ? "" : SearchBox.Text);
 
         private void AddBtn_Click(object s, RoutedEventArgs e)
-            => AddPanel.Visibility = AddPanel.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+        {
+            _editId = -1;
+            FormTitle.Text  = "Новая команда";
+            SaveBtn.Content = "Сохранить";
+            AddName.Text    = "";
+            AddError.Visibility = Visibility.Collapsed;
+            AddPanel.Visibility = AddPanel.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void Edit_Click(object s, RoutedEventArgs e)
+        {
+            var id   = (int)((System.Windows.Controls.Button)s).Tag;
+            var item = _all.FirstOrDefault(t => t.Id == id);
+            if (item == null) return;
+
+            _editId = id;
+            FormTitle.Text  = "Редактировать команду";
+            SaveBtn.Content = "Обновить";
+            AddName.Text    = item.Name;
+
+            AddError.Visibility = Visibility.Collapsed;
+            AddPanel.Visibility = Visibility.Visible;
+        }
 
         private async void SaveAdd_Click(object s, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(AddName.Text)) { AddError.Text = "Введите название"; AddError.Visibility = Visibility.Visible; return; }
             try
             {
-                await DatabaseService.AddTeamAsync(AddName.Text.Trim());
+                if (_editId > 0)
+                    await DatabaseService.UpdateTeamAsync(_editId, AddName.Text.Trim());
+                else
+                    await DatabaseService.AddTeamAsync(AddName.Text.Trim());
+
+                _editId = -1;
                 AddName.Text = "";
                 AddError.Visibility = Visibility.Collapsed;
                 AddPanel.Visibility = Visibility.Collapsed;
@@ -67,6 +97,7 @@ namespace Space
 
         private void NavProjects_Click(object s, RoutedEventArgs e)  { new MainProject(_user).Show(); Close(); }
         private void NavEmployees_Click(object s, RoutedEventArgs e) { new TasksWindow(_user).Show(); Close(); }
+        private void NavTasks_Click(object s, RoutedEventArgs e)     { new TaskManageWindow(_user).Show(); Close(); }
         private void NavReports_Click(object s, RoutedEventArgs e)   { new ReportWindows(_user).Show(); Close(); }
         private void Exit_Click(object s, RoutedEventArgs e)         { new Autorisation().Show(); Close(); }
         private void TitleBar_MouseDown(object s, MouseButtonEventArgs e) { if (e.LeftButton == MouseButtonState.Pressed) DragMove(); }

@@ -1,7 +1,7 @@
-<Window x:Class="Space.TasksWindow"
+<Window x:Class="Space.TaskManageWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="SpaceZ — Работники" Height="600" Width="980"
+        Title="SpaceZ — Задания" Height="600" Width="980"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent">
 
@@ -52,9 +52,9 @@
                         <StackPanel Margin="8,8,8,0">
                             <TextBlock Text="НАВИГАЦИЯ" Style="{StaticResource NavSectionLabel}"/>
                             <Button Content="📁  Проекты"   Style="{StaticResource NavBtnStyle}"    Click="NavProjects_Click"/>
-                            <Button Content="👥  Работники" Style="{StaticResource NavBtnActiveStyle}"/>
+                            <Button Content="👥  Работники" Style="{StaticResource NavBtnStyle}"    Click="NavEmployees_Click"/>
                             <Button Content="🏷  Команды"   Style="{StaticResource NavBtnStyle}"    Click="NavTeams_Click"/>
-                            <Button Content="📋  Задания"   Style="{StaticResource NavBtnStyle}"    Click="NavTasks_Click"/>
+                            <Button Content="📋  Задания"   Style="{StaticResource NavBtnActiveStyle}"/>
                             <Button Content="📝  Отчёты"    Style="{StaticResource NavBtnStyle}"    Click="NavReports_Click"/>
                         </StackPanel>
                     </DockPanel>
@@ -70,8 +70,8 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0" Margin="0,0,0,2">
-                        <TextBlock Text="Работники" Style="{StaticResource PageTitleStyle}"/>
-                        <TextBlock Text="Список сотрудников и управление доступом" Style="{StaticResource PageSubtitleStyle}"/>
+                        <TextBlock Text="Задания" Style="{StaticResource PageTitleStyle}"/>
+                        <TextBlock Text="Задачи по проектам и исполнители" Style="{StaticResource PageSubtitleStyle}"/>
                     </StackPanel>
 
                     <Grid Grid.Row="1" Margin="0,12,0,10">
@@ -90,44 +90,49 @@
                     <Border Grid.Row="2" x:Name="AddPanel" Visibility="Collapsed"
                             Background="#1E293B" CornerRadius="8" Padding="14,12" Margin="0,0,0,10">
                         <StackPanel>
-                            <TextBlock x:Name="FormTitle" Text="Новый работник" Foreground="White" FontSize="13"
+                            <TextBlock x:Name="FormTitle" Text="Новое задание" Foreground="White" FontSize="13"
                                        FontWeight="SemiBold" Margin="0,0,0,10"/>
-                            <!-- Row 1: FullName, Email, Position, Role -->
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="8"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="170"/>
                                     <ColumnDefinition Width="8"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="160"/>
                                     <ColumnDefinition Width="8"/>
-                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBox Grid.Column="0" x:Name="AddFullName" Style="{StaticResource FormInputStyle}" Tag="Имя Фамилия"/>
-                                <TextBox Grid.Column="2" x:Name="AddEmail"    Style="{StaticResource FormInputStyle}" Tag="Email"/>
-                                <TextBox Grid.Column="4" x:Name="AddPosition" Style="{StaticResource FormInputStyle}" Tag="Должность"/>
-                                <ComboBox Grid.Column="6" x:Name="AddRole"    Style="{StaticResource FormComboStyle}">
-                                    <ComboBoxItem Content="developer" IsSelected="True"/>
-                                    <ComboBoxItem Content="tester"/>
-                                    <ComboBoxItem Content="manager"/>
-                                </ComboBox>
+                                <TextBox  Grid.Column="0" x:Name="AddTitle"    Style="{StaticResource FormInputStyle}" Tag="Название задачи"/>
+                                <ComboBox Grid.Column="2" x:Name="AddProject"  Style="{StaticResource FormComboStyle}" DisplayMemberPath="Name"/>
+                                <ComboBox Grid.Column="4" x:Name="AddAssignee" Style="{StaticResource FormComboStyle}" DisplayMemberPath="Name"/>
+                                <Button   Grid.Column="6" x:Name="SaveBtn" Content="Сохранить"
+                                          Style="{StaticResource PrimaryBtnStyle}" Click="SaveAdd_Click"/>
                             </Grid>
-                            <!-- Row 2: Username, Password, Save (only shown when adding new) -->
-                            <Grid x:Name="LoginRow" Margin="0,8,0,0">
+                            <Grid Margin="0,8,0,0">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="110"/>
                                     <ColumnDefinition Width="8"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="130"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="115"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBox Grid.Column="0" x:Name="AddUsername" Style="{StaticResource FormInputStyle}" Tag="Логин"/>
-                                <TextBox Grid.Column="2" x:Name="AddPassword" Style="{StaticResource FormInputStyle}" Tag="Пароль"/>
+                                <ComboBox Grid.Column="0" x:Name="AddPriority" Style="{StaticResource FormComboStyle}">
+                                    <ComboBoxItem Content="low"      IsSelected="True"/>
+                                    <ComboBoxItem Content="medium"/>
+                                    <ComboBoxItem Content="high"/>
+                                    <ComboBoxItem Content="critical"/>
+                                </ComboBox>
+                                <ComboBox Grid.Column="2" x:Name="AddStatus" Style="{StaticResource FormComboStyle}">
+                                    <ComboBoxItem Content="open"        IsSelected="True"/>
+                                    <ComboBoxItem Content="in_progress"/>
+                                    <ComboBoxItem Content="testing"/>
+                                    <ComboBoxItem Content="closed"/>
+                                </ComboBox>
+                                <TextBox Grid.Column="4" x:Name="AddDeadline" Style="{StaticResource FormInputStyle}" Tag="Дедлайн (дд.мм.гггг)"/>
                             </Grid>
-                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0" HorizontalAlignment="Right">
-                                <TextBlock x:Name="AddError" Foreground="#F87171" FontSize="11"
-                                           VerticalAlignment="Center" Margin="0,0,10,0" Visibility="Collapsed"/>
-                                <Button x:Name="SaveBtn" Content="Сохранить" Style="{StaticResource PrimaryBtnStyle}" Click="SaveAdd_Click"/>
-                            </StackPanel>
+                            <TextBlock x:Name="AddError" Foreground="#F87171" FontSize="11"
+                                       Margin="0,6,0,0" Visibility="Collapsed"/>
                         </StackPanel>
                     </Border>
 
@@ -136,13 +141,13 @@
                               ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
                               CellStyle="{StaticResource GridCellStyle}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID"        Binding="{Binding Id}"       Width="50"/>
-                            <DataGridTextColumn Header="Имя"       Binding="{Binding FullName}"  Width="*"/>
-                            <DataGridTextColumn Header="Должность" Binding="{Binding Position}"  Width="130"/>
-                            <DataGridTextColumn Header="Email"     Binding="{Binding Email}"     Width="150"/>
-                            <DataGridTextColumn Header="Команда"   Binding="{Binding Team}"      Width="100"/>
-                            <DataGridTextColumn Header="Логин"     Binding="{Binding Username}"  Width="100"/>
-                            <DataGridTextColumn Header="Роль"      Binding="{Binding Role}"      Width="85"/>
+                            <DataGridTextColumn Header="ID"          Binding="{Binding Id}"       Width="45"/>
+                            <DataGridTextColumn Header="Задача"      Binding="{Binding Title}"     Width="*"/>
+                            <DataGridTextColumn Header="Проект"      Binding="{Binding Project}"   Width="130"/>
+                            <DataGridTextColumn Header="Исполнитель" Binding="{Binding Assignee}"  Width="130"/>
+                            <DataGridTextColumn Header="Приоритет"   Binding="{Binding Priority}"  Width="80"/>
+                            <DataGridTextColumn Header="Статус"      Binding="{Binding Status}"    Width="90"/>
+                            <DataGridTextColumn Header="Дедлайн"     Binding="{Binding Deadline}"  Width="85"/>
                             <DataGridTemplateColumn Header="Действия" Width="155">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>

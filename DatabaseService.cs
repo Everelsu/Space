@@ -46,12 +46,14 @@ namespace Space
 
     public class WorkLogItem
     {
-        public int     Id       { get; set; }
-        public string  Task     { get; set; }
-        public string  Employee { get; set; }
-        public string  LogDate  { get; set; }
-        public decimal Hours    { get; set; }
-        public string  Comment  { get; set; }
+        public int     Id         { get; set; }
+        public string  Task       { get; set; }
+        public string  Employee   { get; set; }
+        public string  LogDate    { get; set; }
+        public decimal Hours      { get; set; }
+        public string  Comment    { get; set; }
+        public int     TaskId     { get; set; }
+        public int     EmployeeId { get; set; }
     }
 
     public class TaskItem
@@ -85,6 +87,19 @@ namespace Space
         public string  Comment   { get; set; }
         public string  LogDate   { get; set; }
         public decimal Hours     { get; set; }
+    }
+
+    public class TaskManageItem
+    {
+        public int    Id         { get; set; }
+        public string Title      { get; set; }
+        public string Project    { get; set; }
+        public string Assignee   { get; set; }
+        public string Priority   { get; set; }
+        public string Status     { get; set; }
+        public string Deadline   { get; set; }
+        public int?   ProjectId  { get; set; }
+        public int?   AssigneeId { get; set; }
     }
 
     public class DropdownItem
@@ -338,7 +353,7 @@ namespace Space
                 await conn.OpenAsync();
                 using (var cmd = new NpgsqlCommand(@"
                     SELECT w.id, t.title, e.full_name, w.log_date, w.hours_spent,
-                           COALESCE(w.comment,'')
+                           COALESCE(w.comment,''), w.task_id, w.employee_id
                     FROM worklogs w
                     JOIN tasks t ON t.id = w.task_id
                     JOIN employees e ON e.id = w.employee_id
@@ -347,12 +362,14 @@ namespace Space
                     while (await r.ReadAsync())
                         list.Add(new WorkLogItem
                         {
-                            Id       = r.GetInt32(0),
-                            Task     = r.GetString(1),
-                            Employee = r.GetString(2),
-                            LogDate  = r.GetDateTime(3).ToString("dd.MM.yyyy"),
-                            Hours    = r.GetDecimal(4),
-                            Comment  = r.GetString(5)
+                            Id         = r.GetInt32(0),
+                            Task       = r.GetString(1),
+                            Employee   = r.GetString(2),
+                            LogDate    = r.GetDateTime(3).ToString("dd.MM.yyyy"),
+                            Hours      = r.GetDecimal(4),
+                            Comment    = r.GetString(5),
+                            TaskId     = r.GetInt32(6),
+                            EmployeeId = r.GetInt32(7)
                         });
             }
             return list;
@@ -508,6 +525,189 @@ namespace Space
                         list.Add(new DropdownItem { Id = r.GetInt32(0), Name = r.GetString(1) });
             }
             return list;
+        }
+
+        public static async Task<List<DropdownItem>> GetProjectsDropdownAsync()
+        {
+            var list = new List<DropdownItem>();
+            using (var conn = GetConnection())
+            {
+                await conn.OpenAsync();
+                using (var cmd = new NpgsqlCommand(
+                    "SELECT id, name FROM projects ORDER BY name", conn))
+                using (var r = await cmd.ExecuteReaderAsync())
+                    while (await r.ReadAsync())
+                        list.Add(new DropdownItem { Id = r.GetInt32(0), Name = r.GetString(1) });
+            }
+            return list;
+        }
+
+        // ── Tasks Management ──────────────────────────────────────────────────
+
+        public static async Task<List<TaskManageItem>> GetAllTasksManageAsync()
+        {
+            var list = new List<TaskManageItem>();
+            using (var conn = GetConnection())
+            {
+                await conn.OpenAsync();
+                using (var cmd = new NpgsqlCommand(@"
+                    SELECT t.id, t.title,
+                           COALESCE(p.name,'—'), COALESCE(e.full_name,'—'),
+                           COALESCE(t.priority,'low'), COALESCE(t.status,'open'),
+                           t.deadline, t.project_id, t.assignee_id
+                    FROM tasks t
+                    LEFT JOIN projects p ON p.id = t.project_id
+                    LEFT JOIN employees e ON e.id = t.assignee_id
+                    ORDER BY CASE t.priority WHEN 'critical' THEN 1 WHEN 'high' THEN 2
+                        WHEN 'medium' THEN 3 ELSE 4 END, t.deadline ASC NULLS LAST", conn))
+                using (var r = await cmd.ExecuteReaderAsync())
+                    while (await r.ReadAsync())
+                        list.Add(new TaskManageItem
+                        {
+                            Id         = r.GetInt32(0),
+                            Title      = r.GetString(1),
+                            Project    = r.GetString(2),
+                            Assignee   = r.GetString(3),
+                            Priority   = r.GetString(4),
+                            Status     = r.GetString(5),
+                            Deadline   = r.IsDBNull(6) ? "—" : r.GetDateTime(6).ToString("dd.MM.yyyy"),
+                            ProjectId  = r.IsDBNull(7) ? (int?)null : r.GetInt32(7),
+                            AssigneeId = r.IsDBNull(8) ? (int?)null : r.GetInt32(8)
+                        });
+            }
+            return list;
+        }
+
+        public static async Task AddTaskManageAsync(string title, int projectId, int? assigneeId,
+            string priority, string status, DateTime? deadline)
+        {
+            using (var conn = GetConnection())
+            {
+                await conn.OpenAsync();
+                using (var cmd = new NpgsqlCommand(@"
+                    INSERT INTO tasks (title, project_id, assignee_id, priority, status, deadline)
+                    VALUES (@t,@p,@a,@pr,@s,@d)", conn))
+                {
+                    cmd.Parameters.AddWithValue("t",  title);
+                    cmd.Parameters.AddWithValue("p",  projectId);
+                    cmd.Parameters.AddWithValue("a",  assigneeId.HasValue ? (object)assigneeId.Value : DBNull.Value);
+                    cmd.Parameters.AddWithValue("pr", priority);
+                    cmd.Parameters.AddWithValue("s",  status);
+                    cmd.Parameters.AddWithValue("d",  deadline.HasValue ? (object)deadline.Value.Date : DBNull.Value);
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+        }
+
+        public static async Task UpdateTaskManageAsync(int id, string title, int projectId,
+            int? assigneeId, string priority, string status, DateTime? deadline)
+        {
+            using (var conn = GetConnection())
+            {
+                await conn.OpenAsync();
+                using (var cmd = new NpgsqlCommand(@"
+                    UPDATE tasks SET title=@t, project_id=@p, assignee_id=@a,
+                        priority=@pr, status=@s, deadline=@d
+                    WHERE id=@id", conn))
+                {
+                    cmd.Parameters.AddWithValue("id", id);
+                    cmd.Parameters.AddWithValue("t",  title);
+                    cmd.Parameters.AddWithValue("p",  projectId);
+                    cmd.Parameters.AddWithValue("a",  assigneeId.HasValue ? (object)assigneeId.Value : DBNull.Value);
+                    cmd.Parameters.AddWithValue("pr", priority);
+                    cmd.Parameters.AddWithValue("s",  status);
+                    cmd.Parameters.AddWithValue("d",  deadline.HasValue ? (object)deadline.Value.Date : DBNull.Value);
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+        }
+
+        public static async Task DeleteTaskManageAsync(int id)
+        {
+            using (var conn = GetConnection())
+            {
+                await conn.OpenAsync();
+                using (var cmd = new NpgsqlCommand("DELETE FROM tasks WHERE id=@id", conn))
+                {
+                    cmd.Parameters.AddWithValue("id", id);
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+        }
+
+        // ── Update methods ────────────────────────────────────────────────────
+
+        public static async Task UpdateProjectAsync(int id, string name, DateTime start, DateTime deadline, string status)
+        {
+            using (var conn = GetConnection())
+            {
+                await conn.OpenAsync();
+                using (var cmd = new NpgsqlCommand(
+                    "UPDATE projects SET name=@n, start_date=@s, deadline=@dl, status=@st WHERE id=@id", conn))
+                {
+                    cmd.Parameters.AddWithValue("id", id);
+                    cmd.Parameters.AddWithValue("n",  name);
+                    cmd.Parameters.AddWithValue("s",  start.Date);
+                    cmd.Parameters.AddWithValue("dl", deadline.Date);
+                    cmd.Parameters.AddWithValue("st", status);
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+        }
+
+        public static async Task UpdateEmployeeAsync(int id, string fullName, string email, string position, string role)
+        {
+            using (var conn = GetConnection())
+            {
+                await conn.OpenAsync();
+                using (var cmd = new NpgsqlCommand(
+                    "UPDATE employees SET full_name=@fn, email=@em, position=@pos WHERE id=@id", conn))
+                {
+                    cmd.Parameters.AddWithValue("id",  id);
+                    cmd.Parameters.AddWithValue("fn",  fullName);
+                    cmd.Parameters.AddWithValue("em",  email ?? "");
+                    cmd.Parameters.AddWithValue("pos", position ?? "");
+                    await cmd.ExecuteNonQueryAsync();
+                }
+                using (var cmd = new NpgsqlCommand(
+                    "UPDATE users SET role=@r WHERE id=(SELECT user_id FROM employees WHERE id=@eid)", conn))
+                {
+                    cmd.Parameters.AddWithValue("eid", id);
+                    cmd.Parameters.AddWithValue("r",   role);
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+        }
+
+        public static async Task UpdateTeamAsync(int id, string name)
+        {
+            using (var conn = GetConnection())
+            {
+                await conn.OpenAsync();
+                using (var cmd = new NpgsqlCommand("UPDATE teams SET name=@n WHERE id=@id", conn))
+                {
+                    cmd.Parameters.AddWithValue("id", id);
+                    cmd.Parameters.AddWithValue("n",  name);
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+        }
+
+        public static async Task UpdateWorkLogAsync(int id, decimal hours, string comment, DateTime date)
+        {
+            using (var conn = GetConnection())
+            {
+                await conn.OpenAsync();
+                using (var cmd = new NpgsqlCommand(
+                    "UPDATE worklogs SET hours_spent=@h, comment=@c, log_date=@d WHERE id=@id", conn))
+                {
+                    cmd.Parameters.AddWithValue("id", id);
+                    cmd.Parameters.AddWithValue("h",  hours);
+                    cmd.Parameters.AddWithValue("c",  comment ?? "");
+                    cmd.Parameters.AddWithValue("d",  date.Date);
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
         }
     }
 }
