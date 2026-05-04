@@ -1,0 +1,97 @@
+<ui:FluentWindow x:Class="Space.RegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        Title="Space Manager — Регистрация"
+        Width="420" Height="620"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ui:TitleBar Grid.Row="0" Title="Регистрация"/>
+
+        <Grid Grid.Row="1">
+            <Border MaxWidth="320"
+                    VerticalAlignment="Center"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="12"
+                    Padding="32">
+
+                <StackPanel>
+                    <ui:SymbolIcon Symbol="PersonAdd24"
+                                   FontSize="40"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,12"/>
+
+                    <TextBlock Text="Создать аккаунт"
+                               FontSize="20"
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,24"/>
+
+                    <TextBlock Text="Имя и фамилия" FontSize="12" Margin="0,0,0,4"/>
+                    <ui:TextBox x:Name="FullNameBox"
+                                PlaceholderText="Иван Иванов"
+                                Icon="{ui:SymbolIcon Person24}"
+                                Margin="0,0,0,14"/>
+
+                    <TextBlock Text="Логин" FontSize="12" Margin="0,0,0,4"/>
+                    <ui:TextBox x:Name="UsernameBox"
+                                PlaceholderText="Придумайте логин"
+                                Icon="{ui:SymbolIcon PersonTag24}"
+                                Margin="0,0,0,14"/>
+
+                    <TextBlock Text="Пароль" FontSize="12" Margin="0,0,0,4"/>
+                    <ui:PasswordBox x:Name="PasswordBox"
+                                    PlaceholderText="Придумайте пароль"
+                                    Icon="{ui:SymbolIcon LockClosed24}"
+                                    Margin="0,0,0,14"/>
+
+                    <TextBlock Text="Повторите пароль" FontSize="12" Margin="0,0,0,4"/>
+                    <ui:PasswordBox x:Name="ConfirmPasswordBox"
+                                    PlaceholderText="Повторите пароль"
+                                    Icon="{ui:SymbolIcon LockClosed24}"
+                                    Margin="0,0,0,14"/>
+
+                    <TextBlock Text="Роль" FontSize="12" Margin="0,0,0,4"/>
+                    <ComboBox x:Name="RoleBox"
+                              HorizontalAlignment="Stretch"
+                              Height="36"
+                              Margin="0,0,0,8"
+                              SelectedIndex="0">
+                        <ComboBoxItem Content="Разработчик" Tag="developer"/>
+                        <ComboBoxItem Content="Тестировщик" Tag="tester"/>
+                    </ComboBox>
+
+                    <TextBlock x:Name="ErrorText"
+                               Foreground="{ui:ThemeResource SystemFillColorCriticalBrush}"
+                               FontSize="12"
+                               HorizontalAlignment="Center"
+                               TextWrapping="Wrap"
+                               Margin="0,4,0,10"
+                               Visibility="Collapsed"/>
+
+                    <TextBlock x:Name="SuccessText"
+                               Foreground="{ui:ThemeResource SystemFillColorSuccessBrush}"
+                               FontSize="12"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,10"
+                               Visibility="Collapsed"/>
+
+                    <ui:Button x:Name="RegisterButton"
+                               Content="Зарегистрироваться"
+                               Appearance="Primary"
+                               HorizontalAlignment="Stretch"
+                               Height="40"
+                               FontSize="14"
+                               Click="RegisterButton_Click"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</ui:FluentWindow>
