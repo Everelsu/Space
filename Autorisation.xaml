@@ -138,12 +138,12 @@
                                    FontSize="30"
                                    FontWeight="Bold"
                                    Foreground="White"
-                                   VerticalAlignment="Center" Margin="-20,0,20,0"/>
+                                   VerticalAlignment="Center" Margin="-18,0,18,0"/>
                         <Image Source="/Assets/Z.png"
                                Height="36"
                                HorizontalAlignment="Right"
                                VerticalAlignment="Top"
-                               Margin="0,-3,-54,0"
+                               Margin="0,-3,-56,0"
                                RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Grid>
 

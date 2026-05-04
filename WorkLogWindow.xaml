@@ -1,0 +1,335 @@
+<Window x:Class="Space.WorkLogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SpaceZ — Отчёты"
+        Height="620" Width="860"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#9CA3AF"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+
+        <Style x:Key="InputStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="#1E293B"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#334155"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#7B3FE4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PrimaryBtn" TargetType="Button">
+            <Setter Property="Background" Value="#7B3FE4"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                CornerRadius="8" Padding="16,0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#9D5CFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#6D28D9"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Bd" Property="Background" Value="#2D2040"/>
+                                <Setter Property="Foreground" Value="#4B5563"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="TaskCardBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                CornerRadius="8" Padding="12,10" Margin="0,0,0,6">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#1E293B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="#0F172A" CornerRadius="16" Margin="10">
+        <Border.Effect>
+            <DropShadowEffect Color="Black" BlurRadius="24" ShadowDepth="0" Opacity="0.6"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Title bar -->
+            <Grid Grid.Row="0" MouseLeftButtonDown="TitleBar_MouseDown" Background="Transparent">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                    <TextBlock Text="📝" FontSize="16" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="Отчёты по задачам"
+                               FontSize="15" FontWeight="SemiBold"
+                               Foreground="White" VerticalAlignment="Center"/>
+                </StackPanel>
+                <Button Content="✕" Width="32" Height="32"
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Margin="0,0,8,0" FontSize="12"
+                        Style="{StaticResource PrimaryBtn}"
+                        Background="#1E293B"
+                        Click="CloseBtn_Click"/>
+            </Grid>
+
+            <!-- Body -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="260"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Left: task list -->
+                <Border Grid.Column="0" Background="#080F1C"
+                        CornerRadius="0,0,0,16" Padding="12,12,12,16">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Text="ЗАДАЧИ"
+                                   FontSize="10" FontWeight="SemiBold"
+                                   Foreground="#374151" Margin="4,0,0,10"/>
+
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl x:Name="TaskListPanel">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource TaskCardBtn}"
+                                                Tag="{Binding}"
+                                                Click="SelectTask_Click">
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Title}"
+                                                           FontSize="13" Foreground="White"
+                                                           TextWrapping="Wrap" FontWeight="SemiBold"
+                                                           Margin="0,0,0,4"/>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Border CornerRadius="4" Padding="5,2" Margin="0,0,6,0">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Priority}" Value="critical">
+                                                                        <Setter Property="Background" Value="#7F1D1D"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Priority}" Value="high">
+                                                                        <Setter Property="Background" Value="#78350F"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Priority}" Value="medium">
+                                                                        <Setter Property="Background" Value="#1E3A5F"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Priority}" Value="low">
+                                                                        <Setter Property="Background" Value="#1F2937"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock Text="{Binding Priority}"
+                                                                   FontSize="10" Foreground="White"/>
+                                                    </Border>
+                                                    <TextBlock Text="{Binding Status}"
+                                                               FontSize="10" Foreground="#6B7280"
+                                                               VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+
+                <!-- Right: form + history -->
+                <Grid Grid.Column="1" Margin="24,16,24,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Selected task header -->
+                    <Border Grid.Row="0" Background="#111827" CornerRadius="10"
+                            Padding="16,12" Margin="0,0,0,16">
+                        <StackPanel>
+                            <TextBlock x:Name="SelectedTaskTitle"
+                                       Text="Выберите задачу из списка"
+                                       FontSize="15" FontWeight="SemiBold"
+                                       Foreground="White"/>
+                            <TextBlock x:Name="SelectedTaskMeta"
+                                       FontSize="12" Foreground="#6B7280"
+                                       Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Form -->
+                    <Border Grid.Row="1" Background="#111827" CornerRadius="10"
+                            Padding="16" Margin="0,0,0,16">
+                        <StackPanel>
+                            <TextBlock Text="Новый отчёт" FontSize="13" FontWeight="SemiBold"
+                                       Foreground="White" Margin="0,0,0,14"/>
+
+                            <Grid Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="120"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Что сделано" Style="{StaticResource LabelStyle}"/>
+                                    <TextBox x:Name="CommentBox"
+                                             Style="{StaticResource InputStyle}"
+                                             Height="70"
+                                             TextWrapping="Wrap"
+                                             AcceptsReturn="True"
+                                             VerticalScrollBarVisibility="Auto"
+                                             VerticalContentAlignment="Top"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Часов потрачено" Style="{StaticResource LabelStyle}"/>
+                                    <TextBox x:Name="HoursBox"
+                                             Style="{StaticResource InputStyle}"
+                                             Height="40" Text="1"/>
+
+                                    <TextBlock Text="Дата" Style="{StaticResource LabelStyle}"
+                                               Margin="0,10,0,6"/>
+                                    <TextBox x:Name="DateBox"
+                                             Style="{StaticResource InputStyle}"
+                                             Height="40"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <TextBlock x:Name="FormError" Foreground="#F87171" FontSize="12"
+                                       Visibility="Collapsed" Margin="0,0,0,8"/>
+
+                            <Button x:Name="SaveBtn" Content="Сохранить отчёт"
+                                    Style="{StaticResource PrimaryBtn}"
+                                    HorizontalAlignment="Right" Width="160"
+                                    IsEnabled="False"
+                                    Click="SaveLog_Click"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- History -->
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Text="История отчётов"
+                                   FontSize="13" FontWeight="SemiBold"
+                                   Foreground="White" Margin="0,0,0,10"/>
+
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                            <StackPanel>
+                                <TextBlock x:Name="NoLogsText"
+                                           Text="Отчётов пока нет"
+                                           Foreground="#4B5563" FontSize="13"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,20,0,0"
+                                           Visibility="Collapsed"/>
+
+                                <ItemsControl x:Name="LogHistory">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Background="#111827" CornerRadius="8"
+                                                    Padding="14,10" Margin="0,0,0,8">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding Comment}"
+                                                                   FontSize="13" Foreground="White"
+                                                                   TextWrapping="Wrap"/>
+                                                        <TextBlock Text="{Binding LogDate}"
+                                                                   FontSize="11" Foreground="#6B7280"
+                                                                   Margin="0,4,0,0"/>
+                                                    </StackPanel>
+                                                    <Border Grid.Column="1"
+                                                            Background="#1E1040"
+                                                            CornerRadius="6"
+                                                            Padding="8,4"
+                                                            VerticalAlignment="Top">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding Hours}"
+                                                                       FontSize="14" FontWeight="Bold"
+                                                                       Foreground="#7B3FE4"/>
+                                                            <TextBlock Text=" ч"
+                                                                       FontSize="12"
+                                                                       Foreground="#6B7280"
+                                                                       VerticalAlignment="Bottom"/>
+                                                        </StackPanel>
+                                                    </Border>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

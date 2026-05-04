@@ -10,7 +10,7 @@ namespace Space
         {
             InitializeComponent();
             _user = user;
-            Title = $"IT Project Manager — {user.Username} ({user.Role})";
+            Title = $"SpaceZ — {user.Username}";
         }
     }
 }

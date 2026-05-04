@@ -72,5 +72,6 @@ namespace Space
         {
             ErrorText.Visibility = Visibility.Collapsed;
         }
+
     }
 }
