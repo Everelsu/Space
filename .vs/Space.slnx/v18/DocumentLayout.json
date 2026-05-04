@@ -1,13 +1,17 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Dev\\Space\\Space\\",
+  "WorkspaceRootPath": "C:\\Dev\\Space\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|c:\\dev\\space\\space\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|c:\\dev\\space\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|c:\\dev\\space\\space\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|c:\\dev\\space\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -18,15 +22,28 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "App.config",
+              "DocumentMoniker": "C:\\Dev\\Space\\App.config",
+              "RelativeDocumentMoniker": "App.config",
+              "ToolTip": "C:\\Dev\\Space\\App.config",
+              "RelativeToolTip": "App.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2026-05-04T00:08:47.959Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "MainWindow.xaml",
-              "DocumentMoniker": "C:\\Dev\\Space\\Space\\MainWindow.xaml",
+              "DocumentMoniker": "C:\\Dev\\Space\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
-              "ToolTip": "C:\\Dev\\Space\\Space\\MainWindow.xaml",
+              "ToolTip": "C:\\Dev\\Space\\MainWindow.xaml",
               "RelativeToolTip": "MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-05-03T23:56:29.731Z",
@@ -34,11 +51,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Dev\\Space\\Space\\MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Dev\\Space\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
-              "ToolTip": "C:\\Dev\\Space\\Space\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Dev\\Space\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
