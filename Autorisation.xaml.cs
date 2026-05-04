@@ -1,5 +1,6 @@
 using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Space
 {
@@ -17,9 +18,13 @@ namespace Space
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Заполните все поля", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                ShowError("Заполните все поля");
                 return;
             }
+
+            LoginButton.IsEnabled = false;
+            LoginButton.Content = "Вход...";
+            HideError();
 
             try
             {
@@ -32,13 +37,40 @@ namespace Space
                 }
                 else
                 {
-                    MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ShowError("Неверный логин или пароль");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ошибка подключения:\n" + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                ShowError("Ошибка подключения: " + ex.Message);
             }
+            finally
+            {
+                LoginButton.IsEnabled = true;
+                LoginButton.Content = "Войти";
+            }
+        }
+
+        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void ShowError(string message)
+        {
+            ErrorText.Text = message;
+            ErrorText.Visibility = Visibility.Visible;
+        }
+
+        private void HideError()
+        {
+            ErrorText.Visibility = Visibility.Collapsed;
         }
     }
 }
