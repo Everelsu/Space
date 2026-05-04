@@ -1,0 +1,134 @@
+<Window x:Class="Space.TasksWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SpaceZ — Работники" Height="580" Width="960"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+
+    <Border Background="#111827" CornerRadius="12" Margin="8">
+        <Border.Effect><DropShadowEffect Color="Black" BlurRadius="20" ShadowDepth="0" Opacity="0.5"/></Border.Effect>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Background="#0B1120" MouseLeftButtonDown="TitleBar_MouseDown">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0">
+                    <Image Source="/Assets/Z.png" Height="26" Margin="0,0,8,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <TextBlock Text="SpaceZ" FontSize="16" FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
+                    <Button Content="─" Style="{StaticResource TitleBtnStyle}" Click="Minimize_Click"/>
+                    <Button Content="✕" Style="{StaticResource TitleBtnStyle}" Click="Close_Click"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="210"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="#0B1120" CornerRadius="0,0,0,12">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Bottom" Margin="8,0,8,12">
+                            <Button Content="⬅  Выход" Style="{StaticResource NavBtnStyle}"
+                                    Foreground="#EF4444" Click="Exit_Click"/>
+                        </StackPanel>
+                        <StackPanel Margin="8,16,8,0">
+                            <TextBlock Text="НАВИГАЦИЯ" Style="{StaticResource NavSectionLabel}"/>
+                            <Button Content="📁  Проекты"   Style="{StaticResource NavBtnStyle}" Click="NavProjects_Click"/>
+                            <Button Content="👥  Работники" Style="{StaticResource NavBtnActiveStyle}"/>
+                            <Button Content="🏷  Команды"   Style="{StaticResource NavBtnStyle}" Click="NavTeams_Click"/>
+                            <Button Content="📝  Отчёты"    Style="{StaticResource NavBtnStyle}" Click="NavReports_Click"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+
+                <Grid Grid.Column="1" Margin="20,16,20,16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Работники" Style="{StaticResource PageTitleStyle}"/>
+
+                    <Grid Grid.Row="1" Margin="0,10,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="SearchBox" Style="{StaticResource SearchBoxStyle}"
+                                 Text="🔍  Поиск..." GotFocus="Search_GotFocus" LostFocus="Search_LostFocus"
+                                 TextChanged="Search_TextChanged"/>
+                        <Button Grid.Column="1" Content="+ Добавить" Style="{StaticResource PrimaryBtnStyle}"
+                                Margin="10,0,0,0" Click="AddBtn_Click"/>
+                    </Grid>
+
+                    <Border Grid.Row="2" x:Name="AddPanel" Visibility="Collapsed"
+                            Background="#1E293B" CornerRadius="8" Padding="14,12" Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Text="Новый работник" Foreground="White" FontSize="13"
+                                       FontWeight="SemiBold" Margin="0,0,0,10"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="0"  x:Name="AddFullName" Style="{StaticResource FormInputStyle}" Tag="Имя Фамилия"/>
+                                <TextBox Grid.Column="2"  x:Name="AddEmail"    Style="{StaticResource FormInputStyle}" Tag="Email"/>
+                                <TextBox Grid.Column="4"  x:Name="AddPosition" Style="{StaticResource FormInputStyle}" Tag="Должность"/>
+                                <ComboBox Grid.Column="6" x:Name="AddRole"     Style="{StaticResource FormComboStyle}">
+                                    <ComboBoxItem Content="developer" IsSelected="True"/>
+                                    <ComboBoxItem Content="tester"/>
+                                    <ComboBoxItem Content="manager"/>
+                                </ComboBox>
+                                <TextBox Grid.Column="8"  x:Name="AddUsername" Style="{StaticResource FormInputStyle}" Tag="Логин"/>
+                                <TextBox Grid.Column="10" x:Name="AddPassword" Style="{StaticResource FormInputStyle}" Tag="Пароль"/>
+                            </Grid>
+                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0" HorizontalAlignment="Right">
+                                <TextBlock x:Name="AddError" Foreground="#F87171" FontSize="11"
+                                           VerticalAlignment="Center" Margin="0,0,10,0" Visibility="Collapsed"/>
+                                <Button Content="Сохранить" Style="{StaticResource PrimaryBtnStyle}" Click="SaveAdd_Click"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <DataGrid Grid.Row="3" x:Name="Grid" Style="{StaticResource GridStyle}"
+                              ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
+                              CellStyle="{StaticResource GridCellStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID"        Binding="{Binding Id}"       Width="50"/>
+                            <DataGridTextColumn Header="Имя"       Binding="{Binding FullName}"  Width="*"/>
+                            <DataGridTextColumn Header="Должность" Binding="{Binding Position}"  Width="130"/>
+                            <DataGridTextColumn Header="Email"     Binding="{Binding Email}"     Width="160"/>
+                            <DataGridTextColumn Header="Команда"   Binding="{Binding Team}"      Width="100"/>
+                            <DataGridTextColumn Header="Логин"     Binding="{Binding Username}"  Width="100"/>
+                            <DataGridTextColumn Header="Роль"      Binding="{Binding Role}"      Width="90"/>
+                            <DataGridTemplateColumn Header="Действие" Width="90">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Удалить" Style="{StaticResource DangerBtnStyle}"
+                                                Tag="{Binding Id}" Click="Delete_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

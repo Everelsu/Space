@@ -1,0 +1,275 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Page title -->
+    <Style x:Key="PageTitleStyle" TargetType="TextBlock">
+        <Setter Property="FontSize"     Value="22"/>
+        <Setter Property="FontWeight"   Value="SemiBold"/>
+        <Setter Property="Foreground"   Value="White"/>
+    </Style>
+
+    <!-- Nav section label -->
+    <Style x:Key="NavSectionLabel" TargetType="TextBlock">
+        <Setter Property="FontSize"   Value="10"/>
+        <Setter Property="Foreground" Value="#374151"/>
+        <Setter Property="Margin"     Value="12,0,0,8"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+
+    <!-- Nav button -->
+    <Style x:Key="NavBtnStyle" TargetType="Button">
+        <Setter Property="Background"              Value="Transparent"/>
+        <Setter Property="Foreground"              Value="#9CA3AF"/>
+        <Setter Property="BorderThickness"         Value="0"/>
+        <Setter Property="Height"                  Value="38"/>
+        <Setter Property="Cursor"                  Value="Hand"/>
+        <Setter Property="FontSize"                Value="13"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Padding"                 Value="12,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="8"
+                            Padding="{TemplateBinding Padding}" Margin="0,1">
+                        <ContentPresenter VerticalAlignment="Center"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="#1E293B"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Nav button active (current page) -->
+    <Style x:Key="NavBtnActiveStyle" TargetType="Button" BasedOn="{StaticResource NavBtnStyle}">
+        <Setter Property="Background" Value="#1E1B4B"/>
+        <Setter Property="Foreground" Value="#A78BFA"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="8"
+                            Padding="{TemplateBinding Padding}" Margin="0,1">
+                        <Grid>
+                            <Border Width="3" Background="#7B3FE4" CornerRadius="2"
+                                    HorizontalAlignment="Left" Margin="-12,4,0,4"/>
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="8,0,0,0"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Title bar button -->
+    <Style x:Key="TitleBtnStyle" TargetType="Button">
+        <Setter Property="Background"      Value="Transparent"/>
+        <Setter Property="Foreground"      Value="#6B7280"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Width"           Value="32"/>
+        <Setter Property="Height"          Value="32"/>
+        <Setter Property="FontSize"        Value="13"/>
+        <Setter Property="Cursor"          Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="6">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="#1E293B"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Primary button -->
+    <Style x:Key="PrimaryBtnStyle" TargetType="Button">
+        <Setter Property="Background"      Value="#7B3FE4"/>
+        <Setter Property="Foreground"      Value="White"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Height"          Value="36"/>
+        <Setter Property="FontSize"        Value="13"/>
+        <Setter Property="Cursor"          Value="Hand"/>
+        <Setter Property="Padding"         Value="14,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="8"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="#9D5CFF"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Bd" Property="Background" Value="#2D2040"/>
+                            <Setter Property="Foreground" Value="#4B5563"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Danger button -->
+    <Style x:Key="DangerBtnStyle" TargetType="Button">
+        <Setter Property="Background"      Value="#3F1515"/>
+        <Setter Property="Foreground"      Value="#F87171"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Height"          Value="26"/>
+        <Setter Property="FontSize"        Value="11"/>
+        <Setter Property="Cursor"          Value="Hand"/>
+        <Setter Property="Padding"         Value="8,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="6"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="#7F1D1D"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Search box -->
+    <Style x:Key="SearchBoxStyle" TargetType="TextBox">
+        <Setter Property="Background"      Value="#1E293B"/>
+        <Setter Property="Foreground"      Value="#6B7280"/>
+        <Setter Property="BorderBrush"     Value="#334155"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Height"          Value="36"/>
+        <Setter Property="FontSize"        Value="13"/>
+        <Setter Property="Padding"         Value="10,0"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8">
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      Margin="{TemplateBinding Padding}"
+                                      VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Form input -->
+    <Style x:Key="FormInputStyle" TargetType="TextBox">
+        <Setter Property="Background"      Value="#0F172A"/>
+        <Setter Property="Foreground"      Value="White"/>
+        <Setter Property="BorderBrush"     Value="#334155"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Height"          Value="34"/>
+        <Setter Property="FontSize"        Value="12"/>
+        <Setter Property="Padding"         Value="8,0"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="CaretBrush"      Value="White"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="6">
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      Margin="{TemplateBinding Padding}"
+                                      VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="#7B3FE4"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Form combo -->
+    <Style x:Key="FormComboStyle" TargetType="ComboBox">
+        <Setter Property="Background"      Value="#0F172A"/>
+        <Setter Property="Foreground"      Value="White"/>
+        <Setter Property="BorderBrush"     Value="#334155"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Height"          Value="34"/>
+        <Setter Property="FontSize"        Value="12"/>
+        <Setter Property="Padding"         Value="8,0"/>
+    </Style>
+
+    <!-- DataGrid -->
+    <Style x:Key="GridStyle" TargetType="DataGrid">
+        <Setter Property="Background"            Value="Transparent"/>
+        <Setter Property="BorderThickness"       Value="0"/>
+        <Setter Property="RowBackground"         Value="#0F172A"/>
+        <Setter Property="AlternatingRowBackground" Value="#111827"/>
+        <Setter Property="HorizontalGridLinesBrush" Value="#1E293B"/>
+        <Setter Property="VerticalGridLinesBrush"   Value="#1E293B"/>
+        <Setter Property="AutoGenerateColumns"   Value="False"/>
+        <Setter Property="CanUserAddRows"        Value="False"/>
+        <Setter Property="CanUserDeleteRows"     Value="False"/>
+        <Setter Property="IsReadOnly"            Value="True"/>
+        <Setter Property="SelectionMode"         Value="Single"/>
+        <Setter Property="SelectionUnit"         Value="FullRow"/>
+        <Setter Property="Foreground"            Value="White"/>
+        <Setter Property="FontSize"              Value="13"/>
+        <Setter Property="RowHeight"             Value="38"/>
+    </Style>
+
+    <!-- DataGrid column header -->
+    <Style x:Key="GridHeaderStyle" TargetType="DataGridColumnHeader">
+        <Setter Property="Background"  Value="#1E293B"/>
+        <Setter Property="Foreground"  Value="#9CA3AF"/>
+        <Setter Property="FontSize"    Value="11"/>
+        <Setter Property="FontWeight"  Value="SemiBold"/>
+        <Setter Property="Height"      Value="36"/>
+        <Setter Property="Padding"     Value="10,0"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
+    <!-- DataGrid cell -->
+    <Style x:Key="GridCellStyle" TargetType="DataGridCell">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding"         Value="10,0"/>
+        <Setter Property="Foreground"      Value="#E2E8F0"/>
+        <Setter Property="Background"      Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridCell">
+                    <Border Background="{TemplateBinding Background}"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#1E1B4B"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

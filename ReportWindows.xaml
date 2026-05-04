@@ -1,0 +1,126 @@
+<Window x:Class="Space.ReportWindows"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SpaceZ — Отчёты" Height="580" Width="960"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+
+    <Border Background="#111827" CornerRadius="12" Margin="8">
+        <Border.Effect><DropShadowEffect Color="Black" BlurRadius="20" ShadowDepth="0" Opacity="0.5"/></Border.Effect>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Background="#0B1120" MouseLeftButtonDown="TitleBar_MouseDown">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0">
+                    <Image Source="/Assets/Z.png" Height="26" Margin="0,0,8,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <TextBlock Text="SpaceZ" FontSize="16" FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
+                    <Button Content="─" Style="{StaticResource TitleBtnStyle}" Click="Minimize_Click"/>
+                    <Button Content="✕" Style="{StaticResource TitleBtnStyle}" Click="Close_Click"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="210"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="#0B1120" CornerRadius="0,0,0,12">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Bottom" Margin="8,0,8,12">
+                            <Button Content="⬅  Выход" Style="{StaticResource NavBtnStyle}"
+                                    Foreground="#EF4444" Click="Exit_Click"/>
+                        </StackPanel>
+                        <StackPanel Margin="8,16,8,0">
+                            <TextBlock Text="НАВИГАЦИЯ" Style="{StaticResource NavSectionLabel}"/>
+                            <Button Content="📁  Проекты"   Style="{StaticResource NavBtnStyle}" Click="NavProjects_Click"/>
+                            <Button Content="👥  Работники" Style="{StaticResource NavBtnStyle}" Click="NavEmployees_Click"/>
+                            <Button Content="🏷  Команды"   Style="{StaticResource NavBtnStyle}" Click="NavTeams_Click"/>
+                            <Button Content="📝  Отчёты"    Style="{StaticResource NavBtnActiveStyle}"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+
+                <Grid Grid.Column="1" Margin="20,16,20,16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Отчёты" Style="{StaticResource PageTitleStyle}"/>
+
+                    <Grid Grid.Row="1" Margin="0,10,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="SearchBox" Style="{StaticResource SearchBoxStyle}"
+                                 Text="🔍  Поиск..." GotFocus="Search_GotFocus" LostFocus="Search_LostFocus"
+                                 TextChanged="Search_TextChanged"/>
+                        <Button Grid.Column="1" Content="+ Создать отчёт" Style="{StaticResource PrimaryBtnStyle}"
+                                Margin="10,0,0,0" Click="AddBtn_Click"/>
+                    </Grid>
+
+                    <!-- Add form -->
+                    <Border Grid.Row="2" x:Name="AddPanel" Visibility="Collapsed"
+                            Background="#1E293B" CornerRadius="8" Padding="14,12" Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Text="Новый отчёт" Foreground="White" FontSize="13"
+                                       FontWeight="SemiBold" Margin="0,0,0,10"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="110"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0" x:Name="AddTask"     Style="{StaticResource FormComboStyle}" DisplayMemberPath="Name"/>
+                                <ComboBox Grid.Column="2" x:Name="AddEmployee" Style="{StaticResource FormComboStyle}" DisplayMemberPath="Name"/>
+                                <TextBox  Grid.Column="4" x:Name="AddHours"    Style="{StaticResource FormInputStyle}" Tag="Часы" Text="1"/>
+                                <TextBox  Grid.Column="6" x:Name="AddDate"     Style="{StaticResource FormInputStyle}" Tag="дд.мм.гггг"/>
+                                <Button   Grid.Column="8" Content="Сохранить"  Style="{StaticResource PrimaryBtnStyle}" Click="SaveAdd_Click"/>
+                            </Grid>
+                            <TextBox x:Name="AddComment" Style="{StaticResource FormInputStyle}"
+                                     Tag="Комментарий" Margin="0,8,0,0" Height="36"/>
+                            <TextBlock x:Name="AddError" Foreground="#F87171" FontSize="11"
+                                       Margin="0,6,0,0" Visibility="Collapsed"/>
+                        </StackPanel>
+                    </Border>
+
+                    <DataGrid Grid.Row="3" x:Name="Grid" Style="{StaticResource GridStyle}"
+                              ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
+                              CellStyle="{StaticResource GridCellStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID"         Binding="{Binding Id}"       Width="50"/>
+                            <DataGridTextColumn Header="Задача"     Binding="{Binding Task}"      Width="*"/>
+                            <DataGridTextColumn Header="Работник"   Binding="{Binding Employee}"  Width="150"/>
+                            <DataGridTextColumn Header="Дата"       Binding="{Binding LogDate}"   Width="100"/>
+                            <DataGridTextColumn Header="Часов"      Binding="{Binding Hours}"     Width="70"/>
+                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}"  Width="180"/>
+                            <DataGridTemplateColumn Header="Действие" Width="90">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Удалить" Style="{StaticResource DangerBtnStyle}"
+                                                Tag="{Binding Id}" Click="Delete_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

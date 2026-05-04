@@ -26,23 +26,31 @@ namespace Space
             LoginButton.Content = "Вход...";
             HideError();
 
+            UserInfo user = null;
             try
             {
-                var user = await DatabaseService.LoginAsync(username, password);
-
-                if (user != null)
-                {
-                    new MainWindow(user).Show();
-                    Close();
-                }
-                else
-                {
-                    ShowError("Неверный логин или пароль");
-                }
+                user = await DatabaseService.LoginAsync(username, password);
             }
             catch (Exception ex)
             {
-                ShowError("Ошибка подключения: " + ex.Message);
+                ShowError("[DB] " + ex.GetType().Name + ": " + ex.Message);
+                return;
+            }
+
+            if (user == null)
+            {
+                ShowError("Неверный логин или пароль");
+                return;
+            }
+
+            try
+            {
+                new MainProject(user).Show();
+                Close();
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка: " + ex.Message);
             }
             finally
             {

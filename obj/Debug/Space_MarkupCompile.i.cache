@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Dev\Space\App.xaml
-4-1930718511
+61068124394
 
-10-1755347620
+12-1463155553
 33613966477
-Autorisation.xaml;WorkLogWindow.xaml;AddLogDialog.xaml;MainWindow.xaml;
+Autorisation.xaml;MainProject.xaml;TasksWindow.xaml;TeemProject.xaml;ReportWindows.xaml;MainWindow.xaml;
 
-False
+True
 
