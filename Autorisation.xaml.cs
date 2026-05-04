@@ -1,22 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Space
 {
-    /// <summary>
-    /// Логика взаимодействия для Autorisation.xaml
-    /// </summary>
     public partial class Autorisation : Window
     {
         public Autorisation()
@@ -24,14 +10,35 @@ namespace Space
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            var username = LoginBox.Text.Trim();
+            var password = PasswordInput.Password;
 
-        }
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Заполните все поля", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
+            try
+            {
+                var user = await DatabaseService.LoginAsync(username, password);
 
+                if (user != null)
+                {
+                    new MainWindow(user).Show();
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка подключения:\n" + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
