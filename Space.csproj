@@ -74,12 +74,40 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddWindows\AddProject.xaml.cs">
+      <DependentUpon>AddProject.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddWindows\AddReport.xaml.cs">
+      <DependentUpon>AddReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddWindows\AddTeem.xaml.cs">
+      <DependentUpon>AddTeem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddWindows\AddWorker.xaml.cs">
+      <DependentUpon>AddWorker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindows\ReportWindows.xaml.cs">
       <DependentUpon>ReportWindows.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindows\TasksWindow.xaml.cs">
       <DependentUpon>TasksWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddWindows\AddProject.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddWindows\AddReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddWindows\AddTeem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddWindows\AddWorker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindows\Autorisation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -152,8 +180,6 @@
   <ItemGroup>
     <Resource Include="Assets\Z.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AddWindows\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
