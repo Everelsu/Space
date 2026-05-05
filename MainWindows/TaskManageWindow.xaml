@@ -95,22 +95,22 @@
                 <DataGridTextColumn Header="Статус"      Binding="{Binding StatusLabel}"    Width="85"/>
                 <DataGridTextColumn Header="Дедлайн"     Binding="{Binding Deadline}"       Width="90"/>
                 <!-- ▶ Timer: admin + developer only -->
-                <DataGridTemplateColumn x:Name="ColTimer" Header="" Width="40">
+                <DataGridTemplateColumn x:Name="ColTimer" Header="" Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="▶" Style="{StaticResource EditBtnStyle}"
                                     Tag="{Binding Id}" Click="StartTimer_Click"
-                                    Width="30" Padding="0" ToolTip="Начать работу над задачей"/>
+                                    Padding="8,4" ToolTip="Начать работу над задачей"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
                 <!-- Advance status: admin + developer (all non-closed tasks) -->
-                <DataGridTemplateColumn x:Name="ColAdvanceDev" Header="Статус" Width="80">
+                <DataGridTemplateColumn x:Name="ColAdvanceDev" Header="Статус" Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="{Binding NextStatusLabel}" Tag="{Binding Id}"
-                                    Click="Advance_Click" MinWidth="68">
+                                    Click="Advance_Click" Padding="8,4">
                                 <Button.Style>
                                     <Style TargetType="Button" BasedOn="{StaticResource EditBtnStyle}">
                                         <Style.Triggers>
@@ -126,10 +126,10 @@
                 </DataGridTemplateColumn>
 
                 <!-- Advance status: tester only (testing → closed) -->
-                <DataGridTemplateColumn x:Name="ColAdvanceTester" Header="Статус" Width="80">
+                <DataGridTemplateColumn x:Name="ColAdvanceTester" Header="Статус" Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Закрыть" Tag="{Binding Id}" Click="Advance_Click">
+                            <Button Content="Закрыть" Tag="{Binding Id}" Click="Advance_Click" Padding="8,4">
                                 <Button.Style>
                                     <Style TargetType="Button" BasedOn="{StaticResource EditBtnStyle}">
                                         <Style.Triggers>
@@ -145,23 +145,23 @@
                 </DataGridTemplateColumn>
 
                 <!-- Edit: admin only -->
-                <DataGridTemplateColumn x:Name="ColEdit" Header="" Width="40">
+                <DataGridTemplateColumn x:Name="ColEdit" Header="" Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="✏" Style="{StaticResource EditBtnStyle}"
                                     Tag="{Binding Id}" Click="Edit_Click"
-                                    Width="30" Padding="0"/>
+                                    Padding="8,4"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
                 <!-- Delete: admin only -->
-                <DataGridTemplateColumn x:Name="ColDelete" Header="" Width="40">
+                <DataGridTemplateColumn x:Name="ColDelete" Header="" Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="✕" Style="{StaticResource DangerBtnStyle}"
                                     Tag="{Binding Id}" Click="Delete_Click"
-                                    Width="30" Padding="0"/>
+                                    Padding="8,4"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
