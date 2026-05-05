@@ -15,7 +15,8 @@ namespace Space
         public string NextStatusLabel => Status == "open"        ? "Начать"
                                        : Status == "in_progress" ? "На тест"
                                        : Status == "testing"     ? "Закрыть" : "";
-        public bool CanAdvance => Status != "closed";
+        public bool CanAdvance       => Status != "closed";
+        public bool CanAdvanceTester => Status == "testing";   // tester may only close tested tasks
 
         public string StatusLabel   => Status   == "open"        ? "Открыта"
                                      : Status   == "in_progress" ? "В работе"

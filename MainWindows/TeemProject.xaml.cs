@@ -10,11 +10,26 @@ namespace Space
     {
         private List<TeamItem> _all = new List<TeamItem>();
         private int _editId = -1;
+        private readonly UserInfo _user;
 
-        public TeemProject()
+        public TeemProject() : this(null) { }
+
+        public TeemProject(UserInfo user)
         {
             InitializeComponent();
-            Loaded += async (s, e) => await Reload();
+            _user = user;
+            Loaded += async (s, e) => { ApplyRole(); await Reload(); };
+        }
+
+        private bool IsAdmin => _user?.Role == "admin";
+
+        private void ApplyRole()
+        {
+            if (!IsAdmin)
+            {
+                AddBtn.Visibility     = Visibility.Collapsed;
+                ColActions.Visibility = Visibility.Collapsed;
+            }
         }
 
         private async System.Threading.Tasks.Task Reload()

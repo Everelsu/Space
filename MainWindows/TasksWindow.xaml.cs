@@ -10,11 +10,27 @@ namespace Space
     {
         private List<EmployeeItem> _all = new List<EmployeeItem>();
         private int _editId = -1;
+        private readonly UserInfo _user;
 
-        public TasksWindow()
+        public TasksWindow() : this(null) { }
+
+        public TasksWindow(UserInfo user)
         {
             InitializeComponent();
-            Loaded += async (s, e) => await Reload();
+            _user = user;
+            Loaded += async (s, e) => { ApplyRole(); await Reload(); };
+        }
+
+        private bool IsAdmin => _user?.Role == "admin";
+
+        private void ApplyRole()
+        {
+            // Non-admins can't navigate here, but guard anyway
+            if (!IsAdmin)
+            {
+                AddBtn.Visibility     = Visibility.Collapsed;
+                ColActions.Visibility = Visibility.Collapsed;
+            }
         }
 
         private async System.Threading.Tasks.Task Reload()

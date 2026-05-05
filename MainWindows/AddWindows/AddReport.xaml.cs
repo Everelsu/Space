@@ -9,18 +9,37 @@ namespace Space.AddWindows
     {
         private readonly WorkLogItem _editItem;
 
-        // ── Add ──────────────────────────────────────────────────────
+        // Timer-flow fields (filled when opened from StopTimer)
+        private readonly int     _timerTaskId;
+        private readonly int     _timerEmployeeId;
+        private readonly decimal _timerHours;
+        private readonly bool    _isTimerFlow;
+
+        // ── Add (manual) ──────────────────────────────────────────────
         public AddReport()
         {
             InitializeComponent();
-            _editItem = null;
+            _editItem    = null;
+            _isTimerFlow = false;
         }
 
-        // ── Edit ─────────────────────────────────────────────────────
+        // ── Edit ──────────────────────────────────────────────────────
         public AddReport(WorkLogItem item)
         {
             InitializeComponent();
-            _editItem = item;
+            _editItem    = item;
+            _isTimerFlow = false;
+        }
+
+        // ── Timer flow: pre-filled from stopped timer ─────────────────
+        public AddReport(int taskId, int employeeId, decimal hours)
+        {
+            InitializeComponent();
+            _editItem        = null;
+            _isTimerFlow     = true;
+            _timerTaskId     = taskId;
+            _timerEmployeeId = employeeId;
+            _timerHours      = hours;
         }
 
         private async void Window_Loaded(object s, RoutedEventArgs e)
@@ -30,6 +49,7 @@ namespace Space.AddWindows
 
             if (_editItem != null)
             {
+                // ── Edit mode ──────────────────────────────────────────
                 DialogTitle.Text = "Редактировать отчёт";
                 SaveBtn.Content  = "Обновить";
 
@@ -45,8 +65,26 @@ namespace Space.AddWindows
                 TxtHours.Text   = _editItem.Hours.ToString(CultureInfo.InvariantCulture);
                 TxtComment.Text = _editItem.Comment;
             }
+            else if (_isTimerFlow)
+            {
+                // ── Timer flow mode ────────────────────────────────────
+                DialogTitle.Text = "Отчёт о работе";
+
+                foreach (DropdownItem di in CmbTask.Items)
+                    if (di.Id == _timerTaskId) { CmbTask.SelectedItem = di; break; }
+                foreach (DropdownItem di in CmbEmployee.Items)
+                    if (di.Id == _timerEmployeeId) { CmbEmployee.SelectedItem = di; break; }
+
+                CmbTask.IsEnabled     = false;   // task fixed from timer
+                CmbEmployee.IsEnabled = false;   // employee fixed from current user
+
+                TxtHours.Text = _timerHours.ToString("0.##", CultureInfo.InvariantCulture);
+                TxtDate.Text  = DateTime.Today.ToString("dd.MM.yyyy");
+                TxtComment.Focus();  // jump straight to comment — everything else is pre-filled
+            }
             else
             {
+                // ── New manual report ──────────────────────────────────
                 TxtDate.Text = DateTime.Today.ToString("dd.MM.yyyy");
             }
         }

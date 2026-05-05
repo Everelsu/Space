@@ -28,7 +28,7 @@
             <TextBox x:Name="SearchBox" Style="{StaticResource SearchBoxStyle}"
                      Text="🔍  Поиск..." GotFocus="Search_GotFocus" LostFocus="Search_LostFocus"
                      TextChanged="Search_TextChanged"/>
-            <Button Grid.Column="1" Content="+ Добавить" Style="{StaticResource PrimaryBtnStyle}"
+            <Button Grid.Column="1" x:Name="AddBtn" Content="+ Добавить" Style="{StaticResource PrimaryBtnStyle}"
                     Margin="10,0,0,0" Click="AddBtn_Click"/>
         </Grid>
 
@@ -62,7 +62,7 @@
                 <DataGridTextColumn Header="Название"   Binding="{Binding Name}"         Width="*"/>
                 <DataGridTextColumn Header="Лид"        Binding="{Binding Lead}"         Width="210"/>
                 <DataGridTextColumn Header="Участников" Binding="{Binding MemberCount}"  Width="100"/>
-                <DataGridTemplateColumn Header="Действия" Width="150">
+                <DataGridTemplateColumn x:Name="ColActions" Header="Действия" Width="150">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">

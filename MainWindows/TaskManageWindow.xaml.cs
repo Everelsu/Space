@@ -3,27 +3,61 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace Space
 {
     public partial class TaskManageWindow : UserControl
     {
-        private List<TaskManageItem> _all      = new List<TaskManageItem>();
+        private List<TaskManageItem> _all       = new List<TaskManageItem>();
         private List<DropdownItem>   _projects  = new List<DropdownItem>();
         private List<DropdownItem>   _employees = new List<DropdownItem>();
         private int _editId = -1;
+        private readonly UserInfo _user;
+        private readonly DispatcherTimer _clock;
 
-        public TaskManageWindow()
+        // Parameterless ctor keeps XAML designer happy
+        public TaskManageWindow() : this(null) { }
+
+        public TaskManageWindow(UserInfo user)
         {
             InitializeComponent();
+            _user = user;
+
+            // Tick every second to refresh elapsed time in banner
+            _clock = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            _clock.Tick += (s, e) => RefreshBanner();
+            _clock.Start();
+
             Loaded += async (s, e) =>
             {
+                ApplyRole();
                 _projects  = await DatabaseService.GetProjectsDropdownAsync();
                 _employees = await DatabaseService.GetEmployeesDropdownAsync();
                 AddProject.ItemsSource  = _projects;
                 AddAssignee.ItemsSource = _employees;
                 await Reload();
+                RefreshBanner();   // show banner immediately if timer was already running
             };
+        }
+
+        private bool IsAdmin     => _user?.Role == "admin";
+        private bool IsDeveloper => _user?.Role == "developer";
+        private bool IsTester    => _user?.Role == "tester";
+
+        private void ApplyRole()
+        {
+            // Add / Edit / Delete — admin only
+            AddBtn.Visibility    = IsAdmin ? Visibility.Visible : Visibility.Collapsed;
+            ColEdit.Visibility   = IsAdmin ? Visibility.Visible : Visibility.Collapsed;
+            ColDelete.Visibility = IsAdmin ? Visibility.Visible : Visibility.Collapsed;
+
+            // Timer — admin + developer
+            ColTimer.Visibility = (IsAdmin || IsDeveloper) ? Visibility.Visible : Visibility.Collapsed;
+
+            // Status advance columns — role-specific
+            ColAdvanceDev.Visibility    = IsTester ? Visibility.Collapsed : Visibility.Visible;
+            ColAdvanceTester.Visibility = IsTester ? Visibility.Visible   : Visibility.Collapsed;
         }
 
         private async System.Threading.Tasks.Task Reload()
@@ -150,6 +184,62 @@ namespace Space
             if (item == null || !item.CanAdvance) return;
             try { await DatabaseService.AdvanceTaskStatusAsync(id, item.Status); await Reload(); }
             catch (Exception ex) { MessageBox.Show("Ошибка: " + ex.Message); }
+        }
+
+        // ── Timer ─────────────────────────────────────────────────────────────
+
+        private void RefreshBanner()
+        {
+            if (TimerBanner == null) return;
+            if (TimerService.IsRunning)
+            {
+                TimerBanner.Visibility = Visibility.Visible;
+                BannerTask.Text = TimerService.ActiveTaskTitle;
+                BannerTime.Text = TimerService.ElapsedText;
+            }
+            else
+            {
+                TimerBanner.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void StartTimer_Click(object s, RoutedEventArgs e)
+        {
+            if (TimerService.IsRunning)
+            {
+                MessageBox.Show(
+                    $"Сейчас уже запущен таймер для задачи:\n\"{TimerService.ActiveTaskTitle}\"\n\nСначала остановите его.",
+                    "Таймер уже запущен", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            var id   = (int)((Button)s).Tag;
+            var item = _all.FirstOrDefault(t => t.Id == id);
+            if (item == null) return;
+
+            TimerService.Start(id, item.Title);
+            RefreshBanner();
+        }
+
+        private void StopTimer_Click(object s, RoutedEventArgs e)
+        {
+            if (!TimerService.IsRunning) return;
+
+            // Capture state BEFORE Stop() clears it
+            var taskId = TimerService.ActiveTaskId;
+            var empId  = _user?.EmployeeId;
+            var hours  = TimerService.Stop();
+            RefreshBanner();
+
+            // Open AddReport pre-filled from timer
+            AddWindows.AddReport dlg;
+            if (empId.HasValue)
+                dlg = new AddWindows.AddReport(taskId, empId.Value, hours);
+            else
+                dlg = new AddWindows.AddReport();   // no linked employee — user fills manually
+
+            dlg.Owner = Window.GetWindow(this);
+            dlg.ShowDialog();
         }
 
         private async void Delete_Click(object s, RoutedEventArgs e)

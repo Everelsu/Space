@@ -75,7 +75,7 @@
                 <DataGridTextColumn Header="Дата"        Binding="{Binding LogDate}"   Width="90"/>
                 <DataGridTextColumn Header="Часов"       Binding="{Binding Hours}"     Width="60"/>
                 <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}"   Width="175"/>
-                <DataGridTemplateColumn Header="Действия" Width="150">
+                <DataGridTemplateColumn x:Name="ColActions" Header="Действия" Width="150">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">

@@ -121,33 +121,12 @@
       <HintPath>packages\WPF-UI.Abstractions.4.2.1\lib\net472\Wpf.Ui.Abstractions.dll</HintPath>
     </Reference>
   </ItemGroup>
-
   <!-- ── XAML Pages ──────────────────────────────────────────────────── -->
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindows\AddWindows\AddProject.xaml.cs">
-      <DependentUpon>AddProject.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindows\AddWindows\AddReport.xaml.cs">
-      <DependentUpon>AddReport.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindows\AddWindows\AddTeem.xaml.cs">
-      <DependentUpon>AddTeem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindows\AddWindows\AddWorker.xaml.cs">
-      <DependentUpon>AddWorker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DatabaseService.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -172,7 +151,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-
     <!-- Main pages (UserControls) -->
     <Page Include="MainWindows\MainProject.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -194,37 +172,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-
     <!-- Dialog windows -->
-    <Page Include="MainWindows\AddWindows\AddProject.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainWindows\AddWindows\AddWorker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainWindows\AddWindows\AddTeem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainWindows\AddWindows\AddReport.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="MainWindows\AddWindows\AddTask.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-
   <!-- ── C# Code ─────────────────────────────────────────────────────── -->
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-
     <!-- Shell + login -->
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -232,7 +191,6 @@
     <Compile Include="MainWindows\Autorisation.xaml.cs">
       <DependentUpon>Autorisation.xaml</DependentUpon>
     </Compile>
-
     <!-- Main pages -->
     <Compile Include="MainWindows\MainProject.xaml.cs">
       <DependentUpon>MainProject.xaml</DependentUpon>
@@ -253,7 +211,6 @@
       <DependentUpon>ReportWindows.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-
     <!-- Dialog windows -->
     <Compile Include="MainWindows\AddWindows\AddProject.xaml.cs">
       <DependentUpon>AddProject.xaml</DependentUpon>
@@ -270,11 +227,8 @@
     <Compile Include="MainWindows\AddWindows\AddTask.xaml.cs">
       <DependentUpon>AddTask.xaml</DependentUpon>
     </Compile>
-
-    <!-- Database service -->
+    <!-- Service + Models -->
     <Compile Include="Model\DatabaseService.cs" />
-
-    <!-- Models -->
     <Compile Include="Model\UserInfo.cs" />
     <Compile Include="Model\ProjectItem.cs" />
     <Compile Include="Model\EmployeeItem.cs" />
@@ -284,7 +238,7 @@
     <Compile Include="Model\TaskManageItem.cs" />
     <Compile Include="Model\DropdownItem.cs" />
     <Compile Include="Model\LogItem.cs" />
-
+    <Compile Include="Model\TimerService.cs" />
     <!-- Properties -->
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -300,7 +254,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -312,16 +265,13 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-
   <ItemGroup>
     <Resource Include="Styles\SharedStyles.xaml" />
     <Resource Include="Assets\Z.png" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
@@ -334,6 +284,5 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -13,31 +13,34 @@ namespace Space
         {
             InitializeComponent();
             _user = user;
+
             SidebarRole.Text     = (_user.Role ?? "user").ToUpper();
             SidebarUsername.Text = _user.Username;
-            Navigate(new MainProject(), BtnProjects);
+
+            // Hide admin-only nav sections for non-admins
+            bool isAdmin = _user.Role == "admin";
+            BtnEmployees.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
+            BtnTeams.Visibility     = isAdmin ? Visibility.Visible : Visibility.Collapsed;
+
+            Navigate(new MainProject(_user), BtnProjects);
         }
 
         private void Navigate(UserControl page, Button btn)
         {
             if (_activeBtn != null)
                 _activeBtn.Style = (Style)FindResource("NavBtnStyle");
-            btn.Style = (Style)FindResource("NavBtnActiveStyle");
-            _activeBtn = btn;
+            btn.Style    = (Style)FindResource("NavBtnActiveStyle");
+            _activeBtn   = btn;
             PageHost.Content = page;
         }
 
-        private void NavProjects_Click(object s, RoutedEventArgs e)  => Navigate(new MainProject(),        BtnProjects);
-        private void NavEmployees_Click(object s, RoutedEventArgs e) => Navigate(new TasksWindow(),        BtnEmployees);
-        private void NavTeams_Click(object s, RoutedEventArgs e)     => Navigate(new TeemProject(),        BtnTeams);
-        private void NavTasks_Click(object s, RoutedEventArgs e)     => Navigate(new TaskManageWindow(),   BtnTasks);
-        private void NavReports_Click(object s, RoutedEventArgs e)   => Navigate(new ReportWindows(),      BtnReports);
+        private void NavProjects_Click(object s, RoutedEventArgs e)  => Navigate(new MainProject(_user),        BtnProjects);
+        private void NavEmployees_Click(object s, RoutedEventArgs e) => Navigate(new TasksWindow(_user),        BtnEmployees);
+        private void NavTeams_Click(object s, RoutedEventArgs e)     => Navigate(new TeemProject(_user),        BtnTeams);
+        private void NavTasks_Click(object s, RoutedEventArgs e)     => Navigate(new TaskManageWindow(_user),   BtnTasks);
+        private void NavReports_Click(object s, RoutedEventArgs e)   => Navigate(new ReportWindows(_user),      BtnReports);
 
-        private void Exit_Click(object s, RoutedEventArgs e)
-        {
-            new Autorisation().Show();
-            Close();
-        }
+        private void Exit_Click(object s, RoutedEventArgs e) { new Autorisation().Show(); Close(); }
 
         private void TitleBar_MouseDown(object s, MouseButtonEventArgs e)
         {

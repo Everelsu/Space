@@ -10,17 +10,31 @@ namespace Space
     {
         private List<WorkLogItem> _all = new List<WorkLogItem>();
         private int _editId = -1;
+        private readonly UserInfo _user;
 
-        public ReportWindows()
+        public ReportWindows() : this(null) { }
+
+        public ReportWindows(UserInfo user)
         {
             InitializeComponent();
+            _user = user;
             Loaded += async (s, e) =>
             {
+                ApplyRole();
                 await Reload();
                 AddTask.ItemsSource     = await DatabaseService.GetTasksDropdownAsync();
                 AddEmployee.ItemsSource = await DatabaseService.GetEmployeesDropdownAsync();
                 AddDate.Text = DateTime.Today.ToString("dd.MM.yyyy");
             };
+        }
+
+        private bool IsAdmin => _user?.Role == "admin";
+
+        private void ApplyRole()
+        {
+            // Everyone can add reports; only admin can edit / delete
+            if (!IsAdmin)
+                ColActions.Visibility = Visibility.Collapsed;
         }
 
         private async System.Threading.Tasks.Task Reload()

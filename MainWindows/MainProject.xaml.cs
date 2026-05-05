@@ -10,11 +10,26 @@ namespace Space
     {
         private List<ProjectItem> _all = new List<ProjectItem>();
         private int _editId = -1;
+        private readonly UserInfo _user;
 
-        public MainProject()
+        public MainProject() : this(null) { }
+
+        public MainProject(UserInfo user)
         {
             InitializeComponent();
-            Loaded += async (s, e) => await Reload();
+            _user = user;
+            Loaded += async (s, e) => { ApplyRole(); await Reload(); };
+        }
+
+        private bool IsAdmin => _user?.Role == "admin";
+
+        private void ApplyRole()
+        {
+            if (!IsAdmin)
+            {
+                AddBtn.Visibility        = Visibility.Collapsed;
+                ColActions.Visibility    = Visibility.Collapsed;
+            }
         }
 
         private async System.Threading.Tasks.Task Reload()

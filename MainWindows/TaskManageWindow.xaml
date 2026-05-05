@@ -6,6 +6,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -49,12 +50,41 @@
                 <ComboBoxItem Content="Средний"        Tag="medium"/>
                 <ComboBoxItem Content="Низкий"         Tag="low"/>
             </ComboBox>
-            <Button Grid.Column="6" Content="+ Добавить" Style="{StaticResource PrimaryBtnStyle}"
+            <Button Grid.Column="6" x:Name="AddBtn" Content="+ Добавить" Style="{StaticResource PrimaryBtnStyle}"
                     Click="AddBtn_Click"/>
         </Grid>
 
+        <!-- Timer banner -->
+        <Border Grid.Row="2" x:Name="TimerBanner" Visibility="Collapsed"
+                Background="#0F2A1E" BorderBrush="#22C55E" BorderThickness="1"
+                CornerRadius="8" Padding="14,10" Margin="0,0,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <!-- Pulse dot -->
+                <Ellipse Width="10" Height="10" Fill="#22C55E" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <!-- Task info -->
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Text="Идёт работа:" Foreground="#86EFAC" FontSize="11"/>
+                    <TextBlock x:Name="BannerTask" Foreground="White" FontSize="13" FontWeight="SemiBold"/>
+                </StackPanel>
+                <!-- Elapsed clock -->
+                <TextBlock Grid.Column="2" x:Name="BannerTime"
+                           Foreground="#22C55E" FontSize="22" FontWeight="Bold"
+                           VerticalAlignment="Center" Margin="0,0,16,0"
+                           FontFamily="Consolas" Text="00:00:00"/>
+                <!-- Stop button -->
+                <Button Grid.Column="3" Content="⏹  Остановить" Style="{StaticResource DangerBtnStyle}"
+                        Click="StopTimer_Click" Padding="14,0"/>
+            </Grid>
+        </Border>
+
         <!-- Add / Edit form -->
-        <Border Grid.Row="2" x:Name="AddPanel" Visibility="Collapsed"
+        <Border Grid.Row="3" x:Name="AddPanel" Visibility="Collapsed"
                 Background="#1E293B" CornerRadius="8" Padding="14,12" Margin="0,0,0,10">
             <StackPanel>
                 <TextBlock x:Name="FormTitle" Text="Новое задание" Foreground="White" FontSize="13"
@@ -104,7 +134,7 @@
         </Border>
 
         <!-- DataGrid -->
-        <DataGrid Grid.Row="3" x:Name="Grid" Style="{StaticResource GridStyle}"
+        <DataGrid Grid.Row="4" x:Name="Grid" Style="{StaticResource GridStyle}"
                   ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
                   CellStyle="{StaticResource GridCellStyle}">
             <DataGrid.Columns>
@@ -115,30 +145,74 @@
                 <DataGridTextColumn Header="Приоритет"   Binding="{Binding PriorityLabel}"  Width="85"/>
                 <DataGridTextColumn Header="Статус"      Binding="{Binding StatusLabel}"    Width="80"/>
                 <DataGridTextColumn Header="Дедлайн"     Binding="{Binding Deadline}"       Width="80"/>
-                <DataGridTemplateColumn Header="Действия" Width="185">
+                <!-- ▶ Timer: admin + developer only -->
+                <DataGridTemplateColumn x:Name="ColTimer" Header="" Width="34">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="{Binding NextStatusLabel}"
-                                        Tag="{Binding Id}" Click="Advance_Click"
-                                        Margin="0,0,4,0" MinWidth="58">
-                                    <Button.Style>
-                                        <Style TargetType="Button" BasedOn="{StaticResource EditBtnStyle}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding CanAdvance}" Value="False">
-                                                    <Setter Property="Visibility" Value="Hidden"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
-                                <Button Content="✏" Style="{StaticResource EditBtnStyle}"
-                                        Tag="{Binding Id}" Click="Edit_Click"
-                                        Margin="0,0,4,0" Width="26" Padding="0"/>
-                                <Button Content="✕" Style="{StaticResource DangerBtnStyle}"
-                                        Tag="{Binding Id}" Click="Delete_Click"
-                                        Width="26" Padding="0"/>
-                            </StackPanel>
+                            <Button Content="▶" Style="{StaticResource EditBtnStyle}"
+                                    Tag="{Binding Id}" Click="StartTimer_Click"
+                                    Width="26" Padding="0" ToolTip="Начать работу над задачей"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Advance status: admin + developer (all non-closed tasks) -->
+                <DataGridTemplateColumn x:Name="ColAdvanceDev" Header="Статус" Width="72">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding NextStatusLabel}" Tag="{Binding Id}"
+                                    Click="Advance_Click" MinWidth="60">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource EditBtnStyle}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CanAdvance}" Value="False">
+                                                <Setter Property="Visibility" Value="Hidden"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Advance status: tester only (testing → closed) -->
+                <DataGridTemplateColumn x:Name="ColAdvanceTester" Header="Статус" Width="72">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Закрыть" Tag="{Binding Id}" Click="Advance_Click">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource EditBtnStyle}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CanAdvanceTester}" Value="False">
+                                                <Setter Property="Visibility" Value="Hidden"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Edit: admin only -->
+                <DataGridTemplateColumn x:Name="ColEdit" Header="" Width="34">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="✏" Style="{StaticResource EditBtnStyle}"
+                                    Tag="{Binding Id}" Click="Edit_Click"
+                                    Width="26" Padding="0"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Delete: admin only -->
+                <DataGridTemplateColumn x:Name="ColDelete" Header="" Width="34">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="✕" Style="{StaticResource DangerBtnStyle}"
+                                    Tag="{Binding Id}" Click="Delete_Click"
+                                    Width="26" Padding="0"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
