@@ -43,14 +43,14 @@
         <!-- DataGrid -->
         <DataGrid Grid.Row="2" x:Name="Grid" Style="{StaticResource GridStyle}"
                   ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
-                  CellStyle="{StaticResource GridCellStyle}">
+                  CellStyle="{StaticResource GridCellStyle}" SelectionChanged="Grid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID"       Binding="{Binding Id}"          Width="50"/>
                 <DataGridTextColumn Header="Название" Binding="{Binding Name}"         Width="280"/>
                 <DataGridTextColumn Header="Начало"   Binding="{Binding StartDate}"    Width="100"/>
                 <DataGridTextColumn Header="Дедлайн"  Binding="{Binding Deadline}"     Width="100"/>
                 <DataGridTextColumn Header="Статус"   Binding="{Binding StatusLabel}"  Width="90"/>
-                <DataGridTextColumn Header="Менеджер" Binding="{Binding Manager}"      Width="180"/>
+                <DataGridTextColumn Header="Руководитель" Binding="{Binding Manager}"      Width="180"/>
                 <DataGridTemplateColumn x:Name="ColActions" Header="Действия" Width="180">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

@@ -78,11 +78,9 @@
                     <Border x:Name="Bd" Background="{TemplateBinding Background}"
                             CornerRadius="8" Padding="{TemplateBinding Padding}" Margin="0,1">
                         <Grid>
-                            <Border Width="3" Background="#7B3FE4" CornerRadius="2"
-                                    HorizontalAlignment="Left" Margin="-12,4,0,4"/>
                             <ContentPresenter VerticalAlignment="Center"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              Margin="8,0,0,0"/>
+                                              Margin="0,0,0,0"/>
                         </Grid>
                     </Border>
                 </ControlTemplate>
