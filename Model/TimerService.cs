@@ -22,7 +22,7 @@ namespace Space
             get
             {
                 var e = Elapsed;
-                return $"{(int)e.TotalHours:D2}ч {e.Minutes:D2}м {e.Seconds:D2}с";
+                return $"{(int)e.TotalHours:D2}ч {(int)e.Minutes:D2}м {e.Seconds:D2}с";
             }
         }
 
