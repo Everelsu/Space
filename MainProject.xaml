@@ -1,7 +1,7 @@
 <Window x:Class="Space.MainProject"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="SpaceZ — Проекты" Height="600" Width="980"
+        Title="SpaceZ — Проекты" Height="650" Width="1100"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent">
 
@@ -32,7 +32,7 @@
             <!-- Body -->
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="210"/>
+                    <ColumnDefinition Width="195"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
@@ -74,23 +74,37 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Page header -->
-                    <StackPanel Grid.Row="0" Margin="0,0,0,2">
-                        <TextBlock Text="Проекты" Style="{StaticResource PageTitleStyle}"/>
-                        <TextBlock Text="Управление проектами компании" Style="{StaticResource PageSubtitleStyle}"/>
-                    </StackPanel>
+                    <!-- Page header with counter -->
+                    <Grid Grid.Row="0" Margin="0,0,0,2">
+                        <StackPanel>
+                            <TextBlock Text="Проекты" Style="{StaticResource PageTitleStyle}"/>
+                            <TextBlock Text="Управление проектами компании" Style="{StaticResource PageSubtitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock x:Name="CountLabel" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                   Foreground="#4B5563" FontSize="12" Margin="0,0,0,4"/>
+                    </Grid>
 
-                    <!-- Toolbar -->
+                    <!-- Toolbar: Search + Status filter + Add -->
                     <Grid Grid.Row="1" Margin="0,12,0,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="8"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="SearchBox" Style="{StaticResource SearchBoxStyle}"
                                  Text="🔍  Поиск..." GotFocus="Search_GotFocus" LostFocus="Search_LostFocus"
                                  TextChanged="Search_TextChanged"/>
-                        <Button Grid.Column="1" Content="+ Добавить" Style="{StaticResource PrimaryBtnStyle}"
-                                Margin="10,0,0,0" Click="AddBtn_Click"/>
+                        <ComboBox Grid.Column="2" x:Name="FilterStatus" Height="36"
+                                  Style="{StaticResource FormComboStyle}"
+                                  SelectionChanged="Filter_Changed">
+                            <ComboBoxItem Content="Все статусы" Tag="" IsSelected="True"/>
+                            <ComboBoxItem Content="Активен"     Tag="active"/>
+                            <ComboBoxItem Content="Закрыт"      Tag="closed"/>
+                        </ComboBox>
+                        <Button Grid.Column="4" Content="+ Добавить" Style="{StaticResource PrimaryBtnStyle}"
+                                Click="AddBtn_Click"/>
                     </Grid>
 
                     <!-- Add / Edit form -->
@@ -115,8 +129,8 @@
                                 <TextBox Grid.Column="2" x:Name="AddStart"    Style="{StaticResource FormInputStyle}" Tag="Начало (дд.мм.гггг)"/>
                                 <TextBox Grid.Column="4" x:Name="AddDeadline" Style="{StaticResource FormInputStyle}" Tag="Дедлайн (дд.мм.гггг)"/>
                                 <ComboBox Grid.Column="6" x:Name="AddStatus"  Style="{StaticResource FormComboStyle}">
-                                    <ComboBoxItem Content="active"  IsSelected="True"/>
-                                    <ComboBoxItem Content="closed"/>
+                                    <ComboBoxItem Content="Активен" Tag="active"  IsSelected="True"/>
+                                    <ComboBoxItem Content="Закрыт"  Tag="closed"/>
                                 </ComboBox>
                                 <Button Grid.Column="8" x:Name="SaveBtn" Content="Сохранить"
                                         Style="{StaticResource PrimaryBtnStyle}" Click="SaveAdd_Click"/>
@@ -131,12 +145,12 @@
                               ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
                               CellStyle="{StaticResource GridCellStyle}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID"       Binding="{Binding Id}"       Width="50"/>
-                            <DataGridTextColumn Header="Название" Binding="{Binding Name}"      Width="*"/>
-                            <DataGridTextColumn Header="Начало"   Binding="{Binding StartDate}" Width="100"/>
-                            <DataGridTextColumn Header="Дедлайн"  Binding="{Binding Deadline}"  Width="100"/>
-                            <DataGridTextColumn Header="Статус"   Binding="{Binding Status}"    Width="90"/>
-                            <DataGridTextColumn Header="Менеджер" Binding="{Binding Manager}"   Width="150"/>
+                            <DataGridTextColumn Header="ID"       Binding="{Binding Id}"          Width="45"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding Name}"         Width="*"/>
+                            <DataGridTextColumn Header="Начало"   Binding="{Binding StartDate}"    Width="95"/>
+                            <DataGridTextColumn Header="Дедлайн"  Binding="{Binding Deadline}"     Width="95"/>
+                            <DataGridTextColumn Header="Статус"   Binding="{Binding StatusLabel}"  Width="85"/>
+                            <DataGridTextColumn Header="Менеджер" Binding="{Binding Manager}"      Width="155"/>
                             <DataGridTemplateColumn Header="Действия" Width="155">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>

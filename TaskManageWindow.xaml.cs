@@ -9,9 +9,9 @@ namespace Space
     public partial class TaskManageWindow : Window
     {
         private readonly UserInfo _user;
-        private List<TaskManageItem> _all = new List<TaskManageItem>();
-        private List<DropdownItem>   _projects   = new List<DropdownItem>();
-        private List<DropdownItem>   _employees  = new List<DropdownItem>();
+        private List<TaskManageItem> _all      = new List<TaskManageItem>();
+        private List<DropdownItem>   _projects  = new List<DropdownItem>();
+        private List<DropdownItem>   _employees = new List<DropdownItem>();
         private int _editId = -1;
 
         public TaskManageWindow(UserInfo user)
@@ -36,27 +36,51 @@ namespace Space
             catch (Exception ex) { MessageBox.Show("Ошибка загрузки: " + ex.Message); }
         }
 
-        private void Apply(string filter = "")
+        private void Apply(string search = "")
         {
             if (Grid == null) return;
-            Grid.ItemsSource = string.IsNullOrWhiteSpace(filter)
-                ? _all
-                : _all.Where(t => t.Title.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0
-                               || t.Project.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0
-                               || t.Assignee.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0
-                               || t.Status.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0
-                               || t.Priority.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+
+            var statusFilter   = (FilterStatus?.SelectedItem   as System.Windows.Controls.ComboBoxItem)?.Tag?.ToString() ?? "";
+            var priorityFilter = (FilterPriority?.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Tag?.ToString() ?? "";
+
+            var result = _all.AsEnumerable();
+
+            if (!string.IsNullOrEmpty(statusFilter))
+                result = result.Where(t => t.Status == statusFilter);
+            if (!string.IsNullOrEmpty(priorityFilter))
+                result = result.Where(t => t.Priority == priorityFilter);
+            if (!string.IsNullOrWhiteSpace(search))
+                result = result.Where(t =>
+                    t.Title.IndexOf(search, StringComparison.OrdinalIgnoreCase)    >= 0 ||
+                    t.Project.IndexOf(search, StringComparison.OrdinalIgnoreCase)  >= 0 ||
+                    t.Assignee.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
+
+            var list = result.ToList();
+            Grid.ItemsSource = list;
+
+            if (CountLabel != null)
+                CountLabel.Text = list.Count == _all.Count
+                    ? $"{_all.Count} заданий"
+                    : $"{list.Count} из {_all.Count}";
         }
 
-        private void Search_GotFocus(object s, RoutedEventArgs e)  { if (SearchBox.Text.StartsWith("🔍")) SearchBox.Text = ""; SearchBox.Foreground = System.Windows.Media.Brushes.White; }
-        private void Search_LostFocus(object s, RoutedEventArgs e) { if (string.IsNullOrWhiteSpace(SearchBox.Text)) { SearchBox.Text = "🔍  Поиск..."; SearchBox.Foreground = System.Windows.Media.Brushes.Gray; } }
+        // ── Search & Filters ──────────────────────────────────────────────────
+
+        private void Search_GotFocus(object s, RoutedEventArgs e)
+        { if (SearchBox.Text.StartsWith("🔍")) SearchBox.Text = ""; SearchBox.Foreground = System.Windows.Media.Brushes.White; }
+        private void Search_LostFocus(object s, RoutedEventArgs e)
+        { if (string.IsNullOrWhiteSpace(SearchBox.Text)) { SearchBox.Text = "🔍  Поиск..."; SearchBox.Foreground = System.Windows.Media.Brushes.Gray; } }
         private void Search_TextChanged(object s, System.Windows.Controls.TextChangedEventArgs e)
             => Apply(SearchBox.Text.StartsWith("🔍") ? "" : SearchBox.Text);
+        private void Filter_Changed(object s, System.Windows.Controls.SelectionChangedEventArgs e)
+            => Apply(SearchBox?.Text.StartsWith("🔍") == true ? "" : SearchBox?.Text ?? "");
+
+        // ── Add / Edit form ───────────────────────────────────────────────────
 
         private void AddBtn_Click(object s, RoutedEventArgs e)
         {
             _editId = -1;
-            FormTitle.Text = "Новое задание";
+            FormTitle.Text  = "Новое задание";
             SaveBtn.Content = "Сохранить";
             AddTitle.Text = AddDeadline.Text = "";
             AddProject.SelectedIndex  = -1;
@@ -93,8 +117,8 @@ namespace Space
 
         private void SetCombo(System.Windows.Controls.ComboBox cb, string value)
         {
-            foreach (System.Windows.Controls.ComboBoxItem item in cb.Items)
-                if (item.Content?.ToString() == value) { cb.SelectedItem = item; return; }
+            foreach (System.Windows.Controls.ComboBoxItem ci in cb.Items)
+                if (ci.Tag?.ToString() == value) { cb.SelectedItem = ci; return; }
             cb.SelectedIndex = 0;
         }
 
@@ -106,8 +130,8 @@ namespace Space
             if (proj == null)
             { AddError.Text = "Выберите проект"; AddError.Visibility = Visibility.Visible; return; }
 
-            var priority = (AddPriority.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content?.ToString() ?? "low";
-            var status   = (AddStatus.SelectedItem   as System.Windows.Controls.ComboBoxItem)?.Content?.ToString() ?? "open";
+            var priority = (AddPriority.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Tag?.ToString() ?? "low";
+            var status   = (AddStatus.SelectedItem   as System.Windows.Controls.ComboBoxItem)?.Tag?.ToString() ?? "open";
             var assignee = AddAssignee.SelectedItem as DropdownItem;
             DateTime? deadline = null;
             if (!string.IsNullOrWhiteSpace(AddDeadline.Text))
@@ -138,6 +162,21 @@ namespace Space
             catch (Exception ex) { AddError.Text = ex.Message; AddError.Visibility = Visibility.Visible; }
         }
 
+        // ── Quick status advance (Linear-style) ───────────────────────────────
+
+        private async void Advance_Click(object s, RoutedEventArgs e)
+        {
+            var id   = (int)((System.Windows.Controls.Button)s).Tag;
+            var item = _all.FirstOrDefault(t => t.Id == id);
+            if (item == null || !item.CanAdvance) return;
+            try
+            {
+                await DatabaseService.AdvanceTaskStatusAsync(id, item.Status);
+                await Reload();
+            }
+            catch (Exception ex) { MessageBox.Show("Ошибка: " + ex.Message); }
+        }
+
         private async void Delete_Click(object s, RoutedEventArgs e)
         {
             if ((int)((System.Windows.Controls.Button)s).Tag is int id && id > 0)
@@ -147,6 +186,8 @@ namespace Space
                     catch (Exception ex) { MessageBox.Show("Ошибка: " + ex.Message); }
                 }
         }
+
+        // ── Navigation ────────────────────────────────────────────────────────
 
         private void NavProjects_Click(object s, RoutedEventArgs e)  { new MainProject(_user).Show(); Close(); }
         private void NavEmployees_Click(object s, RoutedEventArgs e) { new TasksWindow(_user).Show(); Close(); }

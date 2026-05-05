@@ -27,21 +27,38 @@ namespace Space
             catch (Exception ex) { MessageBox.Show("Ошибка загрузки: " + ex.Message); }
         }
 
-        private void Apply(string filter = "")
+        private void Apply(string search = "")
         {
             if (Grid == null) return;
-            Grid.ItemsSource = string.IsNullOrWhiteSpace(filter)
-                ? _all
-                : _all.Where(p => p.FullName.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0
-                               || p.Position.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0
-                               || p.Team.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0
-                               || p.Role.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+
+            var roleFilter = (FilterRole?.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Tag?.ToString() ?? "";
+
+            var result = _all.AsEnumerable();
+
+            if (!string.IsNullOrEmpty(roleFilter))
+                result = result.Where(p => p.Role == roleFilter);
+            if (!string.IsNullOrWhiteSpace(search))
+                result = result.Where(p =>
+                    p.FullName.IndexOf(search, StringComparison.OrdinalIgnoreCase)  >= 0 ||
+                    p.Position.IndexOf(search, StringComparison.OrdinalIgnoreCase)  >= 0 ||
+                    p.Team.IndexOf(search, StringComparison.OrdinalIgnoreCase)      >= 0 ||
+                    p.Username.IndexOf(search, StringComparison.OrdinalIgnoreCase)  >= 0);
+
+            var list = result.ToList();
+            Grid.ItemsSource = list;
+
+            if (CountLabel != null)
+                CountLabel.Text = list.Count == _all.Count
+                    ? $"{_all.Count} работников"
+                    : $"{list.Count} из {_all.Count}";
         }
 
         private void Search_GotFocus(object s, RoutedEventArgs e)  { if (SearchBox.Text.StartsWith("🔍")) SearchBox.Text = ""; SearchBox.Foreground = System.Windows.Media.Brushes.White; }
         private void Search_LostFocus(object s, RoutedEventArgs e) { if (string.IsNullOrWhiteSpace(SearchBox.Text)) { SearchBox.Text = "🔍  Поиск..."; SearchBox.Foreground = System.Windows.Media.Brushes.Gray; } }
         private void Search_TextChanged(object s, System.Windows.Controls.TextChangedEventArgs e)
             => Apply(SearchBox.Text.StartsWith("🔍") ? "" : SearchBox.Text);
+        private void Filter_Changed(object s, System.Windows.Controls.SelectionChangedEventArgs e)
+            => Apply(SearchBox?.Text.StartsWith("🔍") == true ? "" : SearchBox?.Text ?? "");
 
         private void AddBtn_Click(object s, RoutedEventArgs e)
         {
@@ -71,7 +88,7 @@ namespace Space
             AddPosition.Text = item.Position == "—" ? "" : item.Position;
 
             foreach (System.Windows.Controls.ComboBoxItem ci in AddRole.Items)
-                if (ci.Content?.ToString() == item.Role) { AddRole.SelectedItem = ci; break; }
+                if (ci.Tag?.ToString() == item.Role) { AddRole.SelectedItem = ci; break; }
 
             // hide login/password fields on edit — username changes aren't supported here
             LoginRow.Visibility = Visibility.Collapsed;
@@ -89,7 +106,7 @@ namespace Space
                 { AddError.Text = "Введите имя"; AddError.Visibility = Visibility.Visible; return; }
                 try
                 {
-                    var role = (AddRole.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content?.ToString() ?? "developer";
+                    var role = (AddRole.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Tag?.ToString() ?? "developer";
                     await DatabaseService.UpdateEmployeeAsync(_editId, AddFullName.Text.Trim(),
                         AddEmail.Text.Trim(), AddPosition.Text.Trim(), role);
                     _editId = -1;
@@ -106,7 +123,7 @@ namespace Space
                 { AddError.Text = "Заполните Имя, Логин и Пароль"; AddError.Visibility = Visibility.Visible; return; }
                 try
                 {
-                    var role = (AddRole.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content?.ToString() ?? "developer";
+                    var role = (AddRole.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Tag?.ToString() ?? "developer";
                     await DatabaseService.AddEmployeeAsync(AddFullName.Text.Trim(), AddEmail.Text.Trim(),
                         AddPosition.Text.Trim(), AddUsername.Text.Trim(), AddPassword.Text.Trim(), role);
                     AddFullName.Text = AddEmail.Text = AddPosition.Text = AddUsername.Text = AddPassword.Text = "";

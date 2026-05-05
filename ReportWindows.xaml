@@ -1,7 +1,7 @@
 <Window x:Class="Space.ReportWindows"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="SpaceZ — Отчёты" Height="600" Width="980"
+        Title="SpaceZ — Отчёты" Height="650" Width="1100"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent">
 
@@ -17,9 +17,9 @@
             <Grid Grid.Row="0" Background="#0B1120" MouseLeftButtonDown="TitleBar_MouseDown">
                 <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Margin="14,0,0,0" Width="92">
                     <TextBlock Text="Space" FontSize="16" FontWeight="Bold" Foreground="White"
-                               VerticalAlignment="Center" Margin="-10,0,10,0"/>
+                   VerticalAlignment="Center" Margin="4,0,-4,0"/>
                     <Image Source="/Assets/Z.png" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top"
-                           Margin="0,-2,-28,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+               Margin="0,-2,-10,0" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Grid>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
                     <Button Content="─" Style="{StaticResource TitleBtnStyle}" Click="Minimize_Click"/>
@@ -30,7 +30,7 @@
             <!-- Body -->
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="210"/>
+                    <ColumnDefinition Width="195"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
@@ -69,11 +69,17 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" Margin="0,0,0,2">
-                        <TextBlock Text="Отчёты" Style="{StaticResource PageTitleStyle}"/>
-                        <TextBlock Text="Учёт рабочего времени по задачам" Style="{StaticResource PageSubtitleStyle}"/>
-                    </StackPanel>
+                    <!-- Page header with counter -->
+                    <Grid Grid.Row="0" Margin="0,0,0,2">
+                        <StackPanel>
+                            <TextBlock Text="Отчёты" Style="{StaticResource PageTitleStyle}"/>
+                            <TextBlock Text="Учёт рабочего времени по задачам" Style="{StaticResource PageSubtitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock x:Name="CountLabel" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                   Foreground="#4B5563" FontSize="12" Margin="0,0,0,4"/>
+                    </Grid>
 
+                    <!-- Toolbar -->
                     <Grid Grid.Row="1" Margin="0,12,0,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -123,13 +129,13 @@
                               ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
                               CellStyle="{StaticResource GridCellStyle}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID"          Binding="{Binding Id}"       Width="50"/>
+                            <DataGridTextColumn Header="ID"          Binding="{Binding Id}"       Width="45"/>
                             <DataGridTextColumn Header="Задача"      Binding="{Binding Task}"      Width="*"/>
-                            <DataGridTextColumn Header="Работник"    Binding="{Binding Employee}"  Width="140"/>
+                            <DataGridTextColumn Header="Работник"    Binding="{Binding Employee}"  Width="145"/>
                             <DataGridTextColumn Header="Дата"        Binding="{Binding LogDate}"   Width="90"/>
-                            <DataGridTextColumn Header="Часов"       Binding="{Binding Hours}"     Width="65"/>
-                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}"   Width="160"/>
-                            <DataGridTemplateColumn Header="Действия" Width="155">
+                            <DataGridTextColumn Header="Часов"       Binding="{Binding Hours}"     Width="60"/>
+                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}"   Width="175"/>
+                            <DataGridTemplateColumn Header="Действия" Width="150">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">

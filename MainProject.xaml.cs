@@ -27,20 +27,37 @@ namespace Space
             catch (Exception ex) { MessageBox.Show("Ошибка загрузки: " + ex.Message); }
         }
 
-        private void Apply(string filter = "")
+        private void Apply(string search = "")
         {
             if (Grid == null) return;
-            Grid.ItemsSource = string.IsNullOrWhiteSpace(filter)
-                ? _all
-                : _all.Where(p => p.Name.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0
-                               || p.Manager.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0
-                               || p.Status.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+
+            var statusFilter = (FilterStatus?.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Tag?.ToString() ?? "";
+
+            var result = _all.AsEnumerable();
+
+            if (!string.IsNullOrEmpty(statusFilter))
+                result = result.Where(p => p.Status == statusFilter);
+            if (!string.IsNullOrWhiteSpace(search))
+                result = result.Where(p =>
+                    p.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase)    >= 0 ||
+                    p.Manager.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    p.Status.IndexOf(search, StringComparison.OrdinalIgnoreCase)  >= 0);
+
+            var list = result.ToList();
+            Grid.ItemsSource = list;
+
+            if (CountLabel != null)
+                CountLabel.Text = list.Count == _all.Count
+                    ? $"{_all.Count} проектов"
+                    : $"{list.Count} из {_all.Count}";
         }
 
         private void Search_GotFocus(object s, RoutedEventArgs e)  { if (SearchBox.Text.StartsWith("🔍")) SearchBox.Text = ""; SearchBox.Foreground = System.Windows.Media.Brushes.White; }
         private void Search_LostFocus(object s, RoutedEventArgs e) { if (string.IsNullOrWhiteSpace(SearchBox.Text)) { SearchBox.Text = "🔍  Поиск..."; SearchBox.Foreground = System.Windows.Media.Brushes.Gray; } }
         private void Search_TextChanged(object s, System.Windows.Controls.TextChangedEventArgs e)
             => Apply(SearchBox.Text.StartsWith("🔍") ? "" : SearchBox.Text);
+        private void Filter_Changed(object s, System.Windows.Controls.SelectionChangedEventArgs e)
+            => Apply(SearchBox?.Text.StartsWith("🔍") == true ? "" : SearchBox?.Text ?? "");
 
         private void AddBtn_Click(object s, RoutedEventArgs e)
         {
@@ -64,7 +81,7 @@ namespace Space
             AddStart.Text    = item.StartDate == "—" ? "" : item.StartDate;
             AddDeadline.Text = item.Deadline  == "—" ? "" : item.Deadline;
             foreach (System.Windows.Controls.ComboBoxItem ci in AddStatus.Items)
-                if (ci.Content?.ToString() == item.Status) { AddStatus.SelectedItem = ci; break; }
+                if (ci.Tag?.ToString() == item.Status) { AddStatus.SelectedItem = ci; break; }
             AddError.Visibility = Visibility.Collapsed;
             AddPanel.Visibility = Visibility.Visible;
         }
@@ -76,7 +93,7 @@ namespace Space
             if (!DateTime.TryParseExact(AddDeadline.Text, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime dl)) { AddError.Text = "Неверный формат дедлайна"; AddError.Visibility = Visibility.Visible; return; }
             try
             {
-                var status = (AddStatus.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content?.ToString() ?? "active";
+                var status = (AddStatus.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Tag?.ToString() ?? "active";
                 if (_editId > 0)
                     await DatabaseService.UpdateProjectAsync(_editId, AddName.Text.Trim(), start, dl, status);
                 else

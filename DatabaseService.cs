@@ -23,6 +23,9 @@ namespace Space
         public string Deadline    { get; set; }
         public string Status      { get; set; }
         public string Manager     { get; set; }
+
+        public string StatusLabel => Status == "active" ? "Активен"
+                                   : Status == "closed" ? "Закрыт" : Status;
     }
 
     public class EmployeeItem
@@ -34,6 +37,11 @@ namespace Space
         public string Team     { get; set; }
         public string Username { get; set; }
         public string Role     { get; set; }
+
+        public string RoleLabel => Role == "developer" ? "Разработчик"
+                                 : Role == "tester"    ? "Тестировщик"
+                                 : Role == "manager"   ? "Менеджер"
+                                 : Role == "admin"     ? "Администратор" : Role;
     }
 
     public class TeamItem
@@ -100,6 +108,22 @@ namespace Space
         public string Deadline   { get; set; }
         public int?   ProjectId  { get; set; }
         public int?   AssigneeId { get; set; }
+
+        // Quick-advance helpers (Linear-style)
+        public string NextStatusLabel => Status == "open"        ? "Начать"
+                                       : Status == "in_progress" ? "На тест"
+                                       : Status == "testing"     ? "Закрыть" : "";
+        public bool CanAdvance => Status != "closed";
+
+        // Display-friendly labels
+        public string StatusLabel   => Status   == "open"        ? "Открыта"
+                                     : Status   == "in_progress" ? "В работе"
+                                     : Status   == "testing"     ? "Тест"
+                                     : Status   == "closed"      ? "Закрыта"  : Status;
+        public string PriorityLabel => Priority == "critical"    ? "Критичный"
+                                     : Priority == "high"        ? "Высокий"
+                                     : Priority == "medium"      ? "Средний"
+                                     : Priority == "low"         ? "Низкий"   : Priority;
     }
 
     public class DropdownItem

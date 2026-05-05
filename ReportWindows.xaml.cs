@@ -33,14 +33,23 @@ namespace Space
             catch (Exception ex) { MessageBox.Show("Ошибка загрузки: " + ex.Message); }
         }
 
-        private void Apply(string filter = "")
+        private void Apply(string search = "")
         {
             if (Grid == null) return;
-            Grid.ItemsSource = string.IsNullOrWhiteSpace(filter)
+
+            var list = string.IsNullOrWhiteSpace(search)
                 ? _all
-                : _all.Where(w => w.Task.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0
-                               || w.Employee.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0
-                               || w.Comment.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                : _all.Where(w =>
+                    w.Task.IndexOf(search, StringComparison.OrdinalIgnoreCase)     >= 0 ||
+                    w.Employee.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    w.Comment.IndexOf(search, StringComparison.OrdinalIgnoreCase)  >= 0).ToList();
+
+            Grid.ItemsSource = list;
+
+            if (CountLabel != null)
+                CountLabel.Text = list.Count == _all.Count
+                    ? $"{_all.Count} записей"
+                    : $"{list.Count} из {_all.Count}";
         }
 
         private void Search_GotFocus(object s, RoutedEventArgs e)  { if (SearchBox.Text.StartsWith("🔍")) SearchBox.Text = ""; SearchBox.Foreground = System.Windows.Media.Brushes.White; }
