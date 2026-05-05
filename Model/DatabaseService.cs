@@ -18,9 +18,6 @@ namespace Space
             "SSL Mode=Require;" +
             "Trust Server Certificate=true;" +
             "Pooling=true;" +
-            "Min Pool Size=5;" +
-            "Max Pool Size=100;" +
-            "Connection Lifetime=300;" +
             "No Reset On Close=true;";
 
         // ─── Cache ────────────────────────────────────────────────────────────

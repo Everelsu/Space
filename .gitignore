@@ -1,1 +1,13 @@
 Nothing should be ignored based on the provided file changes. The modification of 'Model/DatabaseService.cs' represents a standard source code file change without any build artifacts, dependencies, or temporary files that would warrant adding to .gitignore.
+/.vs
+/.vs
+/bin
+/obj
+/obj
+/obj/Debug
+/packages
+/obj
+/.vs
+/.vs
+/.vs/Space.slnx/v18
+.vs/Space.slnx/v18/.suo

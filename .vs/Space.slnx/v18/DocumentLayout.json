@@ -3,8 +3,52 @@
   "WorkspaceRootPath": "C:\\Dev\\Space\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\model\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:model\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\reportwindows.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\reportwindows.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|c:\\dev\\space\\mainwindows\\readproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\readproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\mainproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\mainproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|c:\\dev\\space\\mainwindows\\reportwindows.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\reportwindows.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\taskmanagewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\taskmanagewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\taskswindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\taskswindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|c:\\dev\\space\\model\\worklogitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:model\\worklogitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\model\\logitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:model\\logitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|c:\\dev\\space\\mainwindows\\teemproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\teemproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|c:\\dev\\space\\mainwindows\\taskmanagewindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\taskmanagewindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\addwindows\\addteem.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -15,24 +59,8 @@
       "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\addwindows\\addtask.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\taskswindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\taskswindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\taskmanagewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\taskmanagewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\model\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:model\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\model\\employeeitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:model\\employeeitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\model\\logitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:model\\logitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\addwindows\\addproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -71,20 +99,8 @@
       "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:model\\projectitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\styles\\sharedstyles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:styles\\sharedstyles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\reportwindows.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\reportwindows.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\mainproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\mainproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\autorisation.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -102,11 +118,62 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 7,
+              "Title": "WorkLogItem.cs",
+              "DocumentMoniker": "C:\\Dev\\Space\\Model\\WorkLogItem.cs",
+              "RelativeDocumentMoniker": "Model\\WorkLogItem.cs",
+              "ToolTip": "C:\\Dev\\Space\\Model\\WorkLogItem.cs",
+              "RelativeToolTip": "Model\\WorkLogItem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T15:36:04.397Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ReportWindows.xaml.cs",
+              "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\ReportWindows.xaml.cs",
+              "RelativeDocumentMoniker": "MainWindows\\ReportWindows.xaml.cs",
+              "ToolTip": "C:\\Dev\\Space\\MainWindows\\ReportWindows.xaml.cs",
+              "RelativeToolTip": "MainWindows\\ReportWindows.xaml.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAcwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T15:35:48.011Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "MainWindows\\TaskManageWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\TaskManageWindow.xaml.cs",
+              "RelativeDocumentMoniker": "MainWindows\\TaskManageWindow.xaml.cs",
+              "ToolTip": "C:\\Dev\\Space\\MainWindows\\TaskManageWindow.xaml.cs",
+              "RelativeToolTip": "MainWindows\\TaskManageWindow.xaml.cs",
+              "ViewState": "AgIAAHEAAAAAAAAAAAApwLsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T15:33:31.255Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "TeemProject.xaml",
+              "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\TeemProject.xaml",
+              "RelativeDocumentMoniker": "MainWindows\\TeemProject.xaml",
+              "ToolTip": "C:\\Dev\\Space\\MainWindows\\TeemProject.xaml",
+              "RelativeToolTip": "MainWindows\\TeemProject.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-05-05T13:54:49.218Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "ReadProject.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\ReadProject.xaml",
               "RelativeDocumentMoniker": "MainWindows\\ReadProject.xaml",
@@ -118,18 +185,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "TasksWindow.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\TasksWindow.xaml",
               "RelativeDocumentMoniker": "MainWindows\\TasksWindow.xaml",
               "ToolTip": "C:\\Dev\\Space\\MainWindows\\TasksWindow.xaml",
               "RelativeToolTip": "MainWindows\\TasksWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-05T04:37:04.655Z"
+              "WhenOpened": "2026-05-05T04:37:04.655Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 19,
               "Title": "Autorisation.xaml.cs",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\Autorisation.xaml.cs",
               "RelativeDocumentMoniker": "MainWindows\\Autorisation.xaml.cs",
@@ -141,19 +209,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "DatabaseService.cs",
               "DocumentMoniker": "C:\\Dev\\Space\\Model\\DatabaseService.cs",
               "RelativeDocumentMoniker": "Model\\DatabaseService.cs",
               "ToolTip": "C:\\Dev\\Space\\Model\\DatabaseService.cs",
               "RelativeToolTip": "Model\\DatabaseService.cs",
-              "ViewState": "AgIAACkCAAAAAAAAAADwvyQAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAABMAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T03:44:36.914Z"
+              "WhenOpened": "2026-05-05T03:44:36.914Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 22,
               "Title": "TaskManageItem.cs",
               "DocumentMoniker": "C:\\Dev\\Space\\Model\\TaskManageItem.cs",
               "RelativeDocumentMoniker": "Model\\TaskManageItem.cs",
@@ -165,7 +234,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 23,
               "Title": "ProjectItem.cs",
               "DocumentMoniker": "C:\\Dev\\Space\\Model\\ProjectItem.cs",
               "RelativeDocumentMoniker": "Model\\ProjectItem.cs",
@@ -177,19 +246,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "LogItem.cs",
               "DocumentMoniker": "C:\\Dev\\Space\\Model\\LogItem.cs",
               "RelativeDocumentMoniker": "Model\\LogItem.cs",
               "ToolTip": "C:\\Dev\\Space\\Model\\LogItem.cs",
               "RelativeToolTip": "Model\\LogItem.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADBSURBVDhPY2AYBQwMDAwMN17c\u002BO\u002B1yv2/4ETe/9aLLf7feHH9P7L8vHNz4XxkNhxYLzb/33yo4T8DAwND06GG/16r3FEUCU7khfOR2QwMDAyMMMH3\u002BZ8ZYYK6czX/X06\u002Bzjjv3Nz/xYcLkNXDgausO8OqoDUQPeimogN8LmBC5pADsBqgO1fzPwM0wGA2Ck7kRWGHrQtBuMRzlfv/5sONkEA83PjferEF0YHIwACNRqtF5v8FJ/L\u002B91zpRno0jnAAAA95Yu0ct6ifAAAAAElFTkSuQmCC",
-              "WhenOpened": "2026-05-05T03:44:28.633Z"
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T03:44:28.633Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 14,
               "Title": "EmployeeItem.cs",
               "DocumentMoniker": "C:\\Dev\\Space\\Model\\EmployeeItem.cs",
               "RelativeDocumentMoniker": "Model\\EmployeeItem.cs",
@@ -201,7 +271,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 17,
               "Title": "DropdownItem.cs",
               "DocumentMoniker": "C:\\Dev\\Space\\Model\\DropdownItem.cs",
               "RelativeDocumentMoniker": "Model\\DropdownItem.cs",
@@ -213,18 +283,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 11,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
               "ToolTip": "C:\\Dev\\Space\\MainWindow.xaml",
               "RelativeToolTip": "MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-05T03:43:56.32Z"
+              "WhenOpened": "2026-05-05T03:43:56.32Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 18,
               "Title": "App.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\App.xaml",
               "RelativeDocumentMoniker": "App.xaml",
@@ -236,7 +307,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 21,
               "Title": "TaskItem.cs",
               "DocumentMoniker": "C:\\Dev\\Space\\Model\\TaskItem.cs",
               "RelativeDocumentMoniker": "Model\\TaskItem.cs",
@@ -248,7 +319,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 20,
               "Title": "TeamItem.cs",
               "DocumentMoniker": "C:\\Dev\\Space\\Model\\TeamItem.cs",
               "RelativeDocumentMoniker": "Model\\TeamItem.cs",
@@ -260,7 +331,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 24,
               "Title": "SharedStyles.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\Styles\\SharedStyles.xaml",
               "RelativeDocumentMoniker": "Styles\\SharedStyles.xaml",
@@ -272,29 +343,31 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 3,
               "Title": "MainProject.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\MainProject.xaml",
               "RelativeDocumentMoniker": "MainWindows\\MainProject.xaml",
               "ToolTip": "C:\\Dev\\Space\\MainWindows\\MainProject.xaml",
               "RelativeToolTip": "MainWindows\\MainProject.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-05T03:43:19.29Z"
+              "WhenOpened": "2026-05-05T03:43:19.29Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 25,
               "Title": "Autorisation.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\Autorisation.xaml",
               "RelativeDocumentMoniker": "MainWindows\\Autorisation.xaml",
               "ToolTip": "C:\\Dev\\Space\\MainWindows\\Autorisation.xaml",
               "RelativeToolTip": "MainWindows\\Autorisation.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-05T03:41:37.737Z"
+              "WhenOpened": "2026-05-05T03:41:37.737Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 13,
               "Title": "AddTask.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\AddWindows\\AddTask.xaml",
               "RelativeDocumentMoniker": "MainWindows\\AddWindows\\AddTask.xaml",
@@ -305,29 +378,31 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "TaskManageWindow.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\TaskManageWindow.xaml",
               "RelativeDocumentMoniker": "MainWindows\\TaskManageWindow.xaml",
               "ToolTip": "C:\\Dev\\Space\\MainWindows\\TaskManageWindow.xaml",
               "RelativeToolTip": "MainWindows\\TaskManageWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-05T03:33:15.078Z"
+              "WhenOpened": "2026-05-05T03:33:15.078Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 1,
               "Title": "ReportWindows.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\ReportWindows.xaml",
               "RelativeDocumentMoniker": "MainWindows\\ReportWindows.xaml",
               "ToolTip": "C:\\Dev\\Space\\MainWindows\\ReportWindows.xaml",
               "RelativeToolTip": "MainWindows\\ReportWindows.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-05T03:33:13.535Z"
+              "WhenOpened": "2026-05-05T03:33:13.535Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 26,
               "Title": "AddWorker.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\AddWindows\\AddWorker.xaml",
               "RelativeDocumentMoniker": "MainWindows\\AddWindows\\AddWorker.xaml",
@@ -338,7 +413,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 12,
               "Title": "AddTeem.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\AddWindows\\AddTeem.xaml",
               "RelativeDocumentMoniker": "MainWindows\\AddWindows\\AddTeem.xaml",
@@ -349,7 +424,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 16,
               "Title": "AddReport.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\AddWindows\\AddReport.xaml",
               "RelativeDocumentMoniker": "MainWindows\\AddWindows\\AddReport.xaml",
@@ -360,7 +435,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 15,
               "Title": "AddProject.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\AddWindows\\AddProject.xaml",
               "RelativeDocumentMoniker": "MainWindows\\AddWindows\\AddProject.xaml",

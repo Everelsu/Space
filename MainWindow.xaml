@@ -79,10 +79,10 @@
                                         <ColumnDefinition Width="34"/>
                                     </Grid.ColumnDefinitions>
                                     <Button Content="Выйти" Height="28" FontSize="11"
-                                            Style="{StaticResource NavBtnStyle}" Click="Exit_Click"/>
-                                    <Button Grid.Column="2" Content="ℹ" Height="28" FontSize="14"
+                                            Style="{StaticResource NavBtnStyle}" Click="Exit_Click" Margin="0,0,6,0"/>
+                                    <Button Content="ℹ" Height="28" FontSize="14"
                                             Style="{StaticResource NavBtnStyle}"
-                                            ToolTip="О разработчике" Click="About_Click"/>
+                                            ToolTip="О разработчике" Click="About_Click" Grid.ColumnSpan="3" Margin="124,0,0,0"/>
                                 </Grid>
                             </StackPanel>
                         </Border>
