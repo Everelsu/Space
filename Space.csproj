@@ -130,6 +130,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindows\AddWindows\AddProject.xaml.cs">
       <DependentUpon>AddProject.xaml</DependentUpon>
     </Compile>
@@ -143,6 +146,10 @@
       <DependentUpon>AddWorker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\DatabaseService.cs" />
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindows\AddWindows\AddProject.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

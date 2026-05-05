@@ -8,7 +8,6 @@ namespace Space
 {
     public partial class MainProject : UserControl
     {
-
         private List<ProjectItem> _all = new List<ProjectItem>();
         private int _editId = -1;
 

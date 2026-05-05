@@ -49,9 +49,9 @@
                             HorizontalAlignment="Right" VerticalAlignment="Center"
                             Margin="0,0,8,0">
                     <Button Content="─" Width="28" Height="28" FontSize="11"
-                            Style="{StaticResource TitleBarBtnStyle}" Click="Minimize_Click"/>
+                            Style="{StaticResource TitleBtnStyle}" Click="Minimize_Click"/>
                     <Button Content="✕" Width="28" Height="28" FontSize="11"
-                            Style="{StaticResource TitleBarBtnStyle}" Click="Close_Click"/>
+                            Style="{StaticResource TitleBtnStyle}" Click="Close_Click"/>
                 </StackPanel>
             </Grid>
 
