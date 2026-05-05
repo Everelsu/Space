@@ -2,22 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace Space
 {
-    public partial class ReportWindows : Window
+    public partial class ReportWindows : UserControl
     {
-        private readonly UserInfo _user;
         private List<WorkLogItem> _all = new List<WorkLogItem>();
         private int _editId = -1;
 
-        public ReportWindows(UserInfo user)
+        public ReportWindows()
         {
             InitializeComponent();
-            _user = user;
-            SidebarRole.Text     = (_user.Role ?? "user").ToUpper();
-            SidebarUsername.Text = _user.Username;
             Loaded += async (s, e) =>
             {
                 await Reload();
@@ -74,7 +70,7 @@ namespace Space
 
         private void Edit_Click(object s, RoutedEventArgs e)
         {
-            var id   = (int)((System.Windows.Controls.Button)s).Tag;
+            var id   = (int)((Button)s).Tag;
             var item = _all.FirstOrDefault(w => w.Id == id);
             if (item == null) return;
 
@@ -82,11 +78,9 @@ namespace Space
             FormTitle.Text  = "Редактировать отчёт";
             SaveBtn.Content = "Обновить";
 
-            // Task and employee are read-only on edit
             AddTask.IsEnabled     = false;
             AddEmployee.IsEnabled = false;
 
-            // Pre-select the current task/employee in the combos (display only)
             foreach (DropdownItem di in AddTask.Items)
                 if (di.Id == item.TaskId) { AddTask.SelectedItem = di; break; }
             foreach (DropdownItem di in AddEmployee.Items)
@@ -141,21 +135,12 @@ namespace Space
 
         private async void Delete_Click(object s, RoutedEventArgs e)
         {
-            if ((int)((System.Windows.Controls.Button)s).Tag is int id && id > 0)
+            if ((int)((Button)s).Tag is int id && id > 0)
                 if (MessageBox.Show("Удалить отчёт?", "Подтверждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     try { await DatabaseService.DeleteWorkLogAsync(id); await Reload(); }
                     catch (Exception ex) { MessageBox.Show("Ошибка: " + ex.Message); }
                 }
         }
-
-        private void NavProjects_Click(object s, RoutedEventArgs e)  { new MainProject(_user).Show(); Close(); }
-        private void NavEmployees_Click(object s, RoutedEventArgs e) { new TasksWindow(_user).Show(); Close(); }
-        private void NavTeams_Click(object s, RoutedEventArgs e)     { new TeemProject(_user).Show(); Close(); }
-        private void NavTasks_Click(object s, RoutedEventArgs e)     { new TaskManageWindow(_user).Show(); Close(); }
-        private void Exit_Click(object s, RoutedEventArgs e)         { new Autorisation().Show(); Close(); }
-        private void TitleBar_MouseDown(object s, MouseButtonEventArgs e) { if (e.LeftButton == MouseButtonState.Pressed) DragMove(); }
-        private void Minimize_Click(object s, RoutedEventArgs e) => WindowState = WindowState.Minimized;
-        private void Close_Click(object s, RoutedEventArgs e)    => Close();
     }
 }

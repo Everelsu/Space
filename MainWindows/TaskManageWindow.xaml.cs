@@ -2,24 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace Space
 {
-    public partial class TaskManageWindow : Window
+    public partial class TaskManageWindow : UserControl
     {
-        private readonly UserInfo _user;
         private List<TaskManageItem> _all      = new List<TaskManageItem>();
         private List<DropdownItem>   _projects  = new List<DropdownItem>();
         private List<DropdownItem>   _employees = new List<DropdownItem>();
         private int _editId = -1;
 
-        public TaskManageWindow(UserInfo user)
+        public TaskManageWindow()
         {
             InitializeComponent();
-            _user = user;
-            SidebarRole.Text     = (_user.Role ?? "user").ToUpper();
-            SidebarUsername.Text = _user.Username;
             Loaded += async (s, e) =>
             {
                 _projects  = await DatabaseService.GetProjectsDropdownAsync();
@@ -40,9 +36,8 @@ namespace Space
         {
             if (Grid == null) return;
 
-            var statusFilter   = (FilterStatus?.SelectedItem   as System.Windows.Controls.ComboBoxItem)?.Tag?.ToString() ?? "";
-            var priorityFilter = (FilterPriority?.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Tag?.ToString() ?? "";
-
+            var statusFilter   = (FilterStatus?.SelectedItem   as ComboBoxItem)?.Tag?.ToString() ?? "";
+            var priorityFilter = (FilterPriority?.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "";
             var result = _all.AsEnumerable();
 
             if (!string.IsNullOrEmpty(statusFilter))
@@ -57,25 +52,16 @@ namespace Space
 
             var list = result.ToList();
             Grid.ItemsSource = list;
-
             if (CountLabel != null)
                 CountLabel.Text = list.Count == _all.Count
                     ? $"{_all.Count} заданий"
                     : $"{list.Count} из {_all.Count}";
         }
 
-        // ── Search & Filters ──────────────────────────────────────────────────
-
-        private void Search_GotFocus(object s, RoutedEventArgs e)
-        { if (SearchBox.Text.StartsWith("🔍")) SearchBox.Text = ""; SearchBox.Foreground = System.Windows.Media.Brushes.White; }
-        private void Search_LostFocus(object s, RoutedEventArgs e)
-        { if (string.IsNullOrWhiteSpace(SearchBox.Text)) { SearchBox.Text = "🔍  Поиск..."; SearchBox.Foreground = System.Windows.Media.Brushes.Gray; } }
-        private void Search_TextChanged(object s, System.Windows.Controls.TextChangedEventArgs e)
-            => Apply(SearchBox.Text.StartsWith("🔍") ? "" : SearchBox.Text);
-        private void Filter_Changed(object s, System.Windows.Controls.SelectionChangedEventArgs e)
-            => Apply(SearchBox?.Text.StartsWith("🔍") == true ? "" : SearchBox?.Text ?? "");
-
-        // ── Add / Edit form ───────────────────────────────────────────────────
+        private void Search_GotFocus(object s, RoutedEventArgs e)  { if (SearchBox.Text.StartsWith("🔍")) SearchBox.Text = ""; SearchBox.Foreground = System.Windows.Media.Brushes.White; }
+        private void Search_LostFocus(object s, RoutedEventArgs e) { if (string.IsNullOrWhiteSpace(SearchBox.Text)) { SearchBox.Text = "🔍  Поиск..."; SearchBox.Foreground = System.Windows.Media.Brushes.Gray; } }
+        private void Search_TextChanged(object s, TextChangedEventArgs e) => Apply(SearchBox.Text.StartsWith("🔍") ? "" : SearchBox.Text);
+        private void Filter_Changed(object s, SelectionChangedEventArgs e) => Apply(SearchBox?.Text.StartsWith("🔍") == true ? "" : SearchBox?.Text ?? "");
 
         private void AddBtn_Click(object s, RoutedEventArgs e)
         {
@@ -88,36 +74,32 @@ namespace Space
             AddPriority.SelectedIndex = 0;
             AddStatus.SelectedIndex   = 0;
             AddError.Visibility = Visibility.Collapsed;
-            AddPanel.Visibility = AddPanel.Visibility == Visibility.Collapsed
-                ? Visibility.Visible : Visibility.Collapsed;
+            AddPanel.Visibility = AddPanel.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void Edit_Click(object s, RoutedEventArgs e)
         {
-            var id   = (int)((System.Windows.Controls.Button)s).Tag;
+            var id   = (int)((Button)s).Tag;
             var item = _all.FirstOrDefault(t => t.Id == id);
             if (item == null) return;
 
             _editId = id;
             FormTitle.Text  = "Редактировать задание";
             SaveBtn.Content = "Обновить";
-
             AddTitle.Text = item.Title;
             AddProject.SelectedItem  = _projects.FirstOrDefault(p => p.Id == item.ProjectId);
             AddAssignee.SelectedItem = item.AssigneeId.HasValue
                 ? _employees.FirstOrDefault(e2 => e2.Id == item.AssigneeId) : null;
-
             SetCombo(AddPriority, item.Priority);
             SetCombo(AddStatus,   item.Status);
             AddDeadline.Text = item.Deadline == "—" ? "" : item.Deadline;
-
             AddError.Visibility = Visibility.Collapsed;
             AddPanel.Visibility = Visibility.Visible;
         }
 
-        private void SetCombo(System.Windows.Controls.ComboBox cb, string value)
+        private void SetCombo(ComboBox cb, string value)
         {
-            foreach (System.Windows.Controls.ComboBoxItem ci in cb.Items)
+            foreach (ComboBoxItem ci in cb.Items)
                 if (ci.Tag?.ToString() == value) { cb.SelectedItem = ci; return; }
             cb.SelectedIndex = 0;
         }
@@ -130,8 +112,8 @@ namespace Space
             if (proj == null)
             { AddError.Text = "Выберите проект"; AddError.Visibility = Visibility.Visible; return; }
 
-            var priority = (AddPriority.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Tag?.ToString() ?? "low";
-            var status   = (AddStatus.SelectedItem   as System.Windows.Controls.ComboBoxItem)?.Tag?.ToString() ?? "open";
+            var priority = (AddPriority.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "low";
+            var status   = (AddStatus.SelectedItem   as ComboBoxItem)?.Tag?.ToString() ?? "open";
             var assignee = AddAssignee.SelectedItem as DropdownItem;
             DateTime? deadline = null;
             if (!string.IsNullOrWhiteSpace(AddDeadline.Text))
@@ -151,7 +133,6 @@ namespace Space
                 else
                     await DatabaseService.AddTaskManageAsync(AddTitle.Text.Trim(),
                         proj.Id, assignee?.Id, priority, status, deadline);
-
                 _editId = -1;
                 AddTitle.Text = AddDeadline.Text = "";
                 AddProject.SelectedIndex = AddAssignee.SelectedIndex = -1;
@@ -162,40 +143,23 @@ namespace Space
             catch (Exception ex) { AddError.Text = ex.Message; AddError.Visibility = Visibility.Visible; }
         }
 
-        // ── Quick status advance (Linear-style) ───────────────────────────────
-
         private async void Advance_Click(object s, RoutedEventArgs e)
         {
-            var id   = (int)((System.Windows.Controls.Button)s).Tag;
+            var id   = (int)((Button)s).Tag;
             var item = _all.FirstOrDefault(t => t.Id == id);
             if (item == null || !item.CanAdvance) return;
-            try
-            {
-                await DatabaseService.AdvanceTaskStatusAsync(id, item.Status);
-                await Reload();
-            }
+            try { await DatabaseService.AdvanceTaskStatusAsync(id, item.Status); await Reload(); }
             catch (Exception ex) { MessageBox.Show("Ошибка: " + ex.Message); }
         }
 
         private async void Delete_Click(object s, RoutedEventArgs e)
         {
-            if ((int)((System.Windows.Controls.Button)s).Tag is int id && id > 0)
+            if ((int)((Button)s).Tag is int id && id > 0)
                 if (MessageBox.Show("Удалить задание?", "Подтверждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     try { await DatabaseService.DeleteTaskManageAsync(id); await Reload(); }
                     catch (Exception ex) { MessageBox.Show("Ошибка: " + ex.Message); }
                 }
         }
-
-        // ── Navigation ────────────────────────────────────────────────────────
-
-        private void NavProjects_Click(object s, RoutedEventArgs e)  { new MainProject(_user).Show(); Close(); }
-        private void NavEmployees_Click(object s, RoutedEventArgs e) { new TasksWindow(_user).Show(); Close(); }
-        private void NavTeams_Click(object s, RoutedEventArgs e)     { new TeemProject(_user).Show(); Close(); }
-        private void NavReports_Click(object s, RoutedEventArgs e)   { new ReportWindows(_user).Show(); Close(); }
-        private void Exit_Click(object s, RoutedEventArgs e)         { new Autorisation().Show(); Close(); }
-        private void TitleBar_MouseDown(object s, MouseButtonEventArgs e) { if (e.LeftButton == MouseButtonState.Pressed) DragMove(); }
-        private void Minimize_Click(object s, RoutedEventArgs e) => WindowState = WindowState.Minimized;
-        private void Close_Click(object s, RoutedEventArgs e)    => Close();
     }
 }

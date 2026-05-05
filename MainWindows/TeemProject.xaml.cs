@@ -2,22 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace Space
 {
-    public partial class TeemProject : Window
+    public partial class TeemProject : UserControl
     {
-        private readonly UserInfo _user;
         private List<TeamItem> _all = new List<TeamItem>();
         private int _editId = -1;
 
-        public TeemProject(UserInfo user)
+        public TeemProject()
         {
             InitializeComponent();
-            _user = user;
-            SidebarRole.Text     = (_user.Role ?? "user").ToUpper();
-            SidebarUsername.Text = _user.Username;
             Loaded += async (s, e) => await Reload();
         }
 
@@ -38,7 +34,6 @@ namespace Space
                     t.Lead.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
 
             Grid.ItemsSource = list;
-
             if (CountLabel != null)
                 CountLabel.Text = list.Count == _all.Count
                     ? $"{_all.Count} команд"
@@ -47,8 +42,7 @@ namespace Space
 
         private void Search_GotFocus(object s, RoutedEventArgs e)  { if (SearchBox.Text.StartsWith("🔍")) SearchBox.Text = ""; SearchBox.Foreground = System.Windows.Media.Brushes.White; }
         private void Search_LostFocus(object s, RoutedEventArgs e) { if (string.IsNullOrWhiteSpace(SearchBox.Text)) { SearchBox.Text = "🔍  Поиск..."; SearchBox.Foreground = System.Windows.Media.Brushes.Gray; } }
-        private void Search_TextChanged(object s, System.Windows.Controls.TextChangedEventArgs e)
-            => Apply(SearchBox.Text.StartsWith("🔍") ? "" : SearchBox.Text);
+        private void Search_TextChanged(object s, TextChangedEventArgs e) => Apply(SearchBox.Text.StartsWith("🔍") ? "" : SearchBox.Text);
 
         private void AddBtn_Click(object s, RoutedEventArgs e)
         {
@@ -62,15 +56,13 @@ namespace Space
 
         private void Edit_Click(object s, RoutedEventArgs e)
         {
-            var id   = (int)((System.Windows.Controls.Button)s).Tag;
+            var id   = (int)((Button)s).Tag;
             var item = _all.FirstOrDefault(t => t.Id == id);
             if (item == null) return;
-
             _editId = id;
             FormTitle.Text  = "Редактировать команду";
             SaveBtn.Content = "Обновить";
             AddName.Text    = item.Name;
-
             AddError.Visibility = Visibility.Collapsed;
             AddPanel.Visibility = Visibility.Visible;
         }
@@ -84,7 +76,6 @@ namespace Space
                     await DatabaseService.UpdateTeamAsync(_editId, AddName.Text.Trim());
                 else
                     await DatabaseService.AddTeamAsync(AddName.Text.Trim());
-
                 _editId = -1;
                 AddName.Text = "";
                 AddError.Visibility = Visibility.Collapsed;
@@ -96,21 +87,12 @@ namespace Space
 
         private async void Delete_Click(object s, RoutedEventArgs e)
         {
-            if ((int)((System.Windows.Controls.Button)s).Tag is int id && id > 0)
+            if ((int)((Button)s).Tag is int id && id > 0)
                 if (MessageBox.Show("Удалить команду?", "Подтверждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     try { await DatabaseService.DeleteTeamAsync(id); await Reload(); }
                     catch (Exception ex) { MessageBox.Show("Ошибка: " + ex.Message); }
                 }
         }
-
-        private void NavProjects_Click(object s, RoutedEventArgs e)  { new MainProject(_user).Show(); Close(); }
-        private void NavEmployees_Click(object s, RoutedEventArgs e) { new TasksWindow(_user).Show(); Close(); }
-        private void NavTasks_Click(object s, RoutedEventArgs e)     { new TaskManageWindow(_user).Show(); Close(); }
-        private void NavReports_Click(object s, RoutedEventArgs e)   { new ReportWindows(_user).Show(); Close(); }
-        private void Exit_Click(object s, RoutedEventArgs e)         { new Autorisation().Show(); Close(); }
-        private void TitleBar_MouseDown(object s, MouseButtonEventArgs e) { if (e.LeftButton == MouseButtonState.Pressed) DragMove(); }
-        private void Minimize_Click(object s, RoutedEventArgs e) => WindowState = WindowState.Minimized;
-        private void Close_Click(object s, RoutedEventArgs e)    => Close();
     }
 }

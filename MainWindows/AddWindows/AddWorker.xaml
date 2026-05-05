@@ -1,0 +1,106 @@
+﻿<Window x:Class="Space.AddWindows.AddWorker"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Space.AddWindows"
+        mc:Ignorable="d"
+        Title="AddWorker" Height="450" Width="400">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="10"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#111827"/>
+            <Setter Property="BorderBrush" Value="#111827"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="btnBorder" 
+                     Background="{TemplateBinding Background}" 
+                     BorderBrush="{TemplateBinding BorderBrush}" 
+                     BorderThickness="1" 
+                     CornerRadius="8" 
+                     Padding="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="btnBorder" Property="Background" Value="#1F2937"/>
+                                <Setter TargetName="btnBorder" Property="BorderBrush" Value="#7B3FE4"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="btnBorder" Property="Background" Value="#374151"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#FF3A4358"/>
+            <Setter Property="BorderBrush" Value="#1F2937"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style TargetType="DatePicker">
+            <Setter Property="Background" Value="#FF3A4358"/>
+            <Setter Property="BorderBrush" Value="#FF3A4358"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style TargetType="DatePickerTextBox">
+            <Setter Property="BorderBrush" Value="#FF3A4358"/>
+            <Setter Property="Background" Value="#FF3A4358"/>
+            <Setter Property="Foreground" Value="White"/>
+
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="#FF3A4358"/>
+            <Setter Property="BorderBrush" Value="#1F2937"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Background" Value="#374151"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Background="#111827">
+
+        <Label FontSize="25" HorizontalAlignment="Center" Height="50" VerticalAlignment="Top">Добавление работника</Label>
+
+        <Label HorizontalAlignment="Left" VerticalContentAlignment="Center" Content="ФИ" Height="25" Width="25" Margin="100,64,0,345"/>
+        <TextBox Height="20" Width="200" Margin="100,89,100,325"/>
+
+        <Button Width="70" Height="30" Margin="230,343,100,61">Cоздать</Button>
+        <Button Width="50" Height="30" Margin="175,343,175,61">Отмена</Button>
+
+        <Label HorizontalAlignment="Left" Content="Логин" Height="25" Width="40" Margin="100,114,0,295" />
+        <TextBox Height="20" Width="200" Margin="100,139,100,275"/>
+
+        <Label HorizontalAlignment="Left" Height="25" Width="45"  Content="Пароль" Margin="100,164,0,245"/>
+        <TextBox Height="20" Width="200" Margin="100,189,100,225"/>
+
+        <ComboBox Height="20" Width="200" Margin="100,287,100,127"/>
+        <Label HorizontalAlignment="Left" Height="25" Width="65"  Content="Должность" Margin="100,262,0,147"/>
+
+        <Label HorizontalAlignment="Left" Height="25" Width="35"  Content="Email" Margin="100,214,0,195"/>
+        <TextBox Height="20" Width="200" Margin="100,237,100,177"/>
+
+    </Grid>
+</Window>

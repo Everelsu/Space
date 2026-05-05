@@ -2,22 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace Space
 {
-    public partial class TasksWindow : Window
+    public partial class TasksWindow : UserControl
     {
-        private readonly UserInfo _user;
         private List<EmployeeItem> _all = new List<EmployeeItem>();
         private int _editId = -1;
 
-        public TasksWindow(UserInfo user)
+        public TasksWindow()
         {
             InitializeComponent();
-            _user = user;
-            SidebarRole.Text     = (_user.Role ?? "user").ToUpper();
-            SidebarUsername.Text = _user.Username;
             Loaded += async (s, e) => await Reload();
         }
 
@@ -31,8 +27,7 @@ namespace Space
         {
             if (Grid == null) return;
 
-            var roleFilter = (FilterRole?.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Tag?.ToString() ?? "";
-
+            var roleFilter = (FilterRole?.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "";
             var result = _all.AsEnumerable();
 
             if (!string.IsNullOrEmpty(roleFilter))
@@ -46,7 +41,6 @@ namespace Space
 
             var list = result.ToList();
             Grid.ItemsSource = list;
-
             if (CountLabel != null)
                 CountLabel.Text = list.Count == _all.Count
                     ? $"{_all.Count} работников"
@@ -55,10 +49,8 @@ namespace Space
 
         private void Search_GotFocus(object s, RoutedEventArgs e)  { if (SearchBox.Text.StartsWith("🔍")) SearchBox.Text = ""; SearchBox.Foreground = System.Windows.Media.Brushes.White; }
         private void Search_LostFocus(object s, RoutedEventArgs e) { if (string.IsNullOrWhiteSpace(SearchBox.Text)) { SearchBox.Text = "🔍  Поиск..."; SearchBox.Foreground = System.Windows.Media.Brushes.Gray; } }
-        private void Search_TextChanged(object s, System.Windows.Controls.TextChangedEventArgs e)
-            => Apply(SearchBox.Text.StartsWith("🔍") ? "" : SearchBox.Text);
-        private void Filter_Changed(object s, System.Windows.Controls.SelectionChangedEventArgs e)
-            => Apply(SearchBox?.Text.StartsWith("🔍") == true ? "" : SearchBox?.Text ?? "");
+        private void Search_TextChanged(object s, TextChangedEventArgs e) => Apply(SearchBox.Text.StartsWith("🔍") ? "" : SearchBox.Text);
+        private void Filter_Changed(object s, SelectionChangedEventArgs e) => Apply(SearchBox?.Text.StartsWith("🔍") == true ? "" : SearchBox?.Text ?? "");
 
         private void AddBtn_Click(object s, RoutedEventArgs e)
         {
@@ -75,24 +67,19 @@ namespace Space
 
         private void Edit_Click(object s, RoutedEventArgs e)
         {
-            var id   = (int)((System.Windows.Controls.Button)s).Tag;
+            var id   = (int)((Button)s).Tag;
             var item = _all.FirstOrDefault(p => p.Id == id);
             if (item == null) return;
 
             _editId = id;
             FormTitle.Text  = "Редактировать работника";
             SaveBtn.Content = "Обновить";
-
             AddFullName.Text = item.FullName;
             AddEmail.Text    = item.Email    == "—" ? "" : item.Email;
             AddPosition.Text = item.Position == "—" ? "" : item.Position;
-
-            foreach (System.Windows.Controls.ComboBoxItem ci in AddRole.Items)
+            foreach (ComboBoxItem ci in AddRole.Items)
                 if (ci.Tag?.ToString() == item.Role) { AddRole.SelectedItem = ci; break; }
-
-            // hide login/password fields on edit — username changes aren't supported here
             LoginRow.Visibility = Visibility.Collapsed;
-
             AddError.Visibility = Visibility.Collapsed;
             AddPanel.Visibility = Visibility.Visible;
         }
@@ -101,12 +88,11 @@ namespace Space
         {
             if (_editId > 0)
             {
-                // Edit mode: update name, email, position, role
                 if (string.IsNullOrWhiteSpace(AddFullName.Text))
                 { AddError.Text = "Введите имя"; AddError.Visibility = Visibility.Visible; return; }
                 try
                 {
-                    var role = (AddRole.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Tag?.ToString() ?? "developer";
+                    var role = (AddRole.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "developer";
                     await DatabaseService.UpdateEmployeeAsync(_editId, AddFullName.Text.Trim(),
                         AddEmail.Text.Trim(), AddPosition.Text.Trim(), role);
                     _editId = -1;
@@ -118,12 +104,11 @@ namespace Space
             }
             else
             {
-                // Add mode: require login and password
                 if (string.IsNullOrWhiteSpace(AddFullName.Text) || string.IsNullOrWhiteSpace(AddUsername.Text) || string.IsNullOrWhiteSpace(AddPassword.Text))
                 { AddError.Text = "Заполните Имя, Логин и Пароль"; AddError.Visibility = Visibility.Visible; return; }
                 try
                 {
-                    var role = (AddRole.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Tag?.ToString() ?? "developer";
+                    var role = (AddRole.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "developer";
                     await DatabaseService.AddEmployeeAsync(AddFullName.Text.Trim(), AddEmail.Text.Trim(),
                         AddPosition.Text.Trim(), AddUsername.Text.Trim(), AddPassword.Text.Trim(), role);
                     AddFullName.Text = AddEmail.Text = AddPosition.Text = AddUsername.Text = AddPassword.Text = "";
@@ -137,21 +122,12 @@ namespace Space
 
         private async void Delete_Click(object s, RoutedEventArgs e)
         {
-            if ((int)((System.Windows.Controls.Button)s).Tag is int id && id > 0)
+            if ((int)((Button)s).Tag is int id && id > 0)
                 if (MessageBox.Show("Удалить работника?", "Подтверждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     try { await DatabaseService.DeleteEmployeeAsync(id); await Reload(); }
                     catch (Exception ex) { MessageBox.Show("Ошибка: " + ex.Message); }
                 }
         }
-
-        private void NavProjects_Click(object s, RoutedEventArgs e)  { new MainProject(_user).Show(); Close(); }
-        private void NavTeams_Click(object s, RoutedEventArgs e)     { new TeemProject(_user).Show(); Close(); }
-        private void NavTasks_Click(object s, RoutedEventArgs e)     { new TaskManageWindow(_user).Show(); Close(); }
-        private void NavReports_Click(object s, RoutedEventArgs e)   { new ReportWindows(_user).Show(); Close(); }
-        private void Exit_Click(object s, RoutedEventArgs e)         { new Autorisation().Show(); Close(); }
-        private void TitleBar_MouseDown(object s, MouseButtonEventArgs e) { if (e.LeftButton == MouseButtonState.Pressed) DragMove(); }
-        private void Minimize_Click(object s, RoutedEventArgs e) => WindowState = WindowState.Minimized;
-        private void Close_Click(object s, RoutedEventArgs e)    => Close();
     }
 }

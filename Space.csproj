@@ -126,66 +126,86 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Autorisation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Autorisation.xaml.cs">
-      <DependentUpon>Autorisation.xaml</DependentUpon>
+    <Compile Include="MainWindows\AddWindows\AddProject.xaml.cs">
+      <DependentUpon>AddProject.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseService.cs" />
-    <Page Include="MainProject.xaml">
+    <Compile Include="MainWindows\AddWindows\AddReport.xaml.cs">
+      <DependentUpon>AddReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindows\AddWindows\AddTeem.xaml.cs">
+      <DependentUpon>AddTeem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindows\AddWindows\AddWorker.xaml.cs">
+      <DependentUpon>AddWorker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DatabaseService.cs" />
+    <Page Include="MainWindows\AddWindows\AddProject.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TasksWindow.xaml">
+    <Page Include="MainWindows\AddWindows\AddReport.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TeemProject.xaml">
+    <Page Include="MainWindows\AddWindows\AddTeem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ReportWindows.xaml">
+    <Page Include="MainWindows\AddWindows\AddWorker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TaskManageWindow.xaml">
+    <Page Include="MainWindows\Autorisation.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="MainWindows\MainProject.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindows\TasksWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindows\TeemProject.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindows\ReportWindows.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindows\TaskManageWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainProject.xaml.cs">
-      <DependentUpon>MainProject.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="MainWindows\Autorisation.xaml.cs">
+      <DependentUpon>Autorisation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TasksWindow.xaml.cs">
+    <Compile Include="MainWindows\MainProject.xaml.cs">
+      <DependentUpon>MainProject.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindows\TasksWindow.xaml.cs">
       <DependentUpon>TasksWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TeemProject.xaml.cs">
+    <Compile Include="MainWindows\TeemProject.xaml.cs">
       <DependentUpon>TeemProject.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ReportWindows.xaml.cs">
+    <Compile Include="MainWindows\ReportWindows.xaml.cs">
       <DependentUpon>ReportWindows.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TaskManageWindow.xaml.cs">
+    <Compile Include="MainWindows\TaskManageWindow.xaml.cs">
       <DependentUpon>TaskManageWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -211,7 +231,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Styles\SharedStyles.xaml"/>
+    <Resource Include="Styles\SharedStyles.xaml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -229,5 +249,6 @@
     </BootstrapperPackage>
     <Resource Include="Assets\Z.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
