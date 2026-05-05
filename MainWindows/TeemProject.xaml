@@ -59,10 +59,10 @@
                   CellStyle="{StaticResource GridCellStyle}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID"         Binding="{Binding Id}"          Width="50"/>
-                <DataGridTextColumn Header="Название"   Binding="{Binding Name}"         Width="*"/>
+                <DataGridTextColumn Header="Название"   Binding="{Binding Name}"         Width="280"/>
                 <DataGridTextColumn Header="Лид"        Binding="{Binding Lead}"         Width="210"/>
                 <DataGridTextColumn Header="Участников" Binding="{Binding MemberCount}"  Width="100"/>
-                <DataGridTemplateColumn x:Name="ColActions" Header="Действия" Width="150">
+                <DataGridTemplateColumn x:Name="ColActions" Header="Действия" Width="180">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
