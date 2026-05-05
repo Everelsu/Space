@@ -75,14 +75,14 @@
                                 <Grid Margin="0,8,0,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="6"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="4"/>
+                                        <ColumnDefinition Width="34"/>
                                     </Grid.ColumnDefinitions>
                                     <Button Content="Выйти" Height="28" FontSize="11"
                                             Style="{StaticResource NavBtnStyle}" Click="Exit_Click"/>
-                                    <Button Grid.Column="2" Content="ℹ" Width="28" Height="28"
-                                            FontSize="13" ToolTip="О программе"
-                                            Style="{StaticResource NavBtnStyle}" Click="About_Click"/>
+                                    <Button Grid.Column="2" Content="ℹ" Height="28" FontSize="14"
+                                            Style="{StaticResource NavBtnStyle}"
+                                            ToolTip="О разработчике" Click="About_Click"/>
                                 </Grid>
                             </StackPanel>
                         </Border>
