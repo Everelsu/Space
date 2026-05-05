@@ -91,14 +91,14 @@
                   ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
                   CellStyle="{StaticResource GridCellStyle}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID"        Binding="{Binding Id}"        Width="40"/>
-                <DataGridTextColumn Header="Имя"       Binding="{Binding FullName}"   Width="*"/>
-                <DataGridTextColumn Header="Должность" Binding="{Binding Position}"   Width="115"/>
-                <DataGridTextColumn Header="Email"     Binding="{Binding Email}"      Width="140"/>
-                <DataGridTextColumn Header="Команда"   Binding="{Binding Team}"       Width="90"/>
-                <DataGridTextColumn Header="Логин"     Binding="{Binding Username}"   Width="95"/>
-                <DataGridTextColumn Header="Роль"      Binding="{Binding RoleLabel}"  Width="105"/>
-                <DataGridTemplateColumn x:Name="ColActions" Header="Действия" Width="150">
+                <DataGridTextColumn Header="ID"        Binding="{Binding Id}"        Width="50"/>
+                <DataGridTextColumn Header="Имя"       Binding="{Binding FullName}"   Width="200"/>
+                <DataGridTextColumn Header="Должность" Binding="{Binding Position}"   Width="130"/>
+                <DataGridTextColumn Header="Email"     Binding="{Binding Email}"      Width="160"/>
+                <DataGridTextColumn Header="Команда"   Binding="{Binding Team}"       Width="100"/>
+                <DataGridTextColumn Header="Логин"     Binding="{Binding Username}"   Width="100"/>
+                <DataGridTextColumn Header="Роль"      Binding="{Binding RoleLabel}"  Width="110"/>
+                <DataGridTemplateColumn x:Name="ColActions" Header="Действия" Width="180">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
