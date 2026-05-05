@@ -9,7 +9,6 @@ namespace Space
     public partial class MainProject : UserControl
     {
         private List<ProjectItem> _all = new List<ProjectItem>();
-        private int _editId = -1;
         private readonly UserInfo _user;
 
         public MainProject() : this(null) { }
@@ -21,14 +20,15 @@ namespace Space
             Loaded += async (s, e) => { ApplyRole(); await Reload(); };
         }
 
-        private bool IsAdmin => _user?.Role == "admin";
+        // admin + manager can create / edit / delete projects
+        private bool CanManage => _user?.Role == "admin" || _user?.Role == "manager";
 
         private void ApplyRole()
         {
-            if (!IsAdmin)
+            if (!CanManage)
             {
-                AddBtn.Visibility        = Visibility.Collapsed;
-                ColActions.Visibility    = Visibility.Collapsed;
+                AddBtn.Visibility     = Visibility.Collapsed;
+                ColActions.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -66,52 +66,19 @@ namespace Space
         private void Search_TextChanged(object s, TextChangedEventArgs e) => Apply(SearchBox.Text.StartsWith("🔍") ? "" : SearchBox.Text);
         private void Filter_Changed(object s, SelectionChangedEventArgs e) => Apply(SearchBox?.Text.StartsWith("🔍") == true ? "" : SearchBox?.Text ?? "");
 
-        private void AddBtn_Click(object s, RoutedEventArgs e)
+        private async void AddBtn_Click(object s, RoutedEventArgs e)
         {
-            _editId = -1;
-            FormTitle.Text  = "Новый проект";
-            SaveBtn.Content = "Сохранить";
-            AddName.Text = AddStart.Text = AddDeadline.Text = "";
-            AddError.Visibility = Visibility.Collapsed;
-            AddPanel.Visibility = AddPanel.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+            var dlg = new AddWindows.AddProject { Owner = Window.GetWindow(this) };
+            if (dlg.ShowDialog() == true) await Reload();
         }
 
-        private void Edit_Click(object s, RoutedEventArgs e)
+        private async void Edit_Click(object s, RoutedEventArgs e)
         {
             var id   = (int)((Button)s).Tag;
             var item = _all.FirstOrDefault(p => p.Id == id);
             if (item == null) return;
-            _editId = id;
-            FormTitle.Text  = "Редактировать проект";
-            SaveBtn.Content = "Обновить";
-            AddName.Text     = item.Name;
-            AddStart.Text    = item.StartDate == "—" ? "" : item.StartDate;
-            AddDeadline.Text = item.Deadline  == "—" ? "" : item.Deadline;
-            foreach (ComboBoxItem ci in AddStatus.Items)
-                if (ci.Tag?.ToString() == item.Status) { AddStatus.SelectedItem = ci; break; }
-            AddError.Visibility = Visibility.Collapsed;
-            AddPanel.Visibility = Visibility.Visible;
-        }
-
-        private async void SaveAdd_Click(object s, RoutedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(AddName.Text)) { AddError.Text = "Введите название"; AddError.Visibility = Visibility.Visible; return; }
-            if (!DateTime.TryParseExact(AddStart.Text, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime start)) { AddError.Text = "Неверный формат начала"; AddError.Visibility = Visibility.Visible; return; }
-            if (!DateTime.TryParseExact(AddDeadline.Text, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime dl)) { AddError.Text = "Неверный формат дедлайна"; AddError.Visibility = Visibility.Visible; return; }
-            try
-            {
-                var status = (AddStatus.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "active";
-                if (_editId > 0)
-                    await DatabaseService.UpdateProjectAsync(_editId, AddName.Text.Trim(), start, dl, status);
-                else
-                    await DatabaseService.AddProjectAsync(AddName.Text.Trim(), "", start, dl, status);
-                _editId = -1;
-                AddName.Text = AddStart.Text = AddDeadline.Text = "";
-                AddError.Visibility = Visibility.Collapsed;
-                AddPanel.Visibility = Visibility.Collapsed;
-                await Reload();
-            }
-            catch (Exception ex) { AddError.Text = ex.Message; AddError.Visibility = Visibility.Visible; }
+            var dlg = new AddWindows.AddProject(item) { Owner = Window.GetWindow(this) };
+            if (dlg.ShowDialog() == true) await Reload();
         }
 
         private async void Delete_Click(object s, RoutedEventArgs e)

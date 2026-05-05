@@ -5,7 +5,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -41,41 +40,8 @@
                     Click="AddBtn_Click"/>
         </Grid>
 
-        <!-- Add / Edit form -->
-        <Border Grid.Row="2" x:Name="AddPanel" Visibility="Collapsed"
-                Background="#1E293B" CornerRadius="8" Padding="14,12" Margin="0,0,0,10">
-            <StackPanel>
-                <TextBlock x:Name="FormTitle" Text="Новый проект" Foreground="White" FontSize="13"
-                           FontWeight="SemiBold" Margin="0,0,0,10"/>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="10"/>
-                        <ColumnDefinition Width="130"/>
-                        <ColumnDefinition Width="10"/>
-                        <ColumnDefinition Width="130"/>
-                        <ColumnDefinition Width="10"/>
-                        <ColumnDefinition Width="110"/>
-                        <ColumnDefinition Width="10"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBox  Grid.Column="0" x:Name="AddName"     Style="{StaticResource FormInputStyle}" Tag="Название"/>
-                    <TextBox  Grid.Column="2" x:Name="AddStart"    Style="{StaticResource FormInputStyle}" Tag="Начало (дд.мм.гггг)"/>
-                    <TextBox  Grid.Column="4" x:Name="AddDeadline" Style="{StaticResource FormInputStyle}" Tag="Дедлайн (дд.мм.гггг)"/>
-                    <ComboBox Grid.Column="6" x:Name="AddStatus"   Style="{StaticResource FormComboStyle}">
-                        <ComboBoxItem Content="Активен" Tag="active" IsSelected="True"/>
-                        <ComboBoxItem Content="Закрыт"  Tag="closed"/>
-                    </ComboBox>
-                    <Button Grid.Column="8" x:Name="SaveBtn" Content="Сохранить"
-                            Style="{StaticResource PrimaryBtnStyle}" Click="SaveAdd_Click"/>
-                </Grid>
-                <TextBlock x:Name="AddError" Foreground="#F87171" FontSize="11"
-                           Margin="0,6,0,0" Visibility="Collapsed"/>
-            </StackPanel>
-        </Border>
-
         <!-- DataGrid -->
-        <DataGrid Grid.Row="3" x:Name="Grid" Style="{StaticResource GridStyle}"
+        <DataGrid Grid.Row="2" x:Name="Grid" Style="{StaticResource GridStyle}"
                   ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
                   CellStyle="{StaticResource GridCellStyle}">
             <DataGrid.Columns>

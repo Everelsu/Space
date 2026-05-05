@@ -17,10 +17,10 @@ namespace Space
             SidebarRole.Text     = (_user.Role ?? "user").ToUpper();
             SidebarUsername.Text = _user.Username;
 
-            // Hide admin-only nav sections for non-admins
-            bool isAdmin = _user.Role == "admin";
-            BtnEmployees.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
-            BtnTeams.Visibility     = isAdmin ? Visibility.Visible : Visibility.Collapsed;
+            // Employees + Teams visible for admin and manager
+            bool seeOrgNav = _user.Role == "admin" || _user.Role == "manager";
+            BtnEmployees.Visibility = seeOrgNav ? Visibility.Visible : Visibility.Collapsed;
+            BtnTeams.Visibility     = seeOrgNav ? Visibility.Visible : Visibility.Collapsed;
 
             Navigate(new MainProject(_user), BtnProjects);
         }
@@ -40,7 +40,8 @@ namespace Space
         private void NavTasks_Click(object s, RoutedEventArgs e)     => Navigate(new TaskManageWindow(_user),   BtnTasks);
         private void NavReports_Click(object s, RoutedEventArgs e)   => Navigate(new ReportWindows(_user),      BtnReports);
 
-        private void Exit_Click(object s, RoutedEventArgs e) { new Autorisation().Show(); Close(); }
+        private void Exit_Click(object s, RoutedEventArgs e)  { new Autorisation().Show(); Close(); }
+        private void About_Click(object s, RoutedEventArgs e) { new ReadProject { Owner = this }.ShowDialog(); }
 
         private void TitleBar_MouseDown(object s, MouseButtonEventArgs e)
         {

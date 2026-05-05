@@ -9,7 +9,6 @@ namespace Space
     public partial class TeemProject : UserControl
     {
         private List<TeamItem> _all = new List<TeamItem>();
-        private int _editId = -1;
         private readonly UserInfo _user;
 
         public TeemProject() : this(null) { }
@@ -21,11 +20,12 @@ namespace Space
             Loaded += async (s, e) => { ApplyRole(); await Reload(); };
         }
 
-        private bool IsAdmin => _user?.Role == "admin";
+        // Admin and manager can create / edit / delete teams
+        private bool CanManage => _user?.Role == "admin" || _user?.Role == "manager";
 
         private void ApplyRole()
         {
-            if (!IsAdmin)
+            if (!CanManage)
             {
                 AddBtn.Visibility     = Visibility.Collapsed;
                 ColActions.Visibility = Visibility.Collapsed;
@@ -59,45 +59,19 @@ namespace Space
         private void Search_LostFocus(object s, RoutedEventArgs e) { if (string.IsNullOrWhiteSpace(SearchBox.Text)) { SearchBox.Text = "🔍  Поиск..."; SearchBox.Foreground = System.Windows.Media.Brushes.Gray; } }
         private void Search_TextChanged(object s, TextChangedEventArgs e) => Apply(SearchBox.Text.StartsWith("🔍") ? "" : SearchBox.Text);
 
-        private void AddBtn_Click(object s, RoutedEventArgs e)
+        private async void AddBtn_Click(object s, RoutedEventArgs e)
         {
-            _editId = -1;
-            FormTitle.Text  = "Новая команда";
-            SaveBtn.Content = "Сохранить";
-            AddName.Text    = "";
-            AddError.Visibility = Visibility.Collapsed;
-            AddPanel.Visibility = AddPanel.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+            var dlg = new AddWindows.AddTeem { Owner = Window.GetWindow(this) };
+            if (dlg.ShowDialog() == true) await Reload();
         }
 
-        private void Edit_Click(object s, RoutedEventArgs e)
+        private async void Edit_Click(object s, RoutedEventArgs e)
         {
             var id   = (int)((Button)s).Tag;
             var item = _all.FirstOrDefault(t => t.Id == id);
             if (item == null) return;
-            _editId = id;
-            FormTitle.Text  = "Редактировать команду";
-            SaveBtn.Content = "Обновить";
-            AddName.Text    = item.Name;
-            AddError.Visibility = Visibility.Collapsed;
-            AddPanel.Visibility = Visibility.Visible;
-        }
-
-        private async void SaveAdd_Click(object s, RoutedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(AddName.Text)) { AddError.Text = "Введите название"; AddError.Visibility = Visibility.Visible; return; }
-            try
-            {
-                if (_editId > 0)
-                    await DatabaseService.UpdateTeamAsync(_editId, AddName.Text.Trim());
-                else
-                    await DatabaseService.AddTeamAsync(AddName.Text.Trim());
-                _editId = -1;
-                AddName.Text = "";
-                AddError.Visibility = Visibility.Collapsed;
-                AddPanel.Visibility = Visibility.Collapsed;
-                await Reload();
-            }
-            catch (Exception ex) { AddError.Text = ex.Message; AddError.Visibility = Visibility.Visible; }
+            var dlg = new AddWindows.AddTeem(item) { Owner = Window.GetWindow(this) };
+            if (dlg.ShowDialog() == true) await Reload();
         }
 
         private async void Delete_Click(object s, RoutedEventArgs e)

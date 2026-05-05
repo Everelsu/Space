@@ -6,7 +6,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -83,58 +82,8 @@
             </Grid>
         </Border>
 
-        <!-- Add / Edit form -->
-        <Border Grid.Row="3" x:Name="AddPanel" Visibility="Collapsed"
-                Background="#1E293B" CornerRadius="8" Padding="14,12" Margin="0,0,0,10">
-            <StackPanel>
-                <TextBlock x:Name="FormTitle" Text="Новое задание" Foreground="White" FontSize="13"
-                           FontWeight="SemiBold" Margin="0,0,0,10"/>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="8"/>
-                        <ColumnDefinition Width="170"/>
-                        <ColumnDefinition Width="8"/>
-                        <ColumnDefinition Width="160"/>
-                        <ColumnDefinition Width="8"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBox  Grid.Column="0" x:Name="AddTitle"    Style="{StaticResource FormInputStyle}" Tag="Название задачи"/>
-                    <ComboBox Grid.Column="2" x:Name="AddProject"  Style="{StaticResource FormComboStyle}" DisplayMemberPath="Name"/>
-                    <ComboBox Grid.Column="4" x:Name="AddAssignee" Style="{StaticResource FormComboStyle}" DisplayMemberPath="Name"/>
-                    <Button   Grid.Column="6" x:Name="SaveBtn" Content="Сохранить"
-                              Style="{StaticResource PrimaryBtnStyle}" Click="SaveAdd_Click"/>
-                </Grid>
-                <Grid Margin="0,8,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="110"/>
-                        <ColumnDefinition Width="8"/>
-                        <ColumnDefinition Width="130"/>
-                        <ColumnDefinition Width="8"/>
-                        <ColumnDefinition Width="115"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <ComboBox Grid.Column="0" x:Name="AddPriority" Style="{StaticResource FormComboStyle}">
-                        <ComboBoxItem Content="Низкий"    Tag="low"      IsSelected="True"/>
-                        <ComboBoxItem Content="Средний"   Tag="medium"/>
-                        <ComboBoxItem Content="Высокий"   Tag="high"/>
-                        <ComboBoxItem Content="Критичный" Tag="critical"/>
-                    </ComboBox>
-                    <ComboBox Grid.Column="2" x:Name="AddStatus" Style="{StaticResource FormComboStyle}">
-                        <ComboBoxItem Content="Открыта"      Tag="open"        IsSelected="True"/>
-                        <ComboBoxItem Content="В работе"     Tag="in_progress"/>
-                        <ComboBoxItem Content="Тестирование" Tag="testing"/>
-                        <ComboBoxItem Content="Закрыта"      Tag="closed"/>
-                    </ComboBox>
-                    <TextBox Grid.Column="4" x:Name="AddDeadline" Style="{StaticResource FormInputStyle}" Tag="Дедлайн (дд.мм.гггг)"/>
-                </Grid>
-                <TextBlock x:Name="AddError" Foreground="#F87171" FontSize="11"
-                           Margin="0,6,0,0" Visibility="Collapsed"/>
-            </StackPanel>
-        </Border>
-
         <!-- DataGrid -->
-        <DataGrid Grid.Row="4" x:Name="Grid" Style="{StaticResource GridStyle}"
+        <DataGrid Grid.Row="3" x:Name="Grid" Style="{StaticResource GridStyle}"
                   ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
                   CellStyle="{StaticResource GridCellStyle}">
             <DataGrid.Columns>

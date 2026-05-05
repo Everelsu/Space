@@ -64,7 +64,7 @@ namespace Space
                     SELECT p.id, p.name, p.description, p.start_date, p.deadline, p.status,
                            COALESCE(e.full_name,'—')
                     FROM projects p LEFT JOIN employees e ON e.id = p.manager_id
-                    ORDER BY p.deadline", conn))
+                    ORDER BY p.id DESC", conn))
                 using (var r = await cmd.ExecuteReaderAsync())
                     while (await r.ReadAsync())
                         list.Add(new ProjectItem
@@ -122,11 +122,11 @@ namespace Space
                 await conn.OpenAsync();
                 using (var cmd = new NpgsqlCommand(@"
                     SELECT e.id, e.full_name, COALESCE(e.email,'—'), COALESCE(e.position,'—'),
-                           COALESCE(t.name,'—'), COALESCE(u.username,'—'), COALESCE(u.role,'—')
+                           e.team_id, COALESCE(t.name,'—'), COALESCE(u.username,'—'), COALESCE(u.role,'—')
                     FROM employees e
                     LEFT JOIN teams t ON t.id = e.team_id
                     LEFT JOIN users u ON u.id = e.user_id
-                    ORDER BY e.full_name", conn))
+                    ORDER BY e.id DESC", conn))
                 using (var r = await cmd.ExecuteReaderAsync())
                     while (await r.ReadAsync())
                         list.Add(new EmployeeItem
@@ -135,16 +135,17 @@ namespace Space
                             FullName = r.GetString(1),
                             Email    = r.GetString(2),
                             Position = r.GetString(3),
-                            Team     = r.GetString(4),
-                            Username = r.GetString(5),
-                            Role     = r.GetString(6)
+                            TeamId   = r.IsDBNull(4) ? (int?)null : r.GetInt32(4),
+                            Team     = r.GetString(5),
+                            Username = r.GetString(6),
+                            Role     = r.GetString(7)
                         });
             }
             return list;
         }
 
         public static async Task AddEmployeeAsync(string fullName, string email, string position,
-            string username, string password, string role)
+            string username, string password, string role, int? teamId = null)
         {
             using (var conn = GetConnection())
             {
@@ -159,12 +160,13 @@ namespace Space
                     userId = (int)await cmd.ExecuteScalarAsync();
                 }
                 using (var cmd = new NpgsqlCommand(
-                    "INSERT INTO employees (user_id,full_name,email,position) VALUES (@uid,@fn,@em,@pos)", conn))
+                    "INSERT INTO employees (user_id,full_name,email,position,team_id) VALUES (@uid,@fn,@em,@pos,@tid)", conn))
                 {
                     cmd.Parameters.AddWithValue("uid", userId);
                     cmd.Parameters.AddWithValue("fn",  fullName);
                     cmd.Parameters.AddWithValue("em",  email ?? "");
                     cmd.Parameters.AddWithValue("pos", position ?? "");
+                    cmd.Parameters.AddWithValue("tid", teamId.HasValue ? (object)teamId.Value : DBNull.Value);
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
@@ -209,7 +211,7 @@ namespace Space
                     SELECT t.id, t.name, COALESCE(e.full_name,'—'),
                            (SELECT COUNT(*) FROM employees WHERE team_id = t.id)
                     FROM teams t LEFT JOIN employees e ON e.id = t.lead_employee_id
-                    ORDER BY t.name", conn))
+                    ORDER BY t.id DESC", conn))
                 using (var r = await cmd.ExecuteReaderAsync())
                     while (await r.ReadAsync())
                         list.Add(new TeamItem
@@ -409,8 +411,9 @@ namespace Space
             using (var conn = GetConnection())
             {
                 await conn.OpenAsync();
+                // Return ALL tasks so closed/advanced tasks still appear in report form
                 using (var cmd = new NpgsqlCommand(
-                    "SELECT id, title FROM tasks WHERE status<>'closed' ORDER BY title", conn))
+                    "SELECT id, title FROM tasks ORDER BY title", conn))
                 using (var r = await cmd.ExecuteReaderAsync())
                     while (await r.ReadAsync())
                         list.Add(new DropdownItem { Id = r.GetInt32(0), Name = r.GetString(1) });
@@ -426,6 +429,21 @@ namespace Space
                 await conn.OpenAsync();
                 using (var cmd = new NpgsqlCommand(
                     "SELECT id, full_name FROM employees ORDER BY full_name", conn))
+                using (var r = await cmd.ExecuteReaderAsync())
+                    while (await r.ReadAsync())
+                        list.Add(new DropdownItem { Id = r.GetInt32(0), Name = r.GetString(1) });
+            }
+            return list;
+        }
+
+        public static async Task<List<DropdownItem>> GetTeamsDropdownAsync()
+        {
+            var list = new List<DropdownItem>();
+            using (var conn = GetConnection())
+            {
+                await conn.OpenAsync();
+                using (var cmd = new NpgsqlCommand(
+                    "SELECT id, name FROM teams ORDER BY name", conn))
                 using (var r = await cmd.ExecuteReaderAsync())
                     while (await r.ReadAsync())
                         list.Add(new DropdownItem { Id = r.GetInt32(0), Name = r.GetString(1) });
@@ -465,7 +483,7 @@ namespace Space
                     LEFT JOIN projects p ON p.id = t.project_id
                     LEFT JOIN employees e ON e.id = t.assignee_id
                     ORDER BY CASE t.priority WHEN 'critical' THEN 1 WHEN 'high' THEN 2
-                        WHEN 'medium' THEN 3 ELSE 4 END, t.deadline ASC NULLS LAST", conn))
+                        WHEN 'medium' THEN 3 ELSE 4 END, t.deadline ASC NULLS LAST, t.id DESC", conn))
                 using (var r = await cmd.ExecuteReaderAsync())
                     while (await r.ReadAsync())
                         list.Add(new TaskManageItem
@@ -561,18 +579,20 @@ namespace Space
             }
         }
 
-        public static async Task UpdateEmployeeAsync(int id, string fullName, string email, string position, string role)
+        public static async Task UpdateEmployeeAsync(int id, string fullName, string email,
+            string position, string role, int? teamId = null)
         {
             using (var conn = GetConnection())
             {
                 await conn.OpenAsync();
                 using (var cmd = new NpgsqlCommand(
-                    "UPDATE employees SET full_name=@fn, email=@em, position=@pos WHERE id=@id", conn))
+                    "UPDATE employees SET full_name=@fn, email=@em, position=@pos, team_id=@tid WHERE id=@id", conn))
                 {
                     cmd.Parameters.AddWithValue("id",  id);
                     cmd.Parameters.AddWithValue("fn",  fullName);
                     cmd.Parameters.AddWithValue("em",  email ?? "");
                     cmd.Parameters.AddWithValue("pos", position ?? "");
+                    cmd.Parameters.AddWithValue("tid", teamId.HasValue ? (object)teamId.Value : DBNull.Value);
                     await cmd.ExecuteNonQueryAsync();
                 }
                 using (var cmd = new NpgsqlCommand(

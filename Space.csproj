@@ -151,6 +151,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <!-- About window -->
+    <Page Include="MainWindows\ReadProject.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <!-- Main pages (UserControls) -->
     <Page Include="MainWindows\MainProject.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -190,6 +195,10 @@
     </Compile>
     <Compile Include="MainWindows\Autorisation.xaml.cs">
       <DependentUpon>Autorisation.xaml</DependentUpon>
+    </Compile>
+    <!-- About window -->
+    <Compile Include="MainWindows\ReadProject.xaml.cs">
+      <DependentUpon>ReadProject.xaml</DependentUpon>
     </Compile>
     <!-- Main pages -->
     <Compile Include="MainWindows\MainProject.xaml.cs">

@@ -11,6 +11,7 @@ namespace Space.AddWindows
 
         // Timer-flow fields (filled when opened from StopTimer)
         private readonly int     _timerTaskId;
+        private readonly string  _timerTaskTitle;   // fallback if task not found in list
         private readonly int     _timerEmployeeId;
         private readonly decimal _timerHours;
         private readonly bool    _isTimerFlow;
@@ -32,12 +33,13 @@ namespace Space.AddWindows
         }
 
         // ── Timer flow: pre-filled from stopped timer ─────────────────
-        public AddReport(int taskId, int employeeId, decimal hours)
+        public AddReport(int taskId, string taskTitle, int employeeId, decimal hours)
         {
             InitializeComponent();
             _editItem        = null;
             _isTimerFlow     = true;
             _timerTaskId     = taskId;
+            _timerTaskTitle  = taskTitle;
             _timerEmployeeId = employeeId;
             _timerHours      = hours;
         }
@@ -73,17 +75,24 @@ namespace Space.AddWindows
                 // ── Timer flow mode ────────────────────────────────────
                 DialogTitle.Text = "Отчёт о работе";
 
-                foreach (DropdownItem di in taskList)
-                    if (di.Id == _timerTaskId) { CmbTask.SelectedItem = di; break; }
-                foreach (DropdownItem di in employeeList)
-                    if (di.Id == _timerEmployeeId) { CmbEmployee.SelectedItem = di; break; }
+                // Find task — if not in list (e.g. status changed) add a synthetic entry
+                var foundTask = taskList.Find(t => t.Id == _timerTaskId);
+                if (foundTask == null && _timerTaskId > 0)
+                {
+                    foundTask = new DropdownItem { Id = _timerTaskId, Name = _timerTaskTitle ?? "—" };
+                    taskList.Add(foundTask);
+                    CmbTask.ItemsSource = taskList;   // refresh binding with added item
+                }
+                CmbTask.SelectedItem = foundTask;
+                CmbTask.IsEnabled    = false;         // task is locked — came from timer
 
-                CmbTask.IsEnabled     = false;   // task fixed from timer
-                CmbEmployee.IsEnabled = false;   // employee fixed from current user
+                var foundEmp = employeeList.Find(e2 => e2.Id == _timerEmployeeId);
+                CmbEmployee.SelectedItem = foundEmp;
+                CmbEmployee.IsEnabled    = false;     // employee locked — current user
 
                 TxtHours.Text = _timerHours.ToString("0.##", CultureInfo.InvariantCulture);
                 TxtDate.Text  = DateTime.Today.ToString("dd.MM.yyyy");
-                TxtComment.Focus();  // jump straight to comment — everything else is pre-filled
+                TxtComment.Focus();  // cursor goes straight to comment
             }
             else
             {
@@ -104,8 +113,13 @@ namespace Space.AddWindows
             ErrorText.Visibility = Visibility.Collapsed;
 
             if (!decimal.TryParse(TxtHours.Text.Replace(',', '.'), NumberStyles.Any,
-                CultureInfo.InvariantCulture, out decimal hours) || hours <= 0)
-            { ShowError("Введите корректное количество часов (больше 0)"); return; }
+                CultureInfo.InvariantCulture, out decimal hours))
+            { ShowError("Введите корректное количество часов"); return; }
+            hours = Math.Round(hours, 2, MidpointRounding.AwayFromZero);
+            if (hours <= 0)
+            { ShowError("Количество часов должно быть больше 0"); return; }
+            if (hours > 24)
+            { ShowError("Количество часов не может превышать 24 в день"); return; }
 
             if (!DateTime.TryParseExact(TxtDate.Text.Trim(), "dd.MM.yyyy",
                 CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dt))

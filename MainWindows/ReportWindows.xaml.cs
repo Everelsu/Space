@@ -9,7 +9,6 @@ namespace Space
     public partial class ReportWindows : UserControl
     {
         private List<WorkLogItem> _all = new List<WorkLogItem>();
-        private int _editId = -1;
         private readonly UserInfo _user;
 
         public ReportWindows() : this(null) { }
@@ -18,22 +17,15 @@ namespace Space
         {
             InitializeComponent();
             _user = user;
-            Loaded += async (s, e) =>
-            {
-                ApplyRole();
-                await Reload();
-                AddTask.ItemsSource     = await DatabaseService.GetTasksDropdownAsync();
-                AddEmployee.ItemsSource = await DatabaseService.GetEmployeesDropdownAsync();
-                AddDate.Text = DateTime.Today.ToString("dd.MM.yyyy");
-            };
+            Loaded += async (s, e) => { ApplyRole(); await Reload(); };
         }
 
-        private bool IsAdmin => _user?.Role == "admin";
+        // admin + manager can edit / delete reports; everyone can add
+        private bool CanManage => _user?.Role == "admin" || _user?.Role == "manager";
 
         private void ApplyRole()
         {
-            // Everyone can add reports; only admin can edit / delete
-            if (!IsAdmin)
+            if (!CanManage)
                 ColActions.Visibility = Visibility.Collapsed;
         }
 
@@ -67,84 +59,19 @@ namespace Space
         private void Search_TextChanged(object s, System.Windows.Controls.TextChangedEventArgs e)
             => Apply(SearchBox.Text.StartsWith("🔍") ? "" : SearchBox.Text);
 
-        private void AddBtn_Click(object s, RoutedEventArgs e)
+        private async void AddBtn_Click(object s, RoutedEventArgs e)
         {
-            _editId = -1;
-            FormTitle.Text  = "Новый отчёт";
-            SaveBtn.Content = "Сохранить";
-            AddTask.IsEnabled     = true;
-            AddEmployee.IsEnabled = true;
-            AddTask.SelectedIndex = AddEmployee.SelectedIndex = -1;
-            AddHours.Text   = "1";
-            AddComment.Text = "";
-            AddDate.Text    = DateTime.Today.ToString("dd.MM.yyyy");
-            AddError.Visibility = Visibility.Collapsed;
-            AddPanel.Visibility = AddPanel.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+            var dlg = new AddWindows.AddReport { Owner = Window.GetWindow(this) };
+            if (dlg.ShowDialog() == true) await Reload();
         }
 
-        private void Edit_Click(object s, RoutedEventArgs e)
+        private async void Edit_Click(object s, RoutedEventArgs e)
         {
             var id   = (int)((Button)s).Tag;
             var item = _all.FirstOrDefault(w => w.Id == id);
             if (item == null) return;
-
-            _editId = id;
-            FormTitle.Text  = "Редактировать отчёт";
-            SaveBtn.Content = "Обновить";
-
-            AddTask.IsEnabled     = false;
-            AddEmployee.IsEnabled = false;
-
-            foreach (DropdownItem di in AddTask.Items)
-                if (di.Id == item.TaskId) { AddTask.SelectedItem = di; break; }
-            foreach (DropdownItem di in AddEmployee.Items)
-                if (di.Id == item.EmployeeId) { AddEmployee.SelectedItem = di; break; }
-
-            AddHours.Text   = item.Hours.ToString(System.Globalization.CultureInfo.InvariantCulture);
-            AddComment.Text = item.Comment;
-            AddDate.Text    = item.LogDate;
-
-            AddError.Visibility = Visibility.Collapsed;
-            AddPanel.Visibility = Visibility.Visible;
-        }
-
-        private async void SaveAdd_Click(object s, RoutedEventArgs e)
-        {
-            if (!decimal.TryParse(AddHours.Text.Replace(',', '.'), System.Globalization.NumberStyles.Any,
-                System.Globalization.CultureInfo.InvariantCulture, out decimal hours) || hours <= 0)
-            { AddError.Text = "Введите корректные часы"; AddError.Visibility = Visibility.Visible; return; }
-            if (!DateTime.TryParseExact(AddDate.Text, "dd.MM.yyyy",
-                System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime dt))
-            { AddError.Text = "Формат даты: дд.мм.гггг"; AddError.Visibility = Visibility.Visible; return; }
-
-            if (_editId > 0)
-            {
-                try
-                {
-                    await DatabaseService.UpdateWorkLogAsync(_editId, hours, AddComment.Text.Trim(), dt);
-                    _editId = -1;
-                    AddPanel.Visibility = Visibility.Collapsed;
-                    AddError.Visibility = Visibility.Collapsed;
-                    await Reload();
-                }
-                catch (Exception ex) { AddError.Text = ex.Message; AddError.Visibility = Visibility.Visible; }
-            }
-            else
-            {
-                var task = AddTask.SelectedItem as DropdownItem;
-                var emp  = AddEmployee.SelectedItem as DropdownItem;
-                if (task == null || emp == null) { AddError.Text = "Выберите задачу и работника"; AddError.Visibility = Visibility.Visible; return; }
-                try
-                {
-                    await DatabaseService.AddWorkLogAsync(task.Id, emp.Id, hours, AddComment.Text.Trim(), dt);
-                    AddHours.Text = "1"; AddComment.Text = "";
-                    AddDate.Text  = DateTime.Today.ToString("dd.MM.yyyy");
-                    AddError.Visibility = Visibility.Collapsed;
-                    AddPanel.Visibility = Visibility.Collapsed;
-                    await Reload();
-                }
-                catch (Exception ex) { AddError.Text = ex.Message; AddError.Visibility = Visibility.Visible; }
-            }
+            var dlg = new AddWindows.AddReport(item) { Owner = Window.GetWindow(this) };
+            if (dlg.ShowDialog() == true) await Reload();
         }
 
         private async void Delete_Click(object s, RoutedEventArgs e)

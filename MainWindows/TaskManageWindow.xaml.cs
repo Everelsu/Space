@@ -9,10 +9,7 @@ namespace Space
 {
     public partial class TaskManageWindow : UserControl
     {
-        private List<TaskManageItem> _all       = new List<TaskManageItem>();
-        private List<DropdownItem>   _projects  = new List<DropdownItem>();
-        private List<DropdownItem>   _employees = new List<DropdownItem>();
-        private int _editId = -1;
+        private List<TaskManageItem> _all = new List<TaskManageItem>();
         private readonly UserInfo _user;
         private readonly DispatcherTimer _clock;
 
@@ -32,30 +29,28 @@ namespace Space
             Loaded += async (s, e) =>
             {
                 ApplyRole();
-                _projects  = await DatabaseService.GetProjectsDropdownAsync();
-                _employees = await DatabaseService.GetEmployeesDropdownAsync();
-                AddProject.ItemsSource  = _projects;
-                AddAssignee.ItemsSource = _employees;
                 await Reload();
                 RefreshBanner();   // show banner immediately if timer was already running
             };
         }
 
         private bool IsAdmin     => _user?.Role == "admin";
+        private bool IsManager   => _user?.Role == "manager";
         private bool IsDeveloper => _user?.Role == "developer";
         private bool IsTester    => _user?.Role == "tester";
 
         private void ApplyRole()
         {
-            // Add / Edit / Delete — admin only
-            AddBtn.Visibility    = IsAdmin ? Visibility.Visible : Visibility.Collapsed;
-            ColEdit.Visibility   = IsAdmin ? Visibility.Visible : Visibility.Collapsed;
-            ColDelete.Visibility = IsAdmin ? Visibility.Visible : Visibility.Collapsed;
+            // Add / Edit / Delete — admin + manager
+            bool canManage = IsAdmin || IsManager;
+            AddBtn.Visibility    = canManage ? Visibility.Visible : Visibility.Collapsed;
+            ColEdit.Visibility   = canManage ? Visibility.Visible : Visibility.Collapsed;
+            ColDelete.Visibility = canManage ? Visibility.Visible : Visibility.Collapsed;
 
-            // Timer — admin + developer
+            // Timer — admin + developer (managers oversee, developers do the work)
             ColTimer.Visibility = (IsAdmin || IsDeveloper) ? Visibility.Visible : Visibility.Collapsed;
 
-            // Status advance columns — role-specific
+            // Status advance — tester sees separate column (testing→closed only)
             ColAdvanceDev.Visibility    = IsTester ? Visibility.Collapsed : Visibility.Visible;
             ColAdvanceTester.Visibility = IsTester ? Visibility.Visible   : Visibility.Collapsed;
         }
@@ -97,84 +92,19 @@ namespace Space
         private void Search_TextChanged(object s, TextChangedEventArgs e) => Apply(SearchBox.Text.StartsWith("🔍") ? "" : SearchBox.Text);
         private void Filter_Changed(object s, SelectionChangedEventArgs e) => Apply(SearchBox?.Text.StartsWith("🔍") == true ? "" : SearchBox?.Text ?? "");
 
-        private void AddBtn_Click(object s, RoutedEventArgs e)
+        private async void AddBtn_Click(object s, RoutedEventArgs e)
         {
-            _editId = -1;
-            FormTitle.Text  = "Новое задание";
-            SaveBtn.Content = "Сохранить";
-            AddTitle.Text = AddDeadline.Text = "";
-            AddProject.SelectedIndex  = -1;
-            AddAssignee.SelectedIndex = -1;
-            AddPriority.SelectedIndex = 0;
-            AddStatus.SelectedIndex   = 0;
-            AddError.Visibility = Visibility.Collapsed;
-            AddPanel.Visibility = AddPanel.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+            var dlg = new AddWindows.AddTask { Owner = Window.GetWindow(this) };
+            if (dlg.ShowDialog() == true) await Reload();
         }
 
-        private void Edit_Click(object s, RoutedEventArgs e)
+        private async void Edit_Click(object s, RoutedEventArgs e)
         {
             var id   = (int)((Button)s).Tag;
             var item = _all.FirstOrDefault(t => t.Id == id);
             if (item == null) return;
-
-            _editId = id;
-            FormTitle.Text  = "Редактировать задание";
-            SaveBtn.Content = "Обновить";
-            AddTitle.Text = item.Title;
-            AddProject.SelectedItem  = _projects.FirstOrDefault(p => p.Id == item.ProjectId);
-            AddAssignee.SelectedItem = item.AssigneeId.HasValue
-                ? _employees.FirstOrDefault(e2 => e2.Id == item.AssigneeId) : null;
-            SetCombo(AddPriority, item.Priority);
-            SetCombo(AddStatus,   item.Status);
-            AddDeadline.Text = item.Deadline == "—" ? "" : item.Deadline;
-            AddError.Visibility = Visibility.Collapsed;
-            AddPanel.Visibility = Visibility.Visible;
-        }
-
-        private void SetCombo(ComboBox cb, string value)
-        {
-            foreach (ComboBoxItem ci in cb.Items)
-                if (ci.Tag?.ToString() == value) { cb.SelectedItem = ci; return; }
-            cb.SelectedIndex = 0;
-        }
-
-        private async void SaveAdd_Click(object s, RoutedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(AddTitle.Text))
-            { AddError.Text = "Введите название задачи"; AddError.Visibility = Visibility.Visible; return; }
-            var proj = AddProject.SelectedItem as DropdownItem;
-            if (proj == null)
-            { AddError.Text = "Выберите проект"; AddError.Visibility = Visibility.Visible; return; }
-
-            var priority = (AddPriority.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "low";
-            var status   = (AddStatus.SelectedItem   as ComboBoxItem)?.Tag?.ToString() ?? "open";
-            var assignee = AddAssignee.SelectedItem as DropdownItem;
-            DateTime? deadline = null;
-            if (!string.IsNullOrWhiteSpace(AddDeadline.Text))
-            {
-                if (!DateTime.TryParseExact(AddDeadline.Text, "dd.MM.yyyy",
-                    System.Globalization.CultureInfo.InvariantCulture,
-                    System.Globalization.DateTimeStyles.None, out DateTime dl))
-                { AddError.Text = "Формат даты: дд.мм.гггг"; AddError.Visibility = Visibility.Visible; return; }
-                deadline = dl;
-            }
-
-            try
-            {
-                if (_editId > 0)
-                    await DatabaseService.UpdateTaskManageAsync(_editId, AddTitle.Text.Trim(),
-                        proj.Id, assignee?.Id, priority, status, deadline);
-                else
-                    await DatabaseService.AddTaskManageAsync(AddTitle.Text.Trim(),
-                        proj.Id, assignee?.Id, priority, status, deadline);
-                _editId = -1;
-                AddTitle.Text = AddDeadline.Text = "";
-                AddProject.SelectedIndex = AddAssignee.SelectedIndex = -1;
-                AddError.Visibility = Visibility.Collapsed;
-                AddPanel.Visibility = Visibility.Collapsed;
-                await Reload();
-            }
-            catch (Exception ex) { AddError.Text = ex.Message; AddError.Visibility = Visibility.Visible; }
+            var dlg = new AddWindows.AddTask(item) { Owner = Window.GetWindow(this) };
+            if (dlg.ShowDialog() == true) await Reload();
         }
 
         private async void Advance_Click(object s, RoutedEventArgs e)
@@ -225,16 +155,17 @@ namespace Space
         {
             if (!TimerService.IsRunning) return;
 
-            // Capture state BEFORE Stop() clears it
-            var taskId = TimerService.ActiveTaskId;
-            var empId  = _user?.EmployeeId;
-            var hours  = TimerService.Stop();
+            // Capture ALL state BEFORE Stop() clears it
+            var taskId    = TimerService.ActiveTaskId;
+            var taskTitle = TimerService.ActiveTaskTitle;
+            var empId     = _user?.EmployeeId;
+            var hours     = TimerService.Stop();
             RefreshBanner();
 
-            // Open AddReport pre-filled from timer
+            // Open pre-filled report dialog
             AddWindows.AddReport dlg;
             if (empId.HasValue)
-                dlg = new AddWindows.AddReport(taskId, empId.Value, hours);
+                dlg = new AddWindows.AddReport(taskId, taskTitle, empId.Value, hours);
             else
                 dlg = new AddWindows.AddReport();   // no linked employee — user fills manually
 
