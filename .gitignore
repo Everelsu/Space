@@ -1,1 +1,1 @@
-Nothing should be ignored based on the provided file changes. The only modified file is 'MainWindows/TaskManageWindow.xaml', which is a source code file (.xaml) and should not be added to .gitignore. Since there are no build artifacts, dependencies, or temporary files in the changes, no additional ignore rules are needed.
+Nothing should be ignored based on the provided file changes. The modification of 'Model/DatabaseService.cs' represents a standard source code file change without any build artifacts, dependencies, or temporary files that would warrant adding to .gitignore.

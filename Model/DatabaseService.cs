@@ -17,10 +17,54 @@ namespace Space
             "Password=d2KkcSEzqzx3yaqv;" +
             "SSL Mode=Require;" +
             "Trust Server Certificate=true;" +
-            "Pooling=false;" +
+            "Pooling=true;" +
+            "Min Pool Size=5;" +
+            "Max Pool Size=100;" +
+            "Connection Lifetime=300;" +
             "No Reset On Close=true;";
 
+        // ─── Cache ────────────────────────────────────────────────────────────
+        
+        private static readonly object _cacheLock = new object();
+        private static List<ProjectItem> _projectsCache;
+        private static List<EmployeeItem> _employeesCache;
+        private static List<TeamItem> _teamsCache;
+        private static List<WorkLogItem> _workLogsCache;
+        private static List<TaskManageItem> _tasksCache;
+        private static List<DropdownItem> _tasksDropdownCache;
+        private static List<DropdownItem> _employeesDropdownCache;
+        private static List<DropdownItem> _teamsDropdownCache;
+        private static List<DropdownItem> _projectsDropdownCache;
+        private static DateTime? _projectsCacheTime;
+        private static DateTime? _employeesCacheTime;
+        private static DateTime? _teamsCacheTime;
+        private static DateTime? _workLogsCacheTime;
+        private static DateTime? _tasksCacheTime;
+        private static readonly TimeSpan CacheDuration = TimeSpan.FromMinutes(5);
+
         public static NpgsqlConnection GetConnection() => new NpgsqlConnection(ConnString);
+
+        private static bool IsCacheValid(DateTime? cacheTime) 
+            => cacheTime.HasValue && DateTime.Now - cacheTime.Value < CacheDuration;
+
+        public static void InvalidateCache(string type = null)
+        {
+            lock (_cacheLock)
+            {
+                if (type == null || type == "projects") { _projectsCache = null; _projectsCacheTime = null; }
+                if (type == null || type == "employees") { _employeesCache = null; _employeesCacheTime = null; }
+                if (type == null || type == "teams") { _teamsCache = null; _teamsCacheTime = null; }
+                if (type == null || type == "worklogs") { _workLogsCache = null; _workLogsCacheTime = null; }
+                if (type == null || type == "tasks") { _tasksCache = null; _tasksCacheTime = null; }
+                if (type == null || type == "dropdowns") 
+                {
+                    _tasksDropdownCache = null;
+                    _employeesDropdownCache = null;
+                    _teamsDropdownCache = null;
+                    _projectsDropdownCache = null;
+                }
+            }
+        }
 
         // ── Auth ──────────────────────────────────────────────────────────────
 
@@ -56,6 +100,12 @@ namespace Space
 
         public static async Task<List<ProjectItem>> GetAllProjectsAsync()
         {
+            lock (_cacheLock)
+            {
+                if (IsCacheValid(_projectsCacheTime) && _projectsCache != null)
+                    return new List<ProjectItem>(_projectsCache);
+            }
+
             var list = new List<ProjectItem>();
             using (var conn = GetConnection())
             {
@@ -78,6 +128,12 @@ namespace Space
                             Manager     = r.GetString(6)
                         });
             }
+
+            lock (_cacheLock)
+            {
+                _projectsCache = new List<ProjectItem>(list);
+                _projectsCacheTime = DateTime.Now;
+            }
             return list;
         }
 
@@ -97,6 +153,7 @@ namespace Space
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
+            InvalidateCache("projects");
         }
 
         public static async Task DeleteProjectAsync(int id)
@@ -110,12 +167,19 @@ namespace Space
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
+            InvalidateCache("projects");
         }
 
         // ── Employees ─────────────────────────────────────────────────────────
 
         public static async Task<List<EmployeeItem>> GetAllEmployeesAsync()
         {
+            lock (_cacheLock)
+            {
+                if (IsCacheValid(_employeesCacheTime) && _employeesCache != null)
+                    return new List<EmployeeItem>(_employeesCache);
+            }
+
             var list = new List<EmployeeItem>();
             using (var conn = GetConnection())
             {
@@ -140,6 +204,12 @@ namespace Space
                             Username = r.GetString(6),
                             Role     = r.GetString(7)
                         });
+            }
+
+            lock (_cacheLock)
+            {
+                _employeesCache = new List<EmployeeItem>(list);
+                _employeesCacheTime = DateTime.Now;
             }
             return list;
         }
@@ -170,6 +240,7 @@ namespace Space
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
+            InvalidateCache("employees");
         }
 
         public static async Task DeleteEmployeeAsync(int id)
@@ -197,12 +268,19 @@ namespace Space
                         await cmd.ExecuteNonQueryAsync();
                     }
             }
+            InvalidateCache("employees");
         }
 
         // ── Teams ─────────────────────────────────────────────────────────────
 
         public static async Task<List<TeamItem>> GetAllTeamsAsync()
         {
+            lock (_cacheLock)
+            {
+                if (IsCacheValid(_teamsCacheTime) && _teamsCache != null)
+                    return new List<TeamItem>(_teamsCache);
+            }
+
             var list = new List<TeamItem>();
             using (var conn = GetConnection())
             {
@@ -222,6 +300,12 @@ namespace Space
                             MemberCount = (int)(long)r.GetValue(3)
                         });
             }
+
+            lock (_cacheLock)
+            {
+                _teamsCache = new List<TeamItem>(list);
+                _teamsCacheTime = DateTime.Now;
+            }
             return list;
         }
 
@@ -236,6 +320,7 @@ namespace Space
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
+            InvalidateCache("teams");
         }
 
         public static async Task DeleteTeamAsync(int id)
@@ -249,12 +334,19 @@ namespace Space
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
+            InvalidateCache("teams");
         }
 
         // ── WorkLogs ──────────────────────────────────────────────────────────
 
         public static async Task<List<WorkLogItem>> GetAllWorkLogsAsync()
         {
+            lock (_cacheLock)
+            {
+                if (IsCacheValid(_workLogsCacheTime) && _workLogsCache != null)
+                    return new List<WorkLogItem>(_workLogsCache);
+            }
+
             var list = new List<WorkLogItem>();
             using (var conn = GetConnection())
             {
@@ -280,6 +372,12 @@ namespace Space
                             EmployeeId = r.GetInt32(7)
                         });
             }
+
+            lock (_cacheLock)
+            {
+                _workLogsCache = new List<WorkLogItem>(list);
+                _workLogsCacheTime = DateTime.Now;
+            }
             return list;
         }
 
@@ -294,6 +392,7 @@ namespace Space
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
+            InvalidateCache("worklogs");
         }
 
         public static async Task AddWorkLogAsync(int taskId, int employeeId, decimal hours,
@@ -314,6 +413,7 @@ namespace Space
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
+            InvalidateCache("worklogs");
         }
 
         // ── Tasks (for employee view) ─────────────────────────────────────────
@@ -377,6 +477,7 @@ namespace Space
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
+            InvalidateCache("tasks");
         }
 
         public static async Task<List<LogItem>> GetTaskLogsAsync(int taskId)
@@ -407,6 +508,12 @@ namespace Space
 
         public static async Task<List<DropdownItem>> GetTasksDropdownAsync()
         {
+            lock (_cacheLock)
+            {
+                if (IsCacheValid(_tasksCacheTime) && _tasksDropdownCache != null)
+                    return new List<DropdownItem>(_tasksDropdownCache);
+            }
+
             var list = new List<DropdownItem>();
             using (var conn = GetConnection())
             {
@@ -418,11 +525,23 @@ namespace Space
                     while (await r.ReadAsync())
                         list.Add(new DropdownItem { Id = r.GetInt32(0), Name = r.GetString(1) });
             }
+
+            lock (_cacheLock)
+            {
+                _tasksDropdownCache = new List<DropdownItem>(list);
+                _tasksCacheTime = DateTime.Now;
+            }
             return list;
         }
 
         public static async Task<List<DropdownItem>> GetEmployeesDropdownAsync()
         {
+            lock (_cacheLock)
+            {
+                if (IsCacheValid(_employeesCacheTime) && _employeesDropdownCache != null)
+                    return new List<DropdownItem>(_employeesDropdownCache);
+            }
+
             var list = new List<DropdownItem>();
             using (var conn = GetConnection())
             {
@@ -433,11 +552,23 @@ namespace Space
                     while (await r.ReadAsync())
                         list.Add(new DropdownItem { Id = r.GetInt32(0), Name = r.GetString(1) });
             }
+
+            lock (_cacheLock)
+            {
+                _employeesDropdownCache = new List<DropdownItem>(list);
+                _employeesCacheTime = DateTime.Now;
+            }
             return list;
         }
 
         public static async Task<List<DropdownItem>> GetTeamsDropdownAsync()
         {
+            lock (_cacheLock)
+            {
+                if (IsCacheValid(_teamsCacheTime) && _teamsDropdownCache != null)
+                    return new List<DropdownItem>(_teamsDropdownCache);
+            }
+
             var list = new List<DropdownItem>();
             using (var conn = GetConnection())
             {
@@ -448,11 +579,23 @@ namespace Space
                     while (await r.ReadAsync())
                         list.Add(new DropdownItem { Id = r.GetInt32(0), Name = r.GetString(1) });
             }
+
+            lock (_cacheLock)
+            {
+                _teamsDropdownCache = new List<DropdownItem>(list);
+                _teamsCacheTime = DateTime.Now;
+            }
             return list;
         }
 
         public static async Task<List<DropdownItem>> GetProjectsDropdownAsync()
         {
+            lock (_cacheLock)
+            {
+                if (IsCacheValid(_projectsCacheTime) && _projectsDropdownCache != null)
+                    return new List<DropdownItem>(_projectsDropdownCache);
+            }
+
             var list = new List<DropdownItem>();
             using (var conn = GetConnection())
             {
@@ -463,6 +606,12 @@ namespace Space
                     while (await r.ReadAsync())
                         list.Add(new DropdownItem { Id = r.GetInt32(0), Name = r.GetString(1) });
             }
+
+            lock (_cacheLock)
+            {
+                _projectsDropdownCache = new List<DropdownItem>(list);
+                _projectsCacheTime = DateTime.Now;
+            }
             return list;
         }
 
@@ -470,6 +619,12 @@ namespace Space
 
         public static async Task<List<TaskManageItem>> GetAllTasksManageAsync()
         {
+            lock (_cacheLock)
+            {
+                if (IsCacheValid(_tasksCacheTime) && _tasksCache != null)
+                    return new List<TaskManageItem>(_tasksCache);
+            }
+
             var list = new List<TaskManageItem>();
             using (var conn = GetConnection())
             {
@@ -499,6 +654,12 @@ namespace Space
                             AssigneeId = r.IsDBNull(8) ? (int?)null : r.GetInt32(8)
                         });
             }
+
+            lock (_cacheLock)
+            {
+                _tasksCache = new List<TaskManageItem>(list);
+                _tasksCacheTime = DateTime.Now;
+            }
             return list;
         }
 
@@ -521,6 +682,7 @@ namespace Space
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
+            InvalidateCache("tasks");
         }
 
         public static async Task UpdateTaskManageAsync(int id, string title, int projectId,
@@ -544,6 +706,7 @@ namespace Space
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
+            InvalidateCache("tasks");
         }
 
         public static async Task DeleteTaskManageAsync(int id)
@@ -557,6 +720,7 @@ namespace Space
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
+            InvalidateCache("tasks");
         }
 
         // ── Update methods ────────────────────────────────────────────────────
@@ -577,6 +741,7 @@ namespace Space
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
+            InvalidateCache("projects");
         }
 
         public static async Task UpdateEmployeeAsync(int id, string fullName, string email,
@@ -603,6 +768,7 @@ namespace Space
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
+            InvalidateCache("employees");
         }
 
         public static async Task UpdateTeamAsync(int id, string name)
@@ -617,6 +783,7 @@ namespace Space
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
+            InvalidateCache("teams");
         }
 
         public static async Task UpdateWorkLogAsync(int id, decimal hours, string comment, DateTime date)
@@ -634,6 +801,7 @@ namespace Space
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
+            InvalidateCache("worklogs");
         }
     }
 }
