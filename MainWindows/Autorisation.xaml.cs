@@ -45,7 +45,7 @@ namespace Space
 
             try
             {
-                new MainProject(user).Show();
+                new MainWindow(user).Show();
                 Close();
             }
             catch (Exception ex)

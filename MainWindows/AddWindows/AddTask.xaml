@@ -1,10 +1,11 @@
-<Window x:Class="Space.AddWindows.AddProject"
+<Window x:Class="Space.AddWindows.AddTask"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Проект"
+        Title="Задача"
         Width="500" SizeToContent="Height"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
-        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Loaded="Window_Loaded">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -22,7 +23,7 @@
 
             <!-- Title bar -->
             <Grid Height="52" MouseLeftButtonDown="TitleBar_MouseDown">
-                <TextBlock x:Name="DialogTitle" Text="Новый проект"
+                <TextBlock x:Name="DialogTitle" Text="Новая задача"
                            Foreground="White" FontSize="15" FontWeight="SemiBold"
                            VerticalAlignment="Center" Margin="22,0,0,0"/>
                 <Button Content="✕" Style="{StaticResource TitleBtnStyle}"
@@ -34,35 +35,46 @@
             <!-- Fields -->
             <StackPanel Margin="22,18,22,18">
 
-                <TextBlock Text="Название *" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
-                <TextBox x:Name="TxtName" Style="{StaticResource FormInputStyle}"/>
+                <TextBlock Text="Название задачи *" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                <TextBox x:Name="TxtTitle" Style="{StaticResource FormInputStyle}"/>
 
-                <TextBlock Text="Описание" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,14,0,6"/>
-                <TextBox x:Name="TxtDesc" Style="{StaticResource FormInputStyle}"
-                         Height="72" TextWrapping="Wrap" AcceptsReturn="True"
-                         VerticalContentAlignment="Top" Padding="10,8"/>
+                <TextBlock Text="Проект *" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,14,0,6"/>
+                <ComboBox x:Name="CmbProject" Style="{StaticResource FormComboStyle}" DisplayMemberPath="Name"/>
+
+                <TextBlock Text="Исполнитель" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,14,0,6"/>
+                <ComboBox x:Name="CmbAssignee" Style="{StaticResource FormComboStyle}" DisplayMemberPath="Name"/>
 
                 <Grid Margin="0,14,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="12"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="12"/>
+                        <ColumnDefinition Width="145"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel>
-                        <TextBlock Text="Начало (дд.мм.гггг) *" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
-                        <TextBox x:Name="TxtStart" Style="{StaticResource FormInputStyle}"/>
+                        <TextBlock Text="Приоритет" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <ComboBox x:Name="CmbPriority" Style="{StaticResource FormComboStyle}">
+                            <ComboBoxItem Content="Низкий"    Tag="low"      IsSelected="True"/>
+                            <ComboBoxItem Content="Средний"   Tag="medium"/>
+                            <ComboBoxItem Content="Высокий"   Tag="high"/>
+                            <ComboBoxItem Content="Критичный" Tag="critical"/>
+                        </ComboBox>
                     </StackPanel>
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="Дедлайн (дд.мм.гггг) *" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <TextBlock Text="Статус" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <ComboBox x:Name="CmbStatus" Style="{StaticResource FormComboStyle}">
+                            <ComboBoxItem Content="Открыта"      Tag="open"        IsSelected="True"/>
+                            <ComboBoxItem Content="В работе"     Tag="in_progress"/>
+                            <ComboBoxItem Content="Тестирование" Tag="testing"/>
+                            <ComboBoxItem Content="Закрыта"      Tag="closed"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Grid.Column="4">
+                        <TextBlock Text="Дедлайн (дд.мм.гггг)" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
                         <TextBox x:Name="TxtDeadline" Style="{StaticResource FormInputStyle}"/>
                     </StackPanel>
                 </Grid>
-
-                <TextBlock Text="Статус" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,14,0,6"/>
-                <ComboBox x:Name="CmbStatus" Style="{StaticResource FormComboStyle}">
-                    <ComboBoxItem Content="Активен" Tag="active" IsSelected="True"/>
-                    <ComboBoxItem Content="Закрыт"  Tag="closed"/>
-                </ComboBox>
 
                 <TextBlock x:Name="ErrorText" Foreground="#F87171" FontSize="11"
                            Margin="0,12,0,0" Visibility="Collapsed" TextWrapping="Wrap"/>

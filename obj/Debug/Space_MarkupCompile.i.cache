@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Dev\Space\App.xaml
-10-361081185
+12922515270
 
-162126948989
+27-383061533
 33613966477
-MainWindows\AddWindows\AddProject.xaml;MainWindows\AddWindows\AddReport.xaml;MainWindows\AddWindows\AddTeem.xaml;MainWindows\AddWindows\AddWorker.xaml;MainWindows\Autorisation.xaml;MainWindows\MainProject.xaml;MainWindows\TasksWindow.xaml;MainWindows\TeemProject.xaml;MainWindows\ReportWindows.xaml;MainWindows\TaskManageWindow.xaml;
+MainWindow.xaml;MainWindows\Autorisation.xaml;MainWindows\MainProject.xaml;MainWindows\TasksWindow.xaml;MainWindows\TeemProject.xaml;MainWindows\TaskManageWindow.xaml;MainWindows\ReportWindows.xaml;MainWindows\AddWindows\AddProject.xaml;MainWindows\AddWindows\AddWorker.xaml;MainWindows\AddWindows\AddTeem.xaml;MainWindows\AddWindows\AddReport.xaml;MainWindows\AddWindows\AddTask.xaml;
 
-True
+False
 
