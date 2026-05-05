@@ -53,10 +53,15 @@ namespace Space.AddWindows
                 DialogTitle.Text = "Редактировать отчёт";
                 SaveBtn.Content  = "Обновить";
 
-                foreach (DropdownItem di in CmbTask.Items)
-                    if (di.Id == _editItem.TaskId) { CmbTask.SelectedItem = di; break; }
-                foreach (DropdownItem di in CmbEmployee.Items)
-                    if (di.Id == _editItem.EmployeeId) { CmbEmployee.SelectedItem = di; break; }
+                var taskList = CmbTask.ItemsSource as System.Collections.Generic.List<DropdownItem>;
+                var empList  = CmbEmployee.ItemsSource as System.Collections.Generic.List<DropdownItem>;
+
+                if (taskList != null)
+                    foreach (DropdownItem di in taskList)
+                        if (di.Id == _editItem.TaskId) { CmbTask.SelectedItem = di; break; }
+                if (empList != null)
+                    foreach (DropdownItem di in empList)
+                        if (di.Id == _editItem.EmployeeId) { CmbEmployee.SelectedItem = di; break; }
 
                 CmbTask.IsEnabled     = false;
                 CmbEmployee.IsEnabled = false;
@@ -70,10 +75,15 @@ namespace Space.AddWindows
                 // ── Timer flow mode ────────────────────────────────────
                 DialogTitle.Text = "Отчёт о работе";
 
-                foreach (DropdownItem di in CmbTask.Items)
-                    if (di.Id == _timerTaskId) { CmbTask.SelectedItem = di; break; }
-                foreach (DropdownItem di in CmbEmployee.Items)
-                    if (di.Id == _timerEmployeeId) { CmbEmployee.SelectedItem = di; break; }
+                var taskList = CmbTask.ItemsSource as System.Collections.Generic.List<DropdownItem>;
+                var empList  = CmbEmployee.ItemsSource as System.Collections.Generic.List<DropdownItem>;
+
+                if (taskList != null)
+                    foreach (DropdownItem di in taskList)
+                        if (di.Id == _timerTaskId) { CmbTask.SelectedItem = di; break; }
+                if (empList != null)
+                    foreach (DropdownItem di in empList)
+                        if (di.Id == _timerEmployeeId) { CmbEmployee.SelectedItem = di; break; }
 
                 CmbTask.IsEnabled     = false;   // task fixed from timer
                 CmbEmployee.IsEnabled = false;   // employee fixed from current user
