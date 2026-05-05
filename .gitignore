@@ -6,25 +6,23 @@
 [Rr]eleases/
 x64/
 x86/
+build/
 bld/
 [Bb]in/
 [Oo]bj/
 
 # Visual Studio files
+.vs/
 *.user
 *.userosscache
 *.suo
 *.csproj.user
 *.vbproj.user
-*.vcxproj.user
+*.fsproj.user
+*.userprefs
 
 # Visual Studio Code files
 .vscode/
-
-# Resharper
-_ReSharper*/
-*.[Rr]e[Ss]harper
-*.DotSettings.user
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
@@ -35,79 +33,80 @@ _ReSharper*/
 TestResult.xml
 nunit-*.xml
 
-# Build Results of an ATL Project
-[Dd]ebugPS/
-[Rr]eleasePS/
-dlldata.c
+# Target Frameworks
+**/*.NETFramework,Version=v*.Build.FrameworkVersion.*
+**/*.NETCoreApp,Version=v*.Build.FrameworkVersion.*
+**/*.NETStandard,Version=v*.Build.FrameworkVersion.*
 
-# Benchmark Results
-BenchmarkDotNet.Artifacts/
-
-# .NET Core
-project.lock.json
-project.fragment.lock.json
-artifacts/
-
-# StyleCop
-StyleCopReport.xml
-
-# Files built by Visual Studio
-*_i.c
-*_p.c
-*_h.h
-*.ilk
-*.meta
-*.obj
-*.iobj
-*.pch
-*.pdb
-*.ipdb
-*.pgc
-*.pgd
-*.rsp
-*.sbr
-*.tlb
-*.tli
-*.tlh
-*.tmp
-*.tmp_proj
-*_wpftmp.csproj
-*.log
-*.vspscc
-*.vssscc
-.builds
-*.pidb
-*.svclog
-*.scc
-
-# Chutzpah Test files
-_Chutzpah*
-
-# SonarQube
-.sonarqube/
-
-# Coverlet coverage reports
-coverage*.json
-*.lcov
-
-# Visual Studio cache/options directory (up to Visual Studio 2019)
-.vs/
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+desktop.ini
 
 # Environment specific settings
 .env
 .env.local
-.env.dev
-.env.test
-.env.prod
+*.env
+*.local.env
 
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-desktop.ini
+# Logs
+*.log
+
+# User-specific files
+*.userprefs
+*.sln.docstates
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Compiled files
+*.dll
+*.exe
+*.pdb
+*.mdb
+*.exe.config
+*.userprefs
+*.sdf
+*.db3
+*.sqlite
+
+# Packages
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+
+# Publish folder
+publish/
+
+# IDE
+.ReSharper/
+*.ReSharper.user
+*.DotSettings.user
+*.resharper
+[Tt]emporaryGeneratedFile_*.cs
+[Tt]emporaryGeneratedFile_*.vb
+
+# Settings
+settings.xml
+*.ide
+*.ide.userprefs
+
+# Cache
+*.cache
+*.Cache
+.cache/
+
+# Output
+output/
+out/
+dist/
+
+# Temporary build files
+obj/
+bin/
 ```
-/packages

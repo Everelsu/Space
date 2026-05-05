@@ -69,13 +69,13 @@
                   ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
                   CellStyle="{StaticResource GridCellStyle}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID"          Binding="{Binding Id}"       Width="45"/>
-                <DataGridTextColumn Header="Задача"      Binding="{Binding Task}"      Width="*"/>
-                <DataGridTextColumn Header="Работник"    Binding="{Binding Employee}"  Width="145"/>
-                <DataGridTextColumn Header="Дата"        Binding="{Binding LogDate}"   Width="90"/>
-                <DataGridTextColumn Header="Часов"       Binding="{Binding Hours}"     Width="60"/>
-                <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}"   Width="175"/>
-                <DataGridTemplateColumn x:Name="ColActions" Header="Действия" Width="150">
+                <DataGridTextColumn Header="ID"          Binding="{Binding Id}"       Width="50"/>
+                <DataGridTextColumn Header="Задача"      Binding="{Binding Task}"      Width="280"/>
+                <DataGridTextColumn Header="Работник"    Binding="{Binding Employee}"  Width="160"/>
+                <DataGridTextColumn Header="Дата"        Binding="{Binding LogDate}"   Width="100"/>
+                <DataGridTextColumn Header="Часов"       Binding="{Binding Hours}"     Width="70"/>
+                <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}"   Width="200"/>
+                <DataGridTemplateColumn x:Name="ColActions" Header="Действия" Width="180">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
