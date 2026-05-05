@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Space.AddWindows"
         mc:Ignorable="d"
-        Title="AddWorker" Height="600" Width="400">
+        Title="AddWorker" Height="450" Width="400">
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="Foreground" Value="White"/>
@@ -82,13 +82,25 @@
 
     <Grid Background="#111827">
 
-        <Label FontSize="25" HorizontalAlignment="Center" Height="50" VerticalAlignment="Top">Добавление проекта</Label>
+        <Label FontSize="25" HorizontalAlignment="Center" Height="50" VerticalAlignment="Top">Добавление работника</Label>
 
-        <Label HorizontalAlignment="Left" Margin="100,54,0,508" Content="ФИ"/>
-        <TextBox Width="200" Margin="100,76,100,490"/>
+        <Label HorizontalAlignment="Left" VerticalContentAlignment="Center" Content="ФИ" Height="25" Width="25" Margin="100,64,0,345"/>
+        <TextBox Height="20" Width="200" Margin="100,89,100,325"/>
 
-        <Button Width="70" Height="30" Margin="255,277,75,277">Cоздать</Button>
-        <Button Width="50" Height="30" Margin="150,273,200,281">Отмена</Button>
+        <Button Width="70" Height="30" Margin="230,343,100,61">Cоздать</Button>
+        <Button Width="50" Height="30" Margin="175,343,175,61">Отмена</Button>
+
+        <Label HorizontalAlignment="Left" Content="Логин" Height="25" Width="40" Margin="100,114,0,295" />
+        <TextBox Height="20" Width="200" Margin="100,139,100,275"/>
+
+        <Label HorizontalAlignment="Left" Height="25" Width="45"  Content="Пароль" Margin="100,164,0,245"/>
+        <TextBox Height="20" Width="200" Margin="100,189,100,225"/>
+
+        <ComboBox Height="20" Width="200" Margin="100,287,100,127"/>
+        <Label HorizontalAlignment="Left" Height="25" Width="65"  Content="Должность" Margin="100,262,0,147"/>
+
+        <Label HorizontalAlignment="Left" Height="25" Width="35"  Content="Email" Margin="100,214,0,195"/>
+        <TextBox Height="20" Width="200" Margin="100,237,100,177"/>
 
     </Grid>
 </Window>
