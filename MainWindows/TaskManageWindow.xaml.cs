@@ -26,20 +26,18 @@ namespace Space
             };
         }
 
-        private bool IsAdmin     => _user?.Role == "admin";
-        private bool IsManager   => _user?.Role == "manager";
-        private bool IsDeveloper => _user?.Role == "developer";
-        private bool IsTester    => _user?.Role == "tester";
+        private string Role      => _user?.Role?.ToLower() ?? "";
+        private bool IsAdmin     => Role == "admin";
+        private bool IsManager   => Role == "manager";
+        private bool IsDeveloper => Role == "developer";
+        private bool IsTester    => Role == "tester";
 
         private void ApplyRole()
         {
-            // Add / Edit — admin + manager; Delete — admin only
             bool canManage = IsAdmin || IsManager;
             AddBtn.Visibility    = canManage ? Visibility.Visible : Visibility.Collapsed;
-            ColEdit.Visibility   = canManage ? Visibility.Visible : Visibility.Collapsed;
-            ColDelete.Visibility = (IsAdmin || IsManager) ? Visibility.Visible : Visibility.Collapsed;
+            ColActions.Visibility = canManage ? Visibility.Visible : Visibility.Collapsed;
 
-            // Timer — admin + developer (managers oversee, developers do the work)
             ColTimer.Visibility = (IsAdmin || IsDeveloper) ? Visibility.Visible : Visibility.Collapsed;
 
             // Status advance — tester sees separate column (testing→closed only)

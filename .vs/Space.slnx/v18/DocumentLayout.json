@@ -3,28 +3,32 @@
   "WorkspaceRootPath": "C:\\Dev\\Space\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|c:\\dev\\space\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\readproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\readproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\autorisation.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\autorisation.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\taskmanagewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\taskmanagewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\addwindows\\addproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\addwindows\\addproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\reportwindows.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\reportwindows.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\taskswindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\taskswindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\taskmanagewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\taskmanagewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\addwindows\\addproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\addwindows\\addproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|c:\\dev\\space\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|c:\\dev\\space\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\addwindows\\addtask.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -41,82 +45,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\addwindows\\addteem.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\addwindows\\addteem.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|c:\\dev\\space\\mainwindows\\mainproject.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\mainproject.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\styles\\sharedstyles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:styles\\sharedstyles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\autorisation.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\autorisation.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\mainproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\mainproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|c:\\dev\\space\\model\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:model\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\readproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\readproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\reportwindows.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\reportwindows.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\model\\worklogitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:model\\worklogitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\model\\logitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:model\\logitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\teemproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\teemproject.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\taskmanagewindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\taskmanagewindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\model\\employeeitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:model\\employeeitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\model\\dropdownitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:model\\dropdownitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\mainwindows\\autorisation.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:mainwindows\\autorisation.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\model\\teamitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:model\\teamitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\model\\taskitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:model\\taskitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\model\\taskmanageitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:model\\taskmanageitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|C:\\Dev\\Space\\model\\projectitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FA8C816-999F-401B-958F-0AC0D44FCC61}|Space.csproj|solutionrelative:model\\projectitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -131,259 +59,43 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Dev\\Space\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "MainWindow.xaml.cs",
-              "ToolTip": "C:\\Dev\\Space\\MainWindow.xaml.cs",
-              "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T23:59:35.415Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "MainWindows\\MainProject.xaml.cs",
-              "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\MainProject.xaml.cs",
-              "RelativeDocumentMoniker": "MainWindows\\MainProject.xaml.cs",
-              "ToolTip": "C:\\Dev\\Space\\MainWindows\\MainProject.xaml.cs",
-              "RelativeToolTip": "MainWindows\\MainProject.xaml.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAA5wGAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T23:24:15.967Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "WorkLogItem.cs",
-              "DocumentMoniker": "C:\\Dev\\Space\\Model\\WorkLogItem.cs",
-              "RelativeDocumentMoniker": "Model\\WorkLogItem.cs",
-              "ToolTip": "C:\\Dev\\Space\\Model\\WorkLogItem.cs",
-              "RelativeToolTip": "Model\\WorkLogItem.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T15:36:04.397Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "ReportWindows.xaml.cs",
-              "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\ReportWindows.xaml.cs",
-              "RelativeDocumentMoniker": "MainWindows\\ReportWindows.xaml.cs",
-              "ToolTip": "C:\\Dev\\Space\\MainWindows\\ReportWindows.xaml.cs",
-              "RelativeToolTip": "MainWindows\\ReportWindows.xaml.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAcwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T15:35:48.011Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "MainWindows\\TaskManageWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\TaskManageWindow.xaml.cs",
-              "RelativeDocumentMoniker": "MainWindows\\TaskManageWindow.xaml.cs",
-              "ToolTip": "C:\\Dev\\Space\\MainWindows\\TaskManageWindow.xaml.cs",
-              "RelativeToolTip": "MainWindows\\TaskManageWindow.xaml.cs",
-              "ViewState": "AgIAAHEAAAAAAAAAAAApwLsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T15:33:31.255Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "TeemProject.xaml",
-              "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\TeemProject.xaml",
-              "RelativeDocumentMoniker": "MainWindows\\TeemProject.xaml",
-              "ToolTip": "C:\\Dev\\Space\\MainWindows\\TeemProject.xaml",
-              "RelativeToolTip": "MainWindows\\TeemProject.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-05T13:54:49.218Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
               "Title": "ReadProject.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\ReadProject.xaml",
               "RelativeDocumentMoniker": "MainWindows\\ReadProject.xaml",
               "ToolTip": "C:\\Dev\\Space\\MainWindows\\ReadProject.xaml",
               "RelativeToolTip": "MainWindows\\ReadProject.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-05T12:14:05.038Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "TasksWindow.xaml",
-              "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\TasksWindow.xaml",
-              "RelativeDocumentMoniker": "MainWindows\\TasksWindow.xaml",
-              "ToolTip": "C:\\Dev\\Space\\MainWindows\\TasksWindow.xaml",
-              "RelativeToolTip": "MainWindows\\TasksWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-05T04:37:04.655Z",
+              "WhenOpened": "2026-05-05T12:14:05.038Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "Autorisation.xaml.cs",
-              "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\Autorisation.xaml.cs",
-              "RelativeDocumentMoniker": "MainWindows\\Autorisation.xaml.cs",
-              "ToolTip": "C:\\Dev\\Space\\MainWindows\\Autorisation.xaml.cs",
-              "RelativeToolTip": "MainWindows\\Autorisation.xaml.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAMwC8AAAAaAAAAAAAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADKSURBVDhP7ZMhDoNAEEX/VlStqMYwJ\u002BgFegguwB1AIsC1ZhWKE3AVkj3DojCEBIOumZqWLENoSVPZl6zYPz8/k5ldQHC\u002BWbbtyFLfjW1HDvOGbTuyMYaJiIui2AxUYd5wN92ljvB0RHe9KCLiKIqglEJZlkr6VvgdAAARMQAkScJpmm52MiNnQEQ8DMO\u002BEGPMqviag3\u002BkZ\u002BZt8Yn0HPzLN/wDfh2gtYZzbnOVzjkOgmChLd52XddcVRX6vvflGa01sixDHMef/8ReHgD\u002BXy4W5TMHAAAAAElFTkSuQmCC",
-              "WhenOpened": "2026-05-05T03:46:01.061Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "DatabaseService.cs",
-              "DocumentMoniker": "C:\\Dev\\Space\\Model\\DatabaseService.cs",
-              "RelativeDocumentMoniker": "Model\\DatabaseService.cs",
-              "ToolTip": "C:\\Dev\\Space\\Model\\DatabaseService.cs",
-              "RelativeToolTip": "Model\\DatabaseService.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAABMAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T03:44:36.914Z",
+              "DocumentIndex": 5,
+              "Title": "App.config",
+              "DocumentMoniker": "C:\\Dev\\Space\\App.config",
+              "RelativeDocumentMoniker": "App.config",
+              "ToolTip": "C:\\Dev\\Space\\App.config",
+              "RelativeToolTip": "App.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2026-05-06T00:07:30.22Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "TaskManageItem.cs",
-              "DocumentMoniker": "C:\\Dev\\Space\\Model\\TaskManageItem.cs",
-              "RelativeDocumentMoniker": "Model\\TaskManageItem.cs",
-              "ToolTip": "C:\\Dev\\Space\\Model\\TaskManageItem.cs",
-              "RelativeToolTip": "Model\\TaskManageItem.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADBSURBVDhPY2AYBQwMDAwMN17c\u002BO\u002B1yv2/4ETe/9aLLf7feHH9P7L8vHNz4XxkNhxYLzb/33yo4T8DAwND06GG/16r3FEUCU7khfOR2QwMDAyMMMH3\u002BZ8ZYYK6czX/X06\u002Bzjjv3Nz/xYcLkNXDgausO8OqoDUQPeimogN8LmBC5pADsBqgO1fzPwM0wGA2Ck7kRWGHrQtBuMRzlfv/5sONkEA83PjferEF0YHIwACNRqtF5v8FJ/L\u002B91zpRno0jnAAAA95Yu0ct6ifAAAAAElFTkSuQmCC",
-              "WhenOpened": "2026-05-05T03:44:31.171Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "ProjectItem.cs",
-              "DocumentMoniker": "C:\\Dev\\Space\\Model\\ProjectItem.cs",
-              "RelativeDocumentMoniker": "Model\\ProjectItem.cs",
-              "ToolTip": "C:\\Dev\\Space\\Model\\ProjectItem.cs",
-              "RelativeToolTip": "Model\\ProjectItem.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADBSURBVDhPY2AYBQwMDAwMN17c\u002BO\u002B1yv2/4ETe/9aLLf7feHH9P7L8vHNz4XxkNhxYLzb/33yo4T8DAwND06GG/16r3FEUCU7khfOR2QwMDAyMMMH3\u002BZ8ZYYK6czX/X06\u002Bzjjv3Nz/xYcLkNXDgausO8OqoDUQPeimogN8LmBC5pADsBqgO1fzPwM0wGA2Ck7kRWGHrQtBuMRzlfv/5sONkEA83PjferEF0YHIwACNRqtF5v8FJ/L\u002B91zpRno0jnAAAA95Yu0ct6ifAAAAAElFTkSuQmCC",
-              "WhenOpened": "2026-05-05T03:44:29.222Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "LogItem.cs",
-              "DocumentMoniker": "C:\\Dev\\Space\\Model\\LogItem.cs",
-              "RelativeDocumentMoniker": "Model\\LogItem.cs",
-              "ToolTip": "C:\\Dev\\Space\\Model\\LogItem.cs",
-              "RelativeToolTip": "Model\\LogItem.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T03:44:28.633Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "EmployeeItem.cs",
-              "DocumentMoniker": "C:\\Dev\\Space\\Model\\EmployeeItem.cs",
-              "RelativeDocumentMoniker": "Model\\EmployeeItem.cs",
-              "ToolTip": "C:\\Dev\\Space\\Model\\EmployeeItem.cs",
-              "RelativeToolTip": "Model\\EmployeeItem.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADBSURBVDhPY2AYBQwMDAwMN17c\u002BO\u002B1yv2/4ETe/9aLLf7feHH9P7L8vHNz4XxkNhxYLzb/33yo4T8DAwND06GG/16r3FEUCU7khfOR2QwMDAyMMMH3\u002BZ8ZYYK6czX/X06\u002Bzjjv3Nz/xYcLkNXDgausO8OqoDUQPeimogN8LmBC5pADsBqgO1fzPwM0wGA2Ck7kRWGHrQtBuMRzlfv/5sONkEA83PjferEF0YHIwACNRqtF5v8FJ/L\u002B91zpRno0jnAAAA95Yu0ct6ifAAAAAElFTkSuQmCC",
-              "WhenOpened": "2026-05-05T03:44:27.933Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "DropdownItem.cs",
-              "DocumentMoniker": "C:\\Dev\\Space\\Model\\DropdownItem.cs",
-              "RelativeDocumentMoniker": "Model\\DropdownItem.cs",
-              "ToolTip": "C:\\Dev\\Space\\Model\\DropdownItem.cs",
-              "RelativeToolTip": "Model\\DropdownItem.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADBSURBVDhPY2AYBQwMDAwMN17c\u002BO\u002B1yv2/4ETe/9aLLf7feHH9P7L8vHNz4XxkNhxYLzb/33yo4T8DAwND06GG/16r3FEUCU7khfOR2QwMDAyMMMH3\u002BZ8ZYYK6czX/X06\u002Bzjjv3Nz/xYcLkNXDgausO8OqoDUQPeimogN8LmBC5pADsBqgO1fzPwM0wGA2Ck7kRWGHrQtBuMRzlfv/5sONkEA83PjferEF0YHIwACNRqtF5v8FJ/L\u002B91zpRno0jnAAAA95Yu0ct6ifAAAAAElFTkSuQmCC",
-              "WhenOpened": "2026-05-05T03:44:26.204Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "C:\\Dev\\Space\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "MainWindow.xaml",
-              "ToolTip": "C:\\Dev\\Space\\MainWindow.xaml",
-              "RelativeToolTip": "MainWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-05T03:43:56.32Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 6,
               "Title": "App.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\App.xaml",
               "RelativeDocumentMoniker": "App.xaml",
               "ToolTip": "C:\\Dev\\Space\\App.xaml",
               "RelativeToolTip": "App.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-05T03:43:54.748Z",
+              "WhenOpened": "2026-05-06T00:07:27.217Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "TaskItem.cs",
-              "DocumentMoniker": "C:\\Dev\\Space\\Model\\TaskItem.cs",
-              "RelativeDocumentMoniker": "Model\\TaskItem.cs",
-              "ToolTip": "C:\\Dev\\Space\\Model\\TaskItem.cs",
-              "RelativeToolTip": "Model\\TaskItem.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADBSURBVDhPY2AYBQwMDAwMN17c\u002BO\u002B1yv2/4ETe/9aLLf7feHH9P7L8vHNz4XxkNhxYLzb/33yo4T8DAwND06GG/16r3FEUCU7khfOR2QwMDAyMMMH3\u002BZ8ZYYK6czX/X06\u002Bzjjv3Nz/xYcLkNXDgausO8OqoDUQPeimogN8LmBC5pADsBqgO1fzPwM0wGA2Ck7kRWGHrQtBuMRzlfv/5sONkEA83PjferEF0YHIwACNRqtF5v8FJ/L\u002B91zpRno0jnAAAA95Yu0ct6ifAAAAAElFTkSuQmCC",
-              "WhenOpened": "2026-05-05T03:43:53.486Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "TeamItem.cs",
-              "DocumentMoniker": "C:\\Dev\\Space\\Model\\TeamItem.cs",
-              "RelativeDocumentMoniker": "Model\\TeamItem.cs",
-              "ToolTip": "C:\\Dev\\Space\\Model\\TeamItem.cs",
-              "RelativeToolTip": "Model\\TeamItem.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADBSURBVDhPY2AYBQwMDAwMN17c\u002BO\u002B1yv2/4ETe/9aLLf7feHH9P7L8vHNz4XxkNhxYLzb/33yo4T8DAwND06GG/16r3FEUCU7khfOR2QwMDAyMMMH3\u002BZ8ZYYK6czX/X06\u002Bzjjv3Nz/xYcLkNXDgausO8OqoDUQPeimogN8LmBC5pADsBqgO1fzPwM0wGA2Ck7kRWGHrQtBuMRzlfv/5sONkEA83PjferEF0YHIwACNRqtF5v8FJ/L\u002B91zpRno0jnAAAA95Yu0ct6ifAAAAAElFTkSuQmCC",
-              "WhenOpened": "2026-05-05T03:43:52.059Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "SharedStyles.xaml",
-              "DocumentMoniker": "C:\\Dev\\Space\\Styles\\SharedStyles.xaml",
-              "RelativeDocumentMoniker": "Styles\\SharedStyles.xaml",
-              "ToolTip": "C:\\Dev\\Space\\Styles\\SharedStyles.xaml",
-              "RelativeToolTip": "Styles\\SharedStyles.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-05T03:43:49.222Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "MainProject.xaml",
-              "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\MainProject.xaml",
-              "RelativeDocumentMoniker": "MainWindows\\MainProject.xaml",
-              "ToolTip": "C:\\Dev\\Space\\MainWindows\\MainProject.xaml",
-              "RelativeToolTip": "MainWindows\\MainProject.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-05T03:43:19.29Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 1,
               "Title": "Autorisation.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\Autorisation.xaml",
               "RelativeDocumentMoniker": "MainWindows\\Autorisation.xaml",
@@ -395,7 +107,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "AddTask.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\AddWindows\\AddTask.xaml",
               "RelativeDocumentMoniker": "MainWindows\\AddWindows\\AddTask.xaml",
@@ -407,7 +119,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "TaskManageWindow.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\TaskManageWindow.xaml",
               "RelativeDocumentMoniker": "MainWindows\\TaskManageWindow.xaml",
@@ -431,7 +143,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "AddWorker.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\AddWindows\\AddWorker.xaml",
               "RelativeDocumentMoniker": "MainWindows\\AddWindows\\AddWorker.xaml",
@@ -443,7 +155,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "AddTeem.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\AddWindows\\AddTeem.xaml",
               "RelativeDocumentMoniker": "MainWindows\\AddWindows\\AddTeem.xaml",
@@ -455,7 +167,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "AddReport.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\AddWindows\\AddReport.xaml",
               "RelativeDocumentMoniker": "MainWindows\\AddWindows\\AddReport.xaml",
@@ -467,7 +179,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "AddProject.xaml",
               "DocumentMoniker": "C:\\Dev\\Space\\MainWindows\\AddWindows\\AddProject.xaml",
               "RelativeDocumentMoniker": "MainWindows\\AddWindows\\AddProject.xaml",

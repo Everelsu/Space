@@ -111,7 +111,7 @@ namespace Space
                     SELECT p.id, p.name, p.description, p.start_date, p.deadline, p.status,
                            COALESCE(e.full_name,'—'), p.manager_id
                     FROM projects p LEFT JOIN employees e ON e.id = p.manager_id
-                    ORDER BY p.id DESC", conn))
+                    ORDER BY p.id ASC", conn))
                 using (var r = await cmd.ExecuteReaderAsync())
                     while (await r.ReadAsync())
                         list.Add(new ProjectItem
@@ -189,7 +189,7 @@ namespace Space
                     FROM employees e
                     LEFT JOIN teams t ON t.id = e.team_id
                     LEFT JOIN users u ON u.id = e.user_id
-                    ORDER BY e.id DESC", conn))
+                    ORDER BY e.id ASC", conn))
                 using (var r = await cmd.ExecuteReaderAsync())
                     while (await r.ReadAsync())
                         list.Add(new EmployeeItem
@@ -288,7 +288,7 @@ namespace Space
                     SELECT t.id, t.name, COALESCE(e.full_name,'—'),
                            (SELECT COUNT(*) FROM employees WHERE team_id = t.id)
                     FROM teams t LEFT JOIN employees e ON e.id = t.lead_employee_id
-                    ORDER BY t.id DESC", conn))
+                    ORDER BY t.id ASC", conn))
                 using (var r = await cmd.ExecuteReaderAsync())
                     while (await r.ReadAsync())
                         list.Add(new TeamItem
@@ -356,7 +356,7 @@ namespace Space
                     FROM worklogs w
                     JOIN tasks t ON t.id = w.task_id
                     JOIN employees e ON e.id = w.employee_id
-                    ORDER BY w.log_date DESC", conn))
+                    ORDER BY w.id ASC", conn))
                 using (var r = await cmd.ExecuteReaderAsync())
                     while (await r.ReadAsync())
                         list.Add(new WorkLogItem
@@ -636,8 +636,7 @@ namespace Space
                     FROM tasks t
                     LEFT JOIN projects p ON p.id = t.project_id
                     LEFT JOIN employees e ON e.id = t.assignee_id
-                    ORDER BY CASE t.priority WHEN 'critical' THEN 1 WHEN 'high' THEN 2
-                        WHEN 'medium' THEN 3 ELSE 4 END, t.deadline ASC NULLS LAST, t.id DESC", conn))
+                    ORDER BY t.id ASC", conn))
                 using (var r = await cmd.ExecuteReaderAsync())
                     while (await r.ReadAsync())
                         list.Add(new TaskManageItem
@@ -713,6 +712,11 @@ namespace Space
             using (var conn = GetConnection())
             {
                 await conn.OpenAsync();
+                using (var cmd = new NpgsqlCommand("DELETE FROM worklogs WHERE task_id=@id", conn))
+                {
+                    cmd.Parameters.AddWithValue("id", id);
+                    await cmd.ExecuteNonQueryAsync();
+                }
                 using (var cmd = new NpgsqlCommand("DELETE FROM tasks WHERE id=@id", conn))
                 {
                     cmd.Parameters.AddWithValue("id", id);

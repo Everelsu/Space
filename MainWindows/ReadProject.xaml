@@ -1,7 +1,7 @@
 <Window x:Class="Space.ReadProject"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="О разработчике"
+        Title="О разработчике" Icon="/Assets/Z.png"
         Width="400" SizeToContent="Height"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
