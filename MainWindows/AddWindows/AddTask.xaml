@@ -71,8 +71,8 @@
                         </ComboBox>
                     </StackPanel>
                     <StackPanel Grid.Column="4">
-                        <TextBlock Text="Дедлайн (дд.мм.гггг)" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
-                        <TextBox x:Name="TxtDeadline" Style="{StaticResource FormInputStyle}"/>
+                        <TextBlock Text="Дедлайн" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <DatePicker x:Name="DpDeadline" Height="36" SelectedDateFormat="Short"/>
                     </StackPanel>
                 </Grid>
 

@@ -4,7 +4,8 @@
         Title="Проект"
         Width="500" SizeToContent="Height"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
-        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Loaded="Window_Loaded">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -49,14 +50,17 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel>
-                        <TextBlock Text="Начало (дд.мм.гггг) *" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
-                        <TextBox x:Name="TxtStart" Style="{StaticResource FormInputStyle}"/>
+                        <TextBlock Text="Начало *" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <DatePicker x:Name="DpStart" Height="36" SelectedDateFormat="Short"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="Дедлайн (дд.мм.гггг) *" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
-                        <TextBox x:Name="TxtDeadline" Style="{StaticResource FormInputStyle}"/>
+                        <TextBlock Text="Дедлайн *" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <DatePicker x:Name="DpDeadline" Height="36" SelectedDateFormat="Short"/>
                     </StackPanel>
                 </Grid>
+
+                <TextBlock Text="Руководитель" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,14,0,6"/>
+                <ComboBox x:Name="CmbManager" Style="{StaticResource FormComboStyle}" DisplayMemberPath="Name"/>
 
                 <TextBlock Text="Статус" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,14,0,6"/>
                 <ComboBox x:Name="CmbStatus" Style="{StaticResource FormComboStyle}">

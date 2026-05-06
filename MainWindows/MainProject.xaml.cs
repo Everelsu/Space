@@ -68,7 +68,7 @@ namespace Space
 
         private async void AddBtn_Click(object s, RoutedEventArgs e)
         {
-            var dlg = new AddWindows.AddProject { Owner = Window.GetWindow(this) };
+            var dlg = new AddWindows.AddProject(_user) { Owner = Window.GetWindow(this) };
             if (dlg.ShowDialog() == true) await Reload();
         }
 
@@ -77,7 +77,7 @@ namespace Space
             var id   = (int)((Button)s).Tag;
             var item = _all.FirstOrDefault(p => p.Id == id);
             if (item == null) return;
-            var dlg = new AddWindows.AddProject(item) { Owner = Window.GetWindow(this) };
+            var dlg = new AddWindows.AddProject(item, _user) { Owner = Window.GetWindow(this) };
             if (dlg.ShowDialog() == true) await Reload();
         }
 

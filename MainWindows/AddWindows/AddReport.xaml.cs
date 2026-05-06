@@ -8,6 +8,7 @@ namespace Space.AddWindows
     public partial class AddReport : Window
     {
         private readonly WorkLogItem _editItem;
+        private readonly bool        _isTester;
 
         // Timer-flow fields (filled when opened from StopTimer)
         private readonly int     _timerTaskId;
@@ -17,11 +18,12 @@ namespace Space.AddWindows
         private readonly bool    _isTimerFlow;
 
         // ── Add (manual) ──────────────────────────────────────────────
-        public AddReport()
+        public AddReport(bool isTester = false)
         {
             InitializeComponent();
             _editItem    = null;
             _isTimerFlow = false;
+            _isTester    = isTester;
         }
 
         // ── Edit ──────────────────────────────────────────────────────
@@ -66,7 +68,9 @@ namespace Space.AddWindows
                 CmbTask.IsEnabled     = false;
                 CmbEmployee.IsEnabled = false;
 
-                TxtDate.Text    = _editItem.LogDate;
+                if (DateTime.TryParseExact(_editItem.LogDate, "dd.MM.yyyy",
+                    CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime editDt))
+                    DpDate.SelectedDate = editDt;
                 TxtHours.Text   = _editItem.Hours.ToString(CultureInfo.InvariantCulture);
                 TxtComment.Text = _editItem.Comment;
             }
@@ -91,13 +95,19 @@ namespace Space.AddWindows
                 CmbEmployee.IsEnabled    = false;     // employee locked — current user
 
                 TxtHours.Text = _timerHours.ToString("0.##", CultureInfo.InvariantCulture);
-                TxtDate.Text  = DateTime.Today.ToString("dd.MM.yyyy");
-                TxtComment.Focus();  // cursor goes straight to comment
+                DpDate.SelectedDate = DateTime.Today;
+                TxtComment.Focus();
             }
             else
             {
                 // ── New manual report ──────────────────────────────────
-                TxtDate.Text = DateTime.Today.ToString("dd.MM.yyyy");
+                DpDate.SelectedDate = DateTime.Today;
+
+                if (_isTester)
+                {
+                    LblHours.Text = "Часов";
+                    TxtHours.Text = "";
+                }
             }
         }
 
@@ -112,18 +122,27 @@ namespace Space.AddWindows
         {
             ErrorText.Visibility = Visibility.Collapsed;
 
-            if (!decimal.TryParse(TxtHours.Text.Replace(',', '.'), NumberStyles.Any,
-                CultureInfo.InvariantCulture, out decimal hours))
-            { ShowError("Введите корректное количество часов"); return; }
-            hours = Math.Round(hours, 2, MidpointRounding.AwayFromZero);
-            if (hours <= 0)
-            { ShowError("Количество часов должно быть больше 0"); return; }
-            if (hours > 24)
-            { ShowError("Количество часов не может превышать 24 в день"); return; }
+            decimal hours = 0;
+            var hoursText = TxtHours.Text.Trim();
+            if (_isTester && string.IsNullOrEmpty(hoursText))
+            {
+                hours = 0;
+            }
+            else
+            {
+                if (!decimal.TryParse(hoursText.Replace(',', '.'), NumberStyles.Any,
+                    CultureInfo.InvariantCulture, out hours))
+                { ShowError("Введите корректное количество часов"); return; }
+                hours = Math.Round(hours, 2, MidpointRounding.AwayFromZero);
+                if (hours <= 0)
+                { ShowError("Количество часов должно быть больше 0"); return; }
+                if (hours > 24)
+                { ShowError("Количество часов не может превышать 24 в день"); return; }
+            }
 
-            if (!DateTime.TryParseExact(TxtDate.Text.Trim(), "dd.MM.yyyy",
-                CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dt))
-            { ShowError("Неверный формат даты. Используйте дд.мм.гггг"); return; }
+            if (!DpDate.SelectedDate.HasValue)
+            { ShowError("Выберите дату"); return; }
+            var dt = DpDate.SelectedDate.Value;
 
             SaveBtn.IsEnabled = false;
             try

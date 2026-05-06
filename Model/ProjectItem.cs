@@ -9,6 +9,7 @@ namespace Space
         public string Deadline    { get; set; }
         public string Status      { get; set; }
         public string Manager     { get; set; }
+        public int?   ManagerId   { get; set; }
 
         public string StatusLabel => Status == "active" ? "Активен"
                                    : Status == "closed" ? "Закрыт" : Status;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Threading;
 
 namespace Space
 {
@@ -11,7 +10,6 @@ namespace Space
     {
         private List<TaskManageItem> _all = new List<TaskManageItem>();
         private readonly UserInfo _user;
-        private readonly DispatcherTimer _clock;
 
         // Parameterless ctor keeps XAML designer happy
         public TaskManageWindow() : this(null) { }
@@ -21,16 +19,10 @@ namespace Space
             InitializeComponent();
             _user = user;
 
-            // Tick every second to refresh elapsed time in banner
-            _clock = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
-            _clock.Tick += (s, e) => RefreshBanner();
-            _clock.Start();
-
             Loaded += async (s, e) =>
             {
                 ApplyRole();
                 await Reload();
-                RefreshBanner();   // show banner immediately if timer was already running
             };
         }
 
@@ -41,11 +33,11 @@ namespace Space
 
         private void ApplyRole()
         {
-            // Add / Edit / Delete — admin + manager
+            // Add / Edit — admin + manager; Delete — admin only
             bool canManage = IsAdmin || IsManager;
             AddBtn.Visibility    = canManage ? Visibility.Visible : Visibility.Collapsed;
             ColEdit.Visibility   = canManage ? Visibility.Visible : Visibility.Collapsed;
-            ColDelete.Visibility = canManage ? Visibility.Visible : Visibility.Collapsed;
+            ColDelete.Visibility = (IsAdmin || IsManager) ? Visibility.Visible : Visibility.Collapsed;
 
             // Timer — admin + developer (managers oversee, developers do the work)
             ColTimer.Visibility = (IsAdmin || IsDeveloper) ? Visibility.Visible : Visibility.Collapsed;
@@ -118,21 +110,6 @@ namespace Space
 
         // ── Timer ─────────────────────────────────────────────────────────────
 
-        private void RefreshBanner()
-        {
-            if (TimerBanner == null) return;
-            if (TimerService.IsRunning)
-            {
-                TimerBanner.Visibility = Visibility.Visible;
-                BannerTask.Text = TimerService.ActiveTaskTitle;
-                BannerTime.Text = TimerService.ElapsedText;
-            }
-            else
-            {
-                TimerBanner.Visibility = Visibility.Collapsed;
-            }
-        }
-
         private void StartTimer_Click(object s, RoutedEventArgs e)
         {
             if (TimerService.IsRunning)
@@ -148,26 +125,25 @@ namespace Space
             if (item == null) return;
 
             TimerService.Start(id, item.Title);
-            RefreshBanner();
+            Apply(SearchBox?.Text.StartsWith("🔍") == true ? "" : SearchBox?.Text ?? "");
         }
 
         private void StopTimer_Click(object s, RoutedEventArgs e)
         {
             if (!TimerService.IsRunning) return;
 
-            // Capture ALL state BEFORE Stop() clears it
             var taskId    = TimerService.ActiveTaskId;
             var taskTitle = TimerService.ActiveTaskTitle;
             var empId     = _user?.EmployeeId;
             var hours     = TimerService.Stop();
-            RefreshBanner();
 
-            // Open pre-filled report dialog
+            Apply(SearchBox?.Text.StartsWith("🔍") == true ? "" : SearchBox?.Text ?? "");
+
             AddWindows.AddReport dlg;
             if (empId.HasValue)
                 dlg = new AddWindows.AddReport(taskId, taskTitle, empId.Value, hours);
             else
-                dlg = new AddWindows.AddReport();   // no linked employee — user fills manually
+                dlg = new AddWindows.AddReport();
 
             dlg.Owner = Window.GetWindow(this);
             dlg.ShowDialog();

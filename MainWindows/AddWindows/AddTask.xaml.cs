@@ -38,7 +38,9 @@ namespace Space.AddWindows
                 DialogTitle.Text = "Редактировать задачу";
                 SaveBtn.Content  = "Обновить";
                 TxtTitle.Text    = _editItem.Title;
-                TxtDeadline.Text = _editItem.Deadline == "—" ? "" : _editItem.Deadline;
+                if (_editItem.Deadline != "—" && DateTime.TryParseExact(_editItem.Deadline, "dd.MM.yyyy",
+                    CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dlEdit))
+                    DpDeadline.SelectedDate = dlEdit;
 
                 foreach (DropdownItem di in CmbProject.Items)
                     if (di.Id == _editItem.ProjectId) { CmbProject.SelectedItem = di; break; }
@@ -78,15 +80,7 @@ namespace Space.AddWindows
             var priority = (CmbPriority.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "low";
             var status   = (CmbStatus.SelectedItem   as ComboBoxItem)?.Tag?.ToString() ?? "open";
             var assignee = CmbAssignee.SelectedItem as DropdownItem;
-            DateTime? deadline = null;
-
-            if (!string.IsNullOrWhiteSpace(TxtDeadline.Text))
-            {
-                if (!DateTime.TryParseExact(TxtDeadline.Text.Trim(), "dd.MM.yyyy",
-                    CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dl))
-                { ShowError("Неверный формат дедлайна. Используйте дд.мм.гггг"); return; }
-                deadline = dl;
-            }
+            DateTime? deadline = DpDeadline.SelectedDate;
 
             SaveBtn.IsEnabled = false;
             try

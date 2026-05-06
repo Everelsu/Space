@@ -5,7 +5,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -53,37 +52,8 @@
                     Click="AddBtn_Click"/>
         </Grid>
 
-        <!-- Timer banner -->
-        <Border Grid.Row="2" x:Name="TimerBanner" Visibility="Collapsed"
-                Background="#0F2A1E" BorderBrush="#22C55E" BorderThickness="1"
-                CornerRadius="8" Padding="14,10" Margin="0,0,0,10">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <!-- Pulse dot -->
-                <Ellipse Width="10" Height="10" Fill="#22C55E" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <!-- Task info -->
-                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Text="Идёт работа:" Foreground="#86EFAC" FontSize="11"/>
-                    <TextBlock x:Name="BannerTask" Foreground="White" FontSize="13" FontWeight="SemiBold"/>
-                </StackPanel>
-                <!-- Elapsed clock -->
-                <TextBlock Grid.Column="2" x:Name="BannerTime"
-                           Foreground="#22C55E" FontSize="22" FontWeight="Bold"
-                           VerticalAlignment="Center" Margin="0,0,16,0"
-                           FontFamily="Consolas"/>
-                <!-- Stop button -->
-                <Button Grid.Column="3" Content="⏹  Остановить" Style="{StaticResource DangerBtnStyle}"
-                        Click="StopTimer_Click" Padding="14,0"/>
-            </Grid>
-        </Border>
-
         <!-- DataGrid -->
-        <DataGrid Grid.Row="3" x:Name="Grid" Style="{StaticResource GridStyle}"
+        <DataGrid Grid.Row="2" x:Name="Grid" Style="{StaticResource GridStyle}"
                   ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
                   CellStyle="{StaticResource GridCellStyle}">
             <DataGrid.Columns>
@@ -94,13 +64,37 @@
                 <DataGridTextColumn Header="Приоритет"   Binding="{Binding PriorityLabel}"  Width="90"/>
                 <DataGridTextColumn Header="Статус"      Binding="{Binding StatusLabel}"    Width="85"/>
                 <DataGridTextColumn Header="Дедлайн"     Binding="{Binding Deadline}"       Width="90"/>
-                <!-- ▶ Timer: admin + developer only -->
+                <!-- Timer: admin + developer only -->
                 <DataGridTemplateColumn x:Name="ColTimer" Header="" Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="▶" Style="{StaticResource EditBtnStyle}"
-                                    Tag="{Binding Id}" Click="StartTimer_Click"
-                                    Padding="8,4" ToolTip="Начать работу над задачей"/>
+                            <StackPanel Orientation="Horizontal">
+                                <!-- Start: скрывается когда таймер запущен для этой задачи -->
+                                <Button Content="▶" Tag="{Binding Id}" Click="StartTimer_Click" Padding="8,4">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource EditBtnStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsTimerActive}" Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <!-- Stop: появляется только у активной задачи -->
+                                <Button Content="⏹" Tag="{Binding Id}" Click="StopTimer_Click" Padding="8,4">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource DangerBtnStyle}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsTimerActive}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -155,8 +149,8 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <!-- Delete: admin only -->
-                <DataGridTemplateColumn x:Name="ColDelete" Header="" Width="SizeToCells">
+                <!-- Delete: admin + manager -->
+                <DataGridTemplateColumn x:Name="ColDelete" Header="" Width="50">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="✕" Style="{StaticResource DangerBtnStyle}"

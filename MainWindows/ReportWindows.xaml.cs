@@ -20,13 +20,16 @@ namespace Space
             Loaded += async (s, e) => { ApplyRole(); await Reload(); };
         }
 
-        // admin + manager can edit / delete reports; everyone can add
         private bool CanManage => _user?.Role == "admin" || _user?.Role == "manager";
+        private bool IsTester  => _user?.Role == "tester";
 
         private void ApplyRole()
         {
             if (!CanManage)
                 ColActions.Visibility = Visibility.Collapsed;
+
+            if (IsTester)
+                AddBtn.Visibility = Visibility.Visible;
         }
 
         private async System.Threading.Tasks.Task Reload()
@@ -61,7 +64,7 @@ namespace Space
 
         private async void AddBtn_Click(object s, RoutedEventArgs e)
         {
-            var dlg = new AddWindows.AddReport { Owner = Window.GetWindow(this) };
+            var dlg = new AddWindows.AddReport(isTester: true) { Owner = Window.GetWindow(this) };
             if (dlg.ShowDialog() == true) await Reload();
         }
 

@@ -48,11 +48,11 @@
                         <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel>
-                        <TextBlock Text="Дата (дд.мм.гггг) *" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
-                        <TextBox x:Name="TxtDate" Style="{StaticResource FormInputStyle}"/>
+                        <TextBlock Text="Дата *" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <DatePicker x:Name="DpDate" Height="36" SelectedDateFormat="Short"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="Часов *" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <TextBlock x:Name="LblHours" Text="Часов *" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
                         <TextBox x:Name="TxtHours" Style="{StaticResource FormInputStyle}" Text="1"/>
                     </StackPanel>
                 </Grid>

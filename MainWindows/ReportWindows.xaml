@@ -27,6 +27,9 @@
             <TextBox x:Name="SearchBox" Style="{StaticResource SearchBoxStyle}"
                      Text="🔍  Поиск..." GotFocus="Search_GotFocus" LostFocus="Search_LostFocus"
                      TextChanged="Search_TextChanged"/>
+            <Button x:Name="AddBtn" Grid.Column="1" Content="+ Создать отчёт"
+                    Style="{StaticResource PrimaryBtnStyle}" Width="150"
+                    Click="AddBtn_Click" Visibility="Collapsed"/>
         </Grid>
 
         <!-- DataGrid -->

@@ -16,7 +16,8 @@ namespace Space
                                        : Status == "in_progress" ? "На тест"
                                        : Status == "testing"     ? "Закрыть" : "";
         public bool CanAdvance       => Status != "closed";
-        public bool CanAdvanceTester => Status == "testing";   // tester may only close tested tasks
+        public bool CanAdvanceTester => Status == "testing";
+        public bool IsTimerActive    => TimerService.IsRunning && TimerService.ActiveTaskId == Id;
 
         public string StatusLabel   => Status   == "open"        ? "Открыта"
                                      : Status   == "in_progress" ? "В работе"
