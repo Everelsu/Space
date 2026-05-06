@@ -11,3 +11,7 @@ Nothing should be ignored based on the provided file changes. The modification o
 /.vs
 /.vs/Space.slnx/v18
 .vs/Space.slnx/v18/.suo
+/obj
+obj/Debug/Space.csproj.AssemblyReference.cache
+/.vs/Space.slnx/v18
+/.vs/Space.slnx/v18
