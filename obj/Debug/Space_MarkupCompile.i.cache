@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Dev\Space\obj\Debug\
+C:\Users\user\Desktop\Space-main\obj\Debug\
 Space
 none
 false
 DEBUG;TRACE
-C:\Dev\Space\App.xaml
+C:\Users\user\Desktop\Space-main\App.xaml
 13-1438233029
 
 29-933619107
-33613966477
+33-654557907
 MainWindow.xaml;MainWindows\AddWindows\AddProject.xaml;MainWindows\AddWindows\AddReport.xaml;MainWindows\AddWindows\AddTeem.xaml;MainWindows\AddWindows\AddWorker.xaml;MainWindows\Autorisation.xaml;MainWindows\ReadProject.xaml;MainWindows\MainProject.xaml;MainWindows\TasksWindow.xaml;MainWindows\TeemProject.xaml;MainWindows\TaskManageWindow.xaml;MainWindows\ReportWindows.xaml;MainWindows\AddWindows\AddTask.xaml;
 
 False

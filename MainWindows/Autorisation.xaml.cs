@@ -81,5 +81,9 @@ namespace Space
             ErrorText.Visibility = Visibility.Collapsed;
         }
 
+        private void LoginBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
+        }
     }
 }

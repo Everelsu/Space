@@ -14,13 +14,12 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Border Background="#0F172A" CornerRadius="12" Margin="8">
+    <Border Background="#252c33" CornerRadius="12" Margin="8">
         <Border.Effect>
             <DropShadowEffect Color="Black" BlurRadius="24" ShadowDepth="0" Opacity="0.65"/>
         </Border.Effect>
         <StackPanel>
 
-            <!-- Title bar -->
             <Grid Height="52" MouseLeftButtonDown="TitleBar_MouseDown">
                 <TextBlock Text="О разработчике" Foreground="White"
                            FontSize="15" FontWeight="SemiBold"
@@ -31,7 +30,6 @@
 
             <Rectangle Height="1" Fill="#1E293B"/>
 
-            <!-- Content -->
             <StackPanel Margin="22,20,22,20">
 
                 <TextBlock Text="Система управления IT-проектами"
@@ -64,7 +62,7 @@
 
             <Grid Margin="22,14,22,16">
                 <Button Content="Закрыть" HorizontalAlignment="Right" Width="110"
-                        Style="{StaticResource PrimaryBtnStyle}" Click="Close_Click"/>
+                        Style="{StaticResource BtnClose}" Click="Close_Click"/>
             </Grid>
 
         </StackPanel>

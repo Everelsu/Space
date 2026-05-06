@@ -8,7 +8,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Page header -->
         <Grid Grid.Row="0" Margin="0,0,0,2">
             <StackPanel>
                 <TextBlock Text="Проекты" Style="{StaticResource PageTitleStyle}"/>
@@ -18,7 +17,6 @@
                        Foreground="#4B5563" FontSize="12" Margin="0,0,0,4"/>
         </Grid>
 
-        <!-- Toolbar -->
         <Grid Grid.Row="1" Margin="0,12,0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -33,24 +31,23 @@
             <ComboBox Grid.Column="2" x:Name="FilterStatus" Height="36"
                       Style="{StaticResource FormComboStyle}" SelectionChanged="Filter_Changed">
                 <ComboBoxItem Content="Все статусы" Tag="" IsSelected="True"/>
-                <ComboBoxItem Content="Активен"     Tag="active"/>
-                <ComboBoxItem Content="Закрыт"      Tag="closed"/>
+                <ComboBoxItem Content="Активен" Tag="active"/>
+                <ComboBoxItem Content="Закрыт" Tag="closed"/>
             </ComboBox>
             <Button Grid.Column="4" x:Name="AddBtn" Content="+ Добавить" Style="{StaticResource PrimaryBtnStyle}"
                     Click="AddBtn_Click"/>
         </Grid>
 
-        <!-- DataGrid -->
         <DataGrid Grid.Row="2" x:Name="Grid" Style="{StaticResource GridStyle}"
                   ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
                   CellStyle="{StaticResource GridCellStyle}" SelectionChanged="Grid_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID"       Binding="{Binding Id}"          Width="50"/>
-                <DataGridTextColumn Header="Название" Binding="{Binding Name}"         Width="280"/>
-                <DataGridTextColumn Header="Начало"   Binding="{Binding StartDate}"    Width="100"/>
-                <DataGridTextColumn Header="Дедлайн"  Binding="{Binding Deadline}"     Width="100"/>
-                <DataGridTextColumn Header="Статус"   Binding="{Binding StatusLabel}"  Width="90"/>
-                <DataGridTextColumn Header="Руководитель" Binding="{Binding Manager}"      Width="180"/>
+                <DataGridTextColumn Header="ID"       Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="280"/>
+                <DataGridTextColumn Header="Начало"   Binding="{Binding StartDate}" Width="100"/>
+                <DataGridTextColumn Header="Дедлайн"  Binding="{Binding Deadline}" Width="100"/>
+                <DataGridTextColumn Header="Статус"   Binding="{Binding StatusLabel}" Width="90"/>
+                <DataGridTextColumn Header="Руководитель" Binding="{Binding Manager}" Width="180"/>
                 <DataGridTemplateColumn x:Name="ColActions" Header="Действия" Width="180">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

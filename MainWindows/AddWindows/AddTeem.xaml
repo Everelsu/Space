@@ -14,13 +14,12 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Border Background="#0F172A" CornerRadius="12" Margin="8">
+    <Border Background="#252c33" CornerRadius="12" Margin="8">
         <Border.Effect>
             <DropShadowEffect Color="Black" BlurRadius="24" ShadowDepth="0" Opacity="0.65"/>
         </Border.Effect>
         <StackPanel>
 
-            <!-- Title bar -->
             <Grid Height="52" MouseLeftButtonDown="TitleBar_MouseDown">
                 <TextBlock x:Name="DialogTitle" Text="Новая команда"
                            Foreground="White" FontSize="15" FontWeight="SemiBold"
@@ -31,7 +30,6 @@
 
             <Rectangle Height="1" Fill="#1E293B"/>
 
-            <!-- Fields -->
             <StackPanel Margin="22,18,22,18">
                 <TextBlock Text="Название команды *" Foreground="#9CA3AF" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,6"/>
                 <TextBox x:Name="TxtName" Style="{StaticResource FormInputStyle}"/>
@@ -42,7 +40,6 @@
 
             <Rectangle Height="1" Fill="#1E293B"/>
 
-            <!-- Buttons -->
             <Grid Margin="22,14,22,18">
                 <Button Content="Отмена" HorizontalAlignment="Left" Width="110"
                         Style="{StaticResource SecondaryBtnStyle}" Click="Cancel_Click"/>

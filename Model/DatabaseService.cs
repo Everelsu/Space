@@ -5,7 +5,6 @@ using Npgsql;
 
 namespace Space
 {
-    // ─── Service ──────────────────────────────────────────────────────────────
 
     public static class DatabaseService
     {
@@ -19,8 +18,6 @@ namespace Space
             "Trust Server Certificate=true;" +
             "Pooling=true;" +
             "No Reset On Close=true;";
-
-        // ─── Cache ────────────────────────────────────────────────────────────
         
         private static readonly object _cacheLock = new object();
         private static List<ProjectItem> _projectsCache;

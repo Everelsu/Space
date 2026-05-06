@@ -13,8 +13,8 @@
 
         <Style x:Key="InputStyle" TargetType="Control">
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Background" Value="#1E293B"/>
-            <Setter Property="BorderBrush" Value="#334155"/>
+            <Setter Property="Background" Value="#434e59"/>
+            <Setter Property="BorderBrush" Value="#FF191E25"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="12,0"/>
             <Setter Property="Height" Value="42"/>
@@ -36,7 +36,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
-                                <Setter Property="BorderBrush" Value="#7B3FE4"/>
+                                <Setter Property="BorderBrush" Value="#18181a"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -58,7 +58,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
-                                <Setter Property="BorderBrush" Value="#7B3FE4"/>
+                                <Setter Property="BorderBrush" Value="#18181a"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -78,20 +78,20 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="Bd"
-                                Background="{TemplateBinding Background}"
+                                Background="Red"
                                 CornerRadius="8">
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#9D5CFF"/>
+                                <Setter TargetName="Bd" Property="Background" Value="Red"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#6D28D9"/>
+                                <Setter TargetName="Bd" Property="Background" Value="#6b1a1a"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="Bd" Property="Background" Value="#4B2C8A"/>
+                                <Setter TargetName="Bd" Property="Background" Value="#630b0b"/>
                                 <Setter Property="Foreground" Value="#9CA3AF"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -102,8 +102,7 @@
 
     </Window.Resources>
 
-    <!-- Outer shadow border -->
-    <Border Background="#0F172A"
+    <Border Background="#252c33"
             CornerRadius="16"
             Margin="10">
         <Border.Effect>
@@ -116,7 +115,6 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Custom title bar -->
             <Grid Grid.Row="0" Background="Transparent" MouseLeftButtonDown="TitleBar_MouseDown">
                 <Button Content="✕"
                         Width="32" Height="32"
@@ -127,12 +125,10 @@
                         Click="CloseButton_Click"/>
             </Grid>
 
-            <!-- Content -->
             <Border Grid.Row="1"
                     Padding="36,16,36,36">
                 <StackPanel VerticalAlignment="Center">
 
-                    <!-- Logo / Title -->
                     <Grid HorizontalAlignment="Center" Margin="0,0,0,4">
                         <TextBlock Text="Space"
                                    FontSize="30"
@@ -153,21 +149,18 @@
                                HorizontalAlignment="Center"
                                Margin="0,0,0,28"/>
 
-                    <!-- Login -->
                     <TextBlock Text="Логин"
                                Foreground="#9CA3AF"
                                FontSize="12"
                                Margin="0,0,0,6"/>
-                    <TextBox x:Name="LoginBox" Margin="0,0,0,16"/>
+                    <TextBox x:Name="LoginBox" Margin="0,0,0,16" TextChanged="LoginBox_TextChanged"/>
 
-                    <!-- Password -->
                     <TextBlock Text="Пароль"
                                Foreground="#9CA3AF"
                                FontSize="12"
                                Margin="0,0,0,6"/>
                     <PasswordBox x:Name="PasswordInput" Margin="0,0,0,8"/>
 
-                    <!-- Error -->
                     <TextBlock x:Name="ErrorText"
                                Foreground="#F87171"
                                FontSize="12"
@@ -176,7 +169,6 @@
                                Margin="0,0,0,12"
                                Visibility="Collapsed"/>
 
-                    <!-- Submit -->
                     <Button x:Name="LoginButton"
                             Content="Войти"
                             Margin="0,8,0,0"

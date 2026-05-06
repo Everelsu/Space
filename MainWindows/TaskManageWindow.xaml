@@ -8,7 +8,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Page header -->
         <Grid Grid.Row="0" Margin="0,0,0,2">
             <StackPanel>
                 <TextBlock Text="Задания" Style="{StaticResource PageTitleStyle}"/>
@@ -51,8 +50,7 @@
             <Button Grid.Column="6" x:Name="AddBtn" Content="+ Добавить" Style="{StaticResource PrimaryBtnStyle}"
                     Click="AddBtn_Click"/>
         </Grid>
-
-        <!-- DataGrid -->
+        
         <DataGrid Grid.Row="2" x:Name="Grid" Style="{StaticResource GridStyle}"
                   ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
                   CellStyle="{StaticResource GridCellStyle}">
@@ -64,12 +62,10 @@
                 <DataGridTextColumn Header="Приоритет"   Binding="{Binding PriorityLabel}"  Width="80"/>
                 <DataGridTextColumn Header="Статус"      Binding="{Binding StatusLabel}"    Width="75"/>
                 <DataGridTextColumn Header="Дедлайн"     Binding="{Binding Deadline}"       Width="80"/>
-                <!-- Timer: admin + developer only -->
                 <DataGridTemplateColumn x:Name="ColTimer" Header="" Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <!-- Start: скрывается когда таймер запущен для этой задачи -->
                                 <Button Content="▶" Tag="{Binding Id}" Click="StartTimer_Click" Padding="8,4">
                                     <Button.Style>
                                         <Style TargetType="Button" BasedOn="{StaticResource EditBtnStyle}">
@@ -81,7 +77,6 @@
                                         </Style>
                                     </Button.Style>
                                 </Button>
-                                <!-- Stop: появляется только у активной задачи -->
                                 <Button Content="⏹" Tag="{Binding Id}" Click="StopTimer_Click" Padding="8,4">
                                     <Button.Style>
                                         <Style TargetType="Button" BasedOn="{StaticResource DangerBtnStyle}">
@@ -98,8 +93,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
-                <!-- Advance status: admin + developer (all non-closed tasks) -->
+                
                 <DataGridTemplateColumn x:Name="ColAdvanceDev" Header="Статус" Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -119,7 +113,6 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <!-- Advance status: tester only (testing → closed) -->
                 <DataGridTemplateColumn x:Name="ColAdvanceTester" Header="Статус" Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -138,7 +131,6 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <!-- Edit + Delete: admin + manager -->
                 <DataGridTemplateColumn x:Name="ColActions" Header="Действия" Width="180">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
