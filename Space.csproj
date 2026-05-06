@@ -238,6 +238,13 @@
     </Compile>
     <!-- Service + Models -->
     <Compile Include="Model\DatabaseService.cs" />
+    <Compile Include="Model\DatabaseService.Auth.cs" />
+    <Compile Include="Model\DatabaseService.Projects.cs" />
+    <Compile Include="Model\DatabaseService.Employees.cs" />
+    <Compile Include="Model\DatabaseService.Teams.cs" />
+    <Compile Include="Model\DatabaseService.WorkLogs.cs" />
+    <Compile Include="Model\DatabaseService.Tasks.cs" />
+    <Compile Include="Model\DatabaseService.Dropdowns.cs" />
     <Compile Include="Model\UserInfo.cs" />
     <Compile Include="Model\ProjectItem.cs" />
     <Compile Include="Model\EmployeeItem.cs" />
@@ -276,6 +283,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Styles\SharedStyles.xaml" />
+    <Resource Include="Styles\TextStyles.xaml" />
+    <Resource Include="Styles\ButtonStyles.xaml" />
+    <Resource Include="Styles\InputStyles.xaml" />
+    <Resource Include="Styles\GridStyles.xaml" />
     <Resource Include="Assets\Z.png" />
   </ItemGroup>
   <ItemGroup>
